@@ -7,6 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var HTMLFILENAME = konstanta.GetHTMLFileName()
+
 func Home(c *gin.Context) {
-	common.RenderPages(c, konstanta.HomeHTML, nil)
+	common.RenderPages(c, HTMLFILENAME.Home(), nil)
 }
