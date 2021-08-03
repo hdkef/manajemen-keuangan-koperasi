@@ -1,0 +1,10 @@
+.menu-btn img{
+    width: 25px;
+    padding-right: 10px;
+}
+
+.menu-btn {
+    border:1px solid black;
+    padding:15px;
+    width:250px;
+}

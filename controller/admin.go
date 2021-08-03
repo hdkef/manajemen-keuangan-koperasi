@@ -6,6 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func FullJournal(c *gin.Context) {
-	common.RenderPages(c, HTMLFILENAME.FullJournal(), nil)
+func Admin(c *gin.Context) {
+	common.RenderPages(c, HTMLFILENAME.Admin(), nil)
 }

@@ -27,7 +27,8 @@ func main() {
 	r.GET(route.NewTransaction(), controller.NewTransaction)
 	r.GET(route.ManageUser(), controller.ManageUser)
 	r.GET(route.Summary(), controller.Summary)
-	r.GET(route.FullJournal(), controller.FullJournal)
+	r.GET(route.FullReport(), controller.FullReport)
+	r.GET(route.Admin(), controller.Admin)
 
 	r.Run()
 

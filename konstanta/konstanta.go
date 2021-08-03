@@ -10,8 +10,9 @@ var newTransaction = "new-transaction"
 var editCOA = "edit-coa"
 var editTransaction = "edit-transaction"
 var summary = "summary"
-var fullJournal = "full-journal"
+var fullReport = "full-report"
 var manageUser = "manage-user"
+var admin = "admin"
 
 //route path
 var homeroute = "/"
@@ -21,7 +22,8 @@ var editcoaroute = fmt.Sprintf("/%s", editCOA)
 var edittransactionroute = fmt.Sprintf("/%s", editTransaction)
 var manageuserroute = fmt.Sprintf("/%s", manageUser)
 var summaryroute = fmt.Sprintf("/%s", summary)
-var fulljournalroute = fmt.Sprintf("/%s", fullJournal)
+var fullReportroute = fmt.Sprintf("/%s", fullReport)
+var adminroute = fmt.Sprintf("/%s", admin)
 
 type htmlFileName struct {
 }
@@ -48,11 +50,14 @@ func (r *htmlFileName) EditTransaction() string {
 func (r *htmlFileName) Summary() string {
 	return fmt.Sprintf("%s.%s", summary, html)
 }
-func (r *htmlFileName) FullJournal() string {
-	return fmt.Sprintf("%s.%s", fullJournal, html)
+func (r *htmlFileName) FullReport() string {
+	return fmt.Sprintf("%s.%s", fullReport, html)
 }
 func (r *htmlFileName) ManageUser() string {
 	return fmt.Sprintf("%s.%s", manageUser, html)
+}
+func (r *htmlFileName) Admin() string {
+	return fmt.Sprintf("%s.%s", admin, html)
 }
 
 type route struct {
@@ -81,9 +86,13 @@ func (r *route) NewTransaction() string {
 func (r *route) Summary() string {
 	return summaryroute
 }
-func (r *route) FullJournal() string {
-	return fulljournalroute
+func (r *route) FullReport() string {
+	return fullReportroute
 }
 func (r *route) ManageUser() string {
 	return manageuserroute
+}
+
+func (r *route) Admin() string {
+	return adminroute
 }
