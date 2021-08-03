@@ -6,6 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ManageUser(c *gin.Context) {
-	services.RenderPages(c, HTMLFILENAME.ManageUser(), nil)
+func renderSuccess(c *gin.Context, msg string) {
+	services.RenderPages(c, HTMLFILENAME.Success(), msg)
 }

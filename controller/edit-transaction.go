@@ -1,11 +1,11 @@
 package controller
 
 import (
-	"manajemen-keuangan-koperasi/common"
+	"manajemen-keuangan-koperasi/services"
 
 	"github.com/gin-gonic/gin"
 )
 
 func EditTransaction(c *gin.Context) {
-	common.RenderPages(c, HTMLFILENAME.EditTransaction(), nil)
+	services.RenderPages(c, HTMLFILENAME.EditTransaction(), nil)
 }

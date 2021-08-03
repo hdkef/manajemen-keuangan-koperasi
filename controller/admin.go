@@ -1,11 +1,11 @@
 package controller
 
 import (
-	"manajemen-keuangan-koperasi/common"
+	"manajemen-keuangan-koperasi/services"
 
 	"github.com/gin-gonic/gin"
 )
 
 func Admin(c *gin.Context) {
-	common.RenderPages(c, HTMLFILENAME.Admin(), nil)
+	services.RenderPages(c, HTMLFILENAME.Admin(), nil)
 }

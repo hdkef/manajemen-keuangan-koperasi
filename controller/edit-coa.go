@@ -1,11 +1,11 @@
 package controller
 
 import (
-	"manajemen-keuangan-koperasi/common"
+	"manajemen-keuangan-koperasi/services"
 
 	"github.com/gin-gonic/gin"
 )
 
 func EditCOA(c *gin.Context) {
-	common.RenderPages(c, HTMLFILENAME.EditCOA(), nil)
+	services.RenderPages(c, HTMLFILENAME.EditCOA(), nil)
 }

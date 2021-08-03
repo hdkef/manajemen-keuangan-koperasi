@@ -13,17 +13,27 @@ var summary = "summary"
 var fullReport = "full-report"
 var manageUser = "manage-user"
 var admin = "admin"
+var errors = "error"
+var success = "success"
+var login = "login"
+
+func createRoute(route string) string {
+	return fmt.Sprintf("/%s", route)
+}
 
 //route path
 var homeroute = "/"
-var newcoaroute = fmt.Sprintf("/%s", newCOA)
-var newtransactionroute = fmt.Sprintf("/%s", newTransaction)
-var editcoaroute = fmt.Sprintf("/%s", editCOA)
-var edittransactionroute = fmt.Sprintf("/%s", editTransaction)
-var manageuserroute = fmt.Sprintf("/%s", manageUser)
-var summaryroute = fmt.Sprintf("/%s", summary)
-var fullReportroute = fmt.Sprintf("/%s", fullReport)
-var adminroute = fmt.Sprintf("/%s", admin)
+var newcoaroute = createRoute(newCOA)
+var newtransactionroute = createRoute(newTransaction)
+var editcoaroute = createRoute(editCOA)
+var edittransactionroute = createRoute(editTransaction)
+var manageuserroute = createRoute(manageUser)
+var summaryroute = createRoute(summary)
+var fullReportroute = createRoute(fullReport)
+var adminroute = createRoute(admin)
+var loginroute = createRoute(login)
+
+var CookiesBearer = "bearer"
 
 type htmlFileName struct {
 }
@@ -32,32 +42,48 @@ func GetHTMLFileName() *htmlFileName {
 	return &htmlFileName{}
 }
 
+func createHTMLFilename(fname string) string {
+	return fmt.Sprintf("%s.%s", fname, html)
+}
+
 func (r *htmlFileName) Home() string {
-	return fmt.Sprintf("%s.%s", home, html)
+	return createHTMLFilename(home)
 }
 func (r *htmlFileName) NewCOA() string {
-	return fmt.Sprintf("%s.%s", newCOA, html)
+	return createHTMLFilename(newCOA)
 }
 func (r *htmlFileName) NewTransaction() string {
-	return fmt.Sprintf("%s.%s", newTransaction, html)
+	return createHTMLFilename(newTransaction)
 }
 func (r *htmlFileName) EditCOA() string {
-	return fmt.Sprintf("%s.%s", editCOA, html)
+	return createHTMLFilename(editCOA)
 }
 func (r *htmlFileName) EditTransaction() string {
-	return fmt.Sprintf("%s.%s", editTransaction, html)
+	return createHTMLFilename(editCOA)
 }
 func (r *htmlFileName) Summary() string {
-	return fmt.Sprintf("%s.%s", summary, html)
+	return createHTMLFilename(summary)
 }
 func (r *htmlFileName) FullReport() string {
-	return fmt.Sprintf("%s.%s", fullReport, html)
+	return createHTMLFilename(fullReport)
 }
 func (r *htmlFileName) ManageUser() string {
-	return fmt.Sprintf("%s.%s", manageUser, html)
+	return createHTMLFilename(manageUser)
 }
 func (r *htmlFileName) Admin() string {
-	return fmt.Sprintf("%s.%s", admin, html)
+	return createHTMLFilename(admin)
+}
+
+func (r *htmlFileName) Error() string {
+	return createHTMLFilename(errors)
+}
+
+func (r *htmlFileName) Success() string {
+	return createHTMLFilename(success)
+}
+
+func (r *htmlFileName) Login() string {
+	return createHTMLFilename(login)
 }
 
 type route struct {
@@ -95,4 +121,8 @@ func (r *route) ManageUser() string {
 
 func (r *route) Admin() string {
 	return adminroute
+}
+
+func (r *route) Login() string {
+	return loginroute
 }

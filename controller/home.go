@@ -1,14 +1,15 @@
 package controller
 
 import (
-	"manajemen-keuangan-koperasi/common"
 	"manajemen-keuangan-koperasi/konstanta"
+	"manajemen-keuangan-koperasi/services"
 
 	"github.com/gin-gonic/gin"
 )
 
 var HTMLFILENAME = konstanta.GetHTMLFileName()
+var route = konstanta.GetRoute()
 
 func Home(c *gin.Context) {
-	common.RenderPages(c, HTMLFILENAME.Home(), nil)
+	services.RenderPages(c, HTMLFILENAME.Home(), nil)
 }

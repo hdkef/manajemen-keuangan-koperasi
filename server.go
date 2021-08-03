@@ -29,6 +29,7 @@ func main() {
 	r.GET(route.Summary(), controller.Summary)
 	r.GET(route.FullReport(), controller.FullReport)
 	r.GET(route.Admin(), controller.Admin)
+	r.GET(route.Login(), controller.Login)
 
 	r.Run()
 
