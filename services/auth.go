@@ -26,11 +26,12 @@ func init() {
 	SECRET = os.Getenv("SECRET")
 }
 
-func ValidateTokenFromCookies(c *gin.Context) error {
+func ValidateTokenFromCookies(c *gin.Context) (models.User, error) {
 	//get token string from cookies
 	tokenString, err := c.Cookie(konstanta.CookiesBearer)
 	if err != nil {
-		return err
+		removeTokenCookie(c)
+		return models.User{}, err
 	}
 	mapclaims, err := ValidateTokenString(&tokenString)
 	if err != nil {
@@ -38,18 +39,31 @@ func ValidateTokenFromCookies(c *gin.Context) error {
 			tokenString, err := createRefreshToken(mapclaims)
 			if err != nil {
 				utils.ResErr(c, http.StatusInternalServerError, &err)
-				return err
+				return models.User{}, err
 			}
 			SaveTokenCookie(c, &tokenString)
-			return nil
+			return models.User{
+				ID:       (*mapclaims)["ID"].(string),
+				Username: (*mapclaims)["Username"].(string),
+				Role:     (*mapclaims)["Role"].(string),
+			}, nil
 		}
-		return err
+		removeTokenCookie(c)
+		return models.User{}, err
 	}
-	return nil
+	return models.User{
+		ID:       (*mapclaims)["ID"].(string),
+		Username: (*mapclaims)["Username"].(string),
+		Role:     (*mapclaims)["Role"].(string),
+	}, nil
 }
 
 func SaveTokenCookie(c *gin.Context, tokenString *string) {
-	c.SetCookie(konstanta.CookiesBearer, *tokenString, tokenexpiresdur, "/", "", false, false)
+	c.SetCookie(konstanta.CookiesBearer, *tokenString, 999999999, "/", "", false, false)
+}
+
+func removeTokenCookie(c *gin.Context) {
+	c.SetCookie(konstanta.CookiesBearer, "", -1, "/", "", false, false)
 }
 
 //if need refresh token return *jwt.Mapclaims and err ERR_NEW_REFRESH_TOKEN
@@ -72,15 +86,14 @@ func ValidateTokenString(token *string) (*jwt.MapClaims, error) {
 	}
 
 	renew := checkTokenRenew(parsedToken)
-
+	mapclaims := parsedToken.Claims.(jwt.MapClaims)
 	if renew {
 		//send refreshToken
 		//cast jwt.MapClaims from parsedToken.Claims
-		mapclaims := parsedToken.Claims.(jwt.MapClaims)
 		return &mapclaims, errors.New(ERR_NEED_REFRESH_TOKEN)
 	}
 
-	return nil, nil
+	return &mapclaims, nil
 }
 
 func createRefreshToken(mapclaims *jwt.MapClaims) (string, error) {

@@ -6,6 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RenderSuccess(c *gin.Context, msg string) {
-	services.RenderPages(c, HTMLFILENAME.Success(), msg)
+func Member(c *gin.Context) {
+	services.RenderPages(c, HTMLFILENAME.Member(), nil)
 }

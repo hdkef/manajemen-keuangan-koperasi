@@ -3,6 +3,7 @@ package main
 import (
 	"manajemen-keuangan-koperasi/controller"
 	"manajemen-keuangan-koperasi/konstanta"
+	"manajemen-keuangan-koperasi/middleware"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -20,6 +21,8 @@ func main() {
 	r.LoadHTMLGlob("public/pages/*")
 	r.Static("/public", "./public")
 
+	r.Use(middleware.Auth)
+
 	r.GET(route.Home(), controller.Home)
 	r.GET(route.EditCOA(), controller.EditCOA)
 	r.GET(route.EditTransaction(), controller.EditTransaction)
@@ -30,6 +33,8 @@ func main() {
 	r.GET(route.FullReport(), controller.FullReport)
 	r.GET(route.Admin(), controller.Admin)
 	r.GET(route.Login(), controller.Login)
+	r.POST(route.Login(), controller.Login)
+	r.GET(route.Member(), controller.Member)
 
 	r.Run()
 

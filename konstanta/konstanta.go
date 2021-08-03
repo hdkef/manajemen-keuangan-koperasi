@@ -16,6 +16,7 @@ var admin = "admin"
 var errors = "error"
 var success = "success"
 var login = "login"
+var member = "member"
 
 func createRoute(route string) string {
 	return fmt.Sprintf("/%s", route)
@@ -32,8 +33,13 @@ var summaryroute = createRoute(summary)
 var fullReportroute = createRoute(fullReport)
 var adminroute = createRoute(admin)
 var loginroute = createRoute(login)
+var memberroute = createRoute(member)
 
 var CookiesBearer = "bearer"
+
+var Claims = "Claims"
+var RoleADMIN = "admin"
+var RoleMEMBER = "member"
 
 type htmlFileName struct {
 }
@@ -86,6 +92,10 @@ func (r *htmlFileName) Login() string {
 	return createHTMLFilename(login)
 }
 
+func (r *htmlFileName) Member() string {
+	return createHTMLFilename(member)
+}
+
 type route struct {
 }
 
@@ -125,4 +135,8 @@ func (r *route) Admin() string {
 
 func (r *route) Login() string {
 	return loginroute
+}
+
+func (r *route) Member() string {
+	return memberroute
 }

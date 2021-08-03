@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"errors"
+	"manajemen-keuangan-koperasi/konstanta"
 	"manajemen-keuangan-koperasi/models"
 	"manajemen-keuangan-koperasi/services"
 	"manajemen-keuangan-koperasi/utils"
@@ -11,12 +13,24 @@ import (
 
 func Login(c *gin.Context) {
 	if c.Request.Method == http.MethodPost {
-		//TOBE
 
-		//retrieve user from db and compare the pass
+		//Get username and pass from form
+
+		username := c.PostForm("Username")
+		pass := c.PostForm("Pass")
+
+		//TOBE
+		//compare pass from form and db
+
+		if pass != "tes" {
+			RenderError(c, errors.New("login failed"))
+			return
+		}
+
 		usr := models.User{
 			ID:       "1",
-			Username: "dk",
+			Username: username,
+			Role:     konstanta.RoleMEMBER,
 		}
 
 		//create token and save
@@ -27,12 +41,7 @@ func Login(c *gin.Context) {
 		}
 		services.SaveTokenCookie(c, &tokenString)
 
-		//redirect
-	}
-	err := services.ValidateTokenFromCookies(c)
-	if err == nil {
-		//redirect
-		c.Redirect(http.StatusTemporaryRedirect, route.Admin())
+		c.Redirect(http.StatusFound, route.Member())
 		return
 	}
 	services.RenderPages(c, HTMLFILENAME.Login(), nil)

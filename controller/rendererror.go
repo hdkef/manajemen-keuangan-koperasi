@@ -6,6 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func renderError(c *gin.Context, err error) {
+func RenderError(c *gin.Context, err error) {
 	services.RenderPages(c, HTMLFILENAME.Error(), err.Error())
 }
