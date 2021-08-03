@@ -1,7 +1,10 @@
 package middleware
 
 import (
+	"errors"
+	"manajemen-keuangan-koperasi/controller"
 	"manajemen-keuangan-koperasi/konstanta"
+	"manajemen-keuangan-koperasi/models"
 	"manajemen-keuangan-koperasi/services"
 	"net/http"
 
@@ -11,19 +14,36 @@ import (
 var route = konstanta.GetRoute()
 
 func Auth(c *gin.Context) {
+	path := c.Request.URL.Path
 	//if bearer token valid, redirect
 	claims, err := services.ValidateTokenFromCookies(c)
+	//if there is valid token
 	if err == nil {
-		//go to destination
+		//send claims to context
 		c.Set(konstanta.Claims, claims)
+		//if must be admin
+		if path == route.Admin() || path == route.EditCOA() || path == route.EditTransaction() || path == route.FullReport() || path == route.ManageUser() || path == route.NewCOA() || path == route.NewTransaction() || path == route.Summary() {
+			mustAdmin(c, &claims)
+			return
+		}
+		//go to destination
 		c.Next()
 		return
 	}
-	//if URL is not /login next
-	if c.Request.URL.Path != route.Login() {
+	//if no valid token and URL is not /login next
+	if path != route.Login() {
 		c.Redirect(http.StatusTemporaryRedirect, route.Login())
 		return
 	}
-	//if URL is /login next
+	//if no valid token and URL is /login next
 	c.Next()
+}
+
+func mustAdmin(c *gin.Context, claims *models.User) {
+	if claims.Role == konstanta.RoleADMIN {
+		c.Next()
+		return
+	}
+	c.Abort()
+	controller.RenderError(c, errors.New("USER IS NOT ADMIN"))
 }

@@ -30,7 +30,7 @@ func Login(c *gin.Context) {
 		usr := models.User{
 			ID:       "1",
 			Username: username,
-			Role:     konstanta.RoleMEMBER,
+			Role:     konstanta.RoleADMIN,
 		}
 
 		//create token and save
