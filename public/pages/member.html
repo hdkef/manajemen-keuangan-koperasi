@@ -5,22 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="public/style/basic.css">
-    <link rel="stylesheet" href="public/style/member.css">
+    <link rel="stylesheet" href="public/style/pico.min.css">
+    <style>
+        a{
+            display: block;
+            color:white;
+            text-decoration: none;
+            padding: 10px
+        }
+        button {
+            padding: 0px;
+        }
+    </style>
 </head>
 <body>
-    <div class="center"><h1>Member</h1></div>
-    <div class="center" id="command">
-        <button>Request Deposit</button>
-        <button>Request Withdraw</button>
+    <article>
+        <head><h1>Mr White</h1></head>
+        <p>Menu</p>
+        <button><a href="/deposit-req">Request Deposit</a></button>
+        <button><a href="/withdraw-req">Request Withdraw</a></button>
         <button><a href="/loan-req">Create Loan Request</a></button>
-    </div>
-    <div class="center" id="balance-chart">
-        <img src="public/assets/chart-example.png" alt="balance chart">
-    </div>
-    <div class="center">
+        <hr>
+        <p>Summary</p>
         <table>
-            <caption><h2>Summary</h2></caption>
             <thead>
                 <th>Account</th>
                 <th>Amount (Rp)</th>
@@ -36,11 +43,11 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-    <div class="center">
+        <hr>
+        <p>Recent Transaction</p>
         <table>
-            <caption><h2>History</h2></caption>
             <thead>
+                <th>ID</th>
                 <th>Date</th>
                 <th>Account</th>
                 <th>Amount (Rp)</th>
@@ -48,18 +55,21 @@
             </thead>
             <tbody>
                 <tr>
+                    <td>1</td>
                     <td>20 Jan 21</td>
                     <td>Cash -</td>
                     <td>100000</td>
                     <td>Withdraw</td>
                 </tr>
                 <tr>
+                    <td>2</td>
                     <td>18 Jan 21</td>
                     <td>Cash +</td>
                     <td>150000</td>
                     <td>Deposit</td>
                 </tr>
                 <tr>
+                    <td>3</td>
                     <td>17 Jan 21</td>
                     <td>Debt -</td>
                     <td>250000</td>
@@ -67,10 +77,9 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-    <div class="center">
+        <hr>
+        <p>Debt Details</p>
         <table>
-            <caption><h2>Debt Details</h2></caption>
             <thead>
                 <th>ID</th>
                 <th>Date</th>
@@ -90,6 +99,6 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </article>
 </body>
 </html>

@@ -5,22 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="public/style/basic.css">
-    <link rel="stylesheet" href="public/style/admin.css">
+    <link rel="stylesheet" href="public/style/pico.min.css">
+    <style>
+        a{
+            display: block;
+            color:white;
+            text-decoration: none;
+            padding: 10px
+        }
+        button {
+            padding: 0px;
+        }
+    </style>
 </head>
 <body>
-    <div class="center"><h1>Admin</h1></div>
-    <div class="center">
-        <div>
-            <a href="/mem-request"><div class="menu-btn"><img src="public/assets/request.svg" alt="member request">member request</div></a>
-            <a href="/manage-user"><div class="menu-btn"><img src="public/assets/manage-user.svg" alt="manage user">manage user</div></a>
-            <a href="/summary"><div class="menu-btn"><img src="public/assets/report.svg" alt="summary">summary</div></a>
-            <a href="/full-report"><div class="menu-btn"><img src="public/assets/report.svg" alt="full report">full report</div></a>
-            <a href="/new-transaction"><div class="menu-btn"><img src="public/assets/new.svg" alt="new transaction">new transaction</div></a>
-            <a href="/edit-transaction"><div class="menu-btn"><img src="public/assets/edit.svg" alt="edit transaction">edit transaction</div></a>
-            <a href="/new-coa"><div class="menu-btn"><img src="public/assets/new.svg" alt="new chart of account">new chart of account</div></a>
-            <a href="/edit-coa"><div class="menu-btn"><img src="public/assets/edit.svg" alt="edit chart of account">edit chart of account</div></a>
-        </div>
+    <div class="container">
+        <article>
+            <header><h1>Admin</h1></header>
+            <p>See Reports</p>
+            <button><a href="/summary">Summary</a></button>
+            <button><a href="/full-report">Full Report</a></button>
+            <hr>
+            <p>Handle Transactions</p>
+            <button><a href="/new-transaction">New Transaction</a></button>
+            <button><a href="/edit-transaction">Edit Transaction</a></button>
+            <hr>
+            <p>Handle Chart of Accounts</p>
+            <button><a href="/new-coa">New Account</a></button>
+            <button><a href="/edit-coa">Edit Account</a></button>
+            <hr>
+            <p>Manage User</p>
+            <button><a href="/manage-user">Manage User</a></button>
+            <button><a href="/mem-inspect">Inspect Member</a></button>
+            <button><a href="/mem-request">Request List</a></button>
+        </article>
     </div>
 </body>
 </html>

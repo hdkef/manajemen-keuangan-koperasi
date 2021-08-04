@@ -5,13 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Chart of Account</title>
-    <link rel="stylesheet" href="public/style/basic.css">
-    <link rel="stylesheet" href="public/style/new-coa.css">
+    <link rel="stylesheet" href="public/style/pico.min.css">
     <script src="public/javascript/new-coa.js" defer></script>
 </head>
 <body>
-    <div class="center"><h1>New Chart of Account</h1></div>
-    <div class="center marginTop">
+    <article>
+        <header><h1>New Chart of Accounts</h1></header>
         <form name="newCOAForm" method="POST" action="/new-coa">
             <input type="text" placeholder="Account Name" name="Name" required>
             <select name="Statement" id="statement" required>
@@ -26,6 +25,6 @@
             <textarea name="Info" cols="23" rows="4" placeholder="Info"></textarea>
             <button type="submit">Submit</button>
         </form>
-    </div>
+    </article>
 </body>
 </html>

@@ -18,6 +18,7 @@ var login = "login"
 var member = "member"
 var memrequest = "mem-request"
 var loanreq = "loan-req"
+var meminspect = "mem-inspect"
 
 func createRoute(route string) string {
 	return fmt.Sprintf("/%s", route)
@@ -37,6 +38,7 @@ var loginroute = createRoute(login)
 var memberroute = createRoute(member)
 var memrequestroute = createRoute(memrequest)
 var loanreqroute = createRoute(loanreq)
+var meminspectroute = createRoute(meminspect)
 
 var CookiesBearer = "bearer"
 
@@ -105,6 +107,10 @@ func (r *htmlFileName) LoanReq() string {
 	return createHTMLFilename(loanreq)
 }
 
+func (r *htmlFileName) MemInspect() string {
+	return createHTMLFilename(meminspect)
+}
+
 type route struct {
 }
 
@@ -156,4 +162,8 @@ func (r *route) MemRequest() string {
 
 func (r *route) LoanReq() string {
 	return loanreqroute
+}
+
+func (r *route) MemInspect() string {
+	return meminspectroute
 }

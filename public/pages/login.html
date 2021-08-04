@@ -5,16 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="public/style/basic.css">
-    <link rel="stylesheet" href="public/style/login.css">
+    <link rel="stylesheet" href="public/style/pico.min.css">
 </head>
 <body>
-    <div class="center"><h1>Login</h1></div>
-    <div class="center marginTop">
-        <form name="loginForm" method="POST" action="/login">
+    <div class="container" style="width: 500px;margin-top: 10vh;">
+        <form action="loginForm" method="POST" action="/login">
+        <article>
+            <header><h1>Login</h1></header>
             <input type="text" placeholder="Username" name="Username" required>
             <input type="password" placeholder="Pass" name="Pass" required>
-            <button type="submit">Submit</button>
+            <footer><button type="submit">Submit</button></footer>
+        </article>
         </form>
     </div>
 </body>

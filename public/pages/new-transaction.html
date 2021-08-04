@@ -5,15 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Transaction</title>
-    <link rel="stylesheet" href="public/style/basic.css">
-    <link rel="stylesheet" href="public/style/new-transaction.css">
+    <link rel="stylesheet" href="public/style/pico.min.css">
 </head>
 <body>
-    <div class="center"><h1>New Transaction</h1></div>
-    <div class="center marginTop">
+    <article>
+        <header><h1>New Transaction</h1></header>
         <form action="/new-transaction" method="POST">
             <select name="Name" id="Name">
-                <!-- TOBE Account Name populated from DB  -->
                 <option value="1">Cash</option>
             </select>
             <input type="text" placeholder="Debit">
@@ -21,6 +19,6 @@
             <textarea name="Info" cols="23" rows="4" placeholder="Info"></textarea>
             <button type="submit">Submit</button>
         </form>
-    </div>
+    </article>
 </body>
 </html>
