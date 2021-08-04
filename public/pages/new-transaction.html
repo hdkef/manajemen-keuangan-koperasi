@@ -10,5 +10,17 @@
 </head>
 <body>
     <div class="center"><h1>New Transaction</h1></div>
+    <div class="center marginTop">
+        <form action="/new-transaction" method="POST">
+            <select name="Name" id="Name">
+                <!-- TOBE Account Name populated from DB  -->
+                <option value="1">Cash</option>
+            </select>
+            <input type="text" placeholder="Debit">
+            <input type="text" placeholder="Credit">
+            <textarea name="Info" cols="23" rows="4" placeholder="Info"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </body>
 </html>

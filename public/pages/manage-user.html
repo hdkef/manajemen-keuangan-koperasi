@@ -10,5 +10,40 @@
 </head>
 <body>
     <div class="center"><h1>Manage User</h1></div>
+    <div class="center">
+        <div class="manageuser">
+            <h2>Find User</h2>
+            <form action="/manage-user" method="POST" name="findForm">
+                <select name="filter" >
+                    <option value="Username">Username</option>
+                    <option value="FullName">FullName</option>
+                </select>
+                <input type="text" name="Key" placeholder="search key">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="center">
+        <div class="manageuser">
+            <h2>Edit User Role</h2>
+            <form action="/manage-user" method="POST" name="editRoleForm">
+                <input type="text" name="id" placeholder="ID">
+                <select name="role">
+                    <option value="Admin-Input">Admin-Input</option>
+                    <option value="Member">Member</option>
+                </select>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="center">
+        <div class="manageuser">
+            <h2>Delete User</h2>
+            <form action="/manage-user" method="POST" name="editRoleForm">
+                <input type="text" name="id" placeholder="ID">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

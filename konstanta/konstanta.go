@@ -2,9 +2,8 @@ package konstanta
 
 import "fmt"
 
-//file  name
+//name
 var html = "html"
-var home = "home"
 var newCOA = "new-coa"
 var newTransaction = "new-transaction"
 var editCOA = "edit-coa"
@@ -17,13 +16,15 @@ var errors = "error"
 var success = "success"
 var login = "login"
 var member = "member"
+var memrequest = "mem-request"
+var loanreq = "loan-req"
 
 func createRoute(route string) string {
 	return fmt.Sprintf("/%s", route)
 }
 
 //route path
-var homeroute = "/"
+var homeroute = createRoute("")
 var newcoaroute = createRoute(newCOA)
 var newtransactionroute = createRoute(newTransaction)
 var editcoaroute = createRoute(editCOA)
@@ -34,11 +35,14 @@ var fullReportroute = createRoute(fullReport)
 var adminroute = createRoute(admin)
 var loginroute = createRoute(login)
 var memberroute = createRoute(member)
+var memrequestroute = createRoute(memrequest)
+var loanreqroute = createRoute(loanreq)
 
 var CookiesBearer = "bearer"
 
 var Claims = "Claims"
-var RoleADMIN = "admin"
+var RoleADMINInput = "Admin-Input"
+var RoleADMINSuper = "Admin-Super"
 var RoleMEMBER = "member"
 
 type htmlFileName struct {
@@ -52,9 +56,6 @@ func createHTMLFilename(fname string) string {
 	return fmt.Sprintf("%s.%s", fname, html)
 }
 
-func (r *htmlFileName) Home() string {
-	return createHTMLFilename(home)
-}
 func (r *htmlFileName) NewCOA() string {
 	return createHTMLFilename(newCOA)
 }
@@ -65,7 +66,7 @@ func (r *htmlFileName) EditCOA() string {
 	return createHTMLFilename(editCOA)
 }
 func (r *htmlFileName) EditTransaction() string {
-	return createHTMLFilename(editCOA)
+	return createHTMLFilename(editTransaction)
 }
 func (r *htmlFileName) Summary() string {
 	return createHTMLFilename(summary)
@@ -94,6 +95,14 @@ func (r *htmlFileName) Login() string {
 
 func (r *htmlFileName) Member() string {
 	return createHTMLFilename(member)
+}
+
+func (r *htmlFileName) MemRequest() string {
+	return createHTMLFilename(memrequest)
+}
+
+func (r *htmlFileName) LoanReq() string {
+	return createHTMLFilename(loanreq)
 }
 
 type route struct {
@@ -139,4 +148,12 @@ func (r *route) Login() string {
 
 func (r *route) Member() string {
 	return memberroute
+}
+
+func (r *route) MemRequest() string {
+	return memrequestroute
+}
+
+func (r *route) LoanReq() string {
+	return loanreqroute
 }

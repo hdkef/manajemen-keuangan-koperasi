@@ -22,8 +22,17 @@ func Auth(c *gin.Context) {
 		//send claims to context
 		c.Set(konstanta.Claims, claims)
 		//if must be admin
-		if path == route.Admin() || path == route.EditCOA() || path == route.EditTransaction() || path == route.FullReport() || path == route.ManageUser() || path == route.NewCOA() || path == route.NewTransaction() || path == route.Summary() {
+		if path == route.Admin() || path == route.EditCOA() || path == route.EditTransaction() || path == route.FullReport() || path == route.NewCOA() || path == route.NewTransaction() || path == route.Summary() || path == route.MemRequest() {
 			mustAdmin(c, &claims)
+			return
+		}
+		if path == route.ManageUser() {
+			mustAdminSuper(c, &claims)
+			return
+		}
+		//if token is valid and it is authenticated, redirect to member
+		if path == route.Login() {
+			c.Redirect(http.StatusTemporaryRedirect, route.Member())
 			return
 		}
 		//go to destination
@@ -40,10 +49,19 @@ func Auth(c *gin.Context) {
 }
 
 func mustAdmin(c *gin.Context, claims *models.User) {
-	if claims.Role == konstanta.RoleADMIN {
+	if claims.Role == konstanta.RoleADMINInput || claims.Role == konstanta.RoleADMINSuper {
 		c.Next()
 		return
 	}
 	c.Abort()
 	controller.RenderError(c, errors.New("USER IS NOT ADMIN"))
+}
+
+func mustAdminSuper(c *gin.Context, claims *models.User) {
+	if claims.Role == konstanta.RoleADMINSuper {
+		c.Next()
+		return
+	}
+	c.Abort()
+	controller.RenderError(c, errors.New("USER IS NOT ADMIN Super"))
 }

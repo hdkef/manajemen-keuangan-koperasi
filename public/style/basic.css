@@ -13,7 +13,22 @@ a {
     text-align: center;
 }
 
-button, input {
+button, input, select, label {
     margin: 5px;
     display: block;
+}
+
+.marginTop {
+    margin-top: 20vh;
+}
+
+table {
+    border-spacing: 0 15px;
+    table-layout: auto;
+    width: 500px;
+}
+
+table td, table th {
+    padding: 5px;
+    border:1px solid black;
 }

@@ -7,8 +7,25 @@
     <title>New Chart of Account</title>
     <link rel="stylesheet" href="public/style/basic.css">
     <link rel="stylesheet" href="public/style/new-coa.css">
+    <script src="public/javascript/new-coa.js" defer></script>
 </head>
 <body>
     <div class="center"><h1>New Chart of Account</h1></div>
+    <div class="center marginTop">
+        <form name="newCOAForm" method="POST" action="/new-coa">
+            <input type="text" placeholder="Account Name" name="Name" required>
+            <select name="Statement" id="statement" required>
+                <option value="Balance Sheet" selected>Balance Sheet</option>
+                <option value="Income Statement">Income Statement</option>
+            </select>
+            <select name="Type" id="type" required>
+                <option value="Assets">Assets</option>
+                <option value="Liabilites">Liabilites</option>
+                <option value="Equity">Equity</option>
+            </select>
+            <textarea name="Info" cols="23" rows="4" placeholder="Info"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </body>
 </html>

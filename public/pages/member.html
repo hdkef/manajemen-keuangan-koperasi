@@ -10,5 +10,86 @@
 </head>
 <body>
     <div class="center"><h1>Member</h1></div>
+    <div class="center" id="command">
+        <button>Request Deposit</button>
+        <button>Request Withdraw</button>
+        <button><a href="/loan-req">Create Loan Request</a></button>
+    </div>
+    <div class="center" id="balance-chart">
+        <img src="public/assets/chart-example.png" alt="balance chart">
+    </div>
+    <div class="center">
+        <table>
+            <caption><h2>Summary</h2></caption>
+            <thead>
+                <th>Account</th>
+                <th>Amount (Rp)</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Current Cash</td>
+                    <td>600000</td>
+                </tr>
+                <tr>
+                    <td>Current Debt</td>
+                    <td>300000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="center">
+        <table>
+            <caption><h2>History</h2></caption>
+            <thead>
+                <th>Date</th>
+                <th>Account</th>
+                <th>Amount (Rp)</th>
+                <th>Info</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>20 Jan 21</td>
+                    <td>Cash -</td>
+                    <td>100000</td>
+                    <td>Withdraw</td>
+                </tr>
+                <tr>
+                    <td>18 Jan 21</td>
+                    <td>Cash +</td>
+                    <td>150000</td>
+                    <td>Deposit</td>
+                </tr>
+                <tr>
+                    <td>17 Jan 21</td>
+                    <td>Debt -</td>
+                    <td>250000</td>
+                    <td>Bayar hutang</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="center">
+        <table>
+            <caption><h2>Debt Details</h2></caption>
+            <thead>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Due Date</th>
+                <th>Amount (Rp)</th>
+                <th>Remain (Rp)</th>
+                <th>Info</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>156</td>
+                    <td>1 Dec 20</td>
+                    <td>1 Jan 21</td>
+                    <td>2500000</td>
+                    <td>300000</td>
+                    <td>Membeli Handphone Samsung A30</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
