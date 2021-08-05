@@ -22,7 +22,7 @@ func Auth(c *gin.Context) {
 		//send claims to context
 		c.Set(konstanta.Claims, claims)
 		//if must be admin
-		if path == route.Admin() || path == route.EditCOA() || path == route.EditTransaction() || path == route.FullReport() || path == route.NewCOA() || path == route.NewTransaction() || path == route.Summary() || path == route.MemRequest() {
+		if path == route.Admin() || path == route.EditCOA() || path == route.EditTransaction() || path == route.FullReport() || path == route.NewCOA() || path == route.NewTransaction() || path == route.Summary() || path == route.MemRequest() || path == route.MemInspect() || path == route.FindUser() {
 			mustAdmin(c, &claims)
 			return
 		}

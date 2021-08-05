@@ -10,33 +10,27 @@
 <body>
     <article>
         <header><h1>Summary</h1></header>
+        <p>Ledger Sum</p>
         <table>
-            <caption><h2>Ledger Sum</h2></caption>
             <thead>
                 <th>Code</th>
-                <th>Account</th>
+                <th>Name</th>
                 <th>Type</th>
                 <th>Debit (Rp)</th>
                 <th>Credit (Rp)</th>
                 <th>Diff (Rp)</th>
             </thead>
             <tbody>
+                {{range $index,$elem := . }}
                 <tr>
-                    <td>A1</td>
-                    <td>Cash</td>
-                    <td>Assets</td>
-                    <td>600000000</td>
-                    <td>250000000</td>
-                    <th>350000000</th>
+                    <td>{{$elem.Code}}</td>
+                    <td>{{$elem.Name}}</td>
+                    <td>{{$elem.Type}}</td>
+                    <td>{{$elem.Debit}}</td>
+                    <td>{{$elem.Credit}}</td>
+                    <td>{{$elem.Diff}}</td>
                 </tr>
-                <tr>
-                    <td>A2</td>
-                    <td>Debt</td>
-                    <td>Liabilities</td>
-                    <td>100000000</td>
-                    <td>450000000</td>
-                    <th>350000000</th>
-                </tr>
+                {{end}}
             </tbody>
         </table>
     </article>

@@ -10,8 +10,8 @@
 <body>
     <article>
         <header><h1>Edit Transaction</h1></header>
+        <p>Recent Transactions</p>
         <table>
-            <caption><h2>Recent Transactions</h2></caption>
             <thead>
                 <th>ID</th>
                 <th>Date</th>
@@ -22,13 +22,17 @@
                 <th>Command</th>
             </thead>
             <tbody>
-                <td>1</td>
-                <td>4 Aug 21</td>
-                <td>Cash</td>
-                <td>0</td>
-                <td>250000</td>
-                <td>Mengambil Uang</td>
-                <td><button>Remove</button></td>
+                {{ range $index, $elem := . }}
+                <tr>
+                    <td>{{$elem.ID}}</td>
+                    <td>{{$elem.Date}}</td>
+                    <td>{{$elem.Name}}</td>
+                    <td>{{$elem.Debit}}</td>
+                    <td>{{$elem.Credit}}</td>
+                    <td>{{$elem.Info}}</td>
+                    <td><button>Remove</button></td>
+                </tr>
+                {{ end }}
             </tbody>
         </table>
     </article>

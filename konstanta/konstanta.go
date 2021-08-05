@@ -19,6 +19,10 @@ var member = "member"
 var memrequest = "mem-request"
 var loanreq = "loan-req"
 var meminspect = "mem-inspect"
+var depositreq = "deposit-req"
+var withdrawreq = "withdraw-req"
+var finduser = "find-user"
+var meminspectres = "mem-inspect-res"
 
 func createRoute(route string) string {
 	return fmt.Sprintf("/%s", route)
@@ -39,6 +43,9 @@ var memberroute = createRoute(member)
 var memrequestroute = createRoute(memrequest)
 var loanreqroute = createRoute(loanreq)
 var meminspectroute = createRoute(meminspect)
+var depositreqroute = createRoute(depositreq)
+var withdrawreqroute = createRoute(withdrawreq)
+var finduserroute = createRoute(finduser)
 
 var CookiesBearer = "bearer"
 
@@ -46,6 +53,12 @@ var Claims = "Claims"
 var RoleADMINInput = "Admin-Input"
 var RoleADMINSuper = "Admin-Super"
 var RoleMEMBER = "member"
+
+var QueryID = "ID"
+var QueryUsername = "Username"
+var QueryPass = "Pass"
+var QueryFilter = "Filter"
+var QueryKey = "Key"
 
 type htmlFileName struct {
 }
@@ -111,6 +124,22 @@ func (r *htmlFileName) MemInspect() string {
 	return createHTMLFilename(meminspect)
 }
 
+func (r *htmlFileName) DepositReq() string {
+	return createHTMLFilename(depositreq)
+}
+
+func (r *htmlFileName) WithdrawReq() string {
+	return createHTMLFilename(withdrawreq)
+}
+
+func (r *htmlFileName) FindUser() string {
+	return createHTMLFilename(finduser)
+}
+
+func (r *htmlFileName) MemInspectRes() string {
+	return createHTMLFilename(meminspectres)
+}
+
 type route struct {
 }
 
@@ -166,4 +195,16 @@ func (r *route) LoanReq() string {
 
 func (r *route) MemInspect() string {
 	return meminspectroute
+}
+
+func (r *route) DepositReq() string {
+	return depositreqroute
+}
+
+func (r *route) WithdrawReq() string {
+	return withdrawreqroute
+}
+
+func (r *route) FindUser() string {
+	return finduserroute
 }

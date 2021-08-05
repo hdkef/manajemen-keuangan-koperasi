@@ -20,7 +20,14 @@
 </head>
 <body>
     <article>
-        <head><h1>Mr White</h1></head>
+        <head><h1> {{ .User.FullName }}</h1></head>
+        <details>
+            <summary>Details</summary>
+            <p>Username : {{ .User.Username }}</p>
+            <p>Tel : {{ .User.Tel }}</p>
+            <p>DoB : {{ .User.DOB }}</p>
+            <p>Address : {{ .User.Address }}</p>
+          </details>
         <p>Menu</p>
         <button><a href="/deposit-req">Request Deposit</a></button>
         <button><a href="/withdraw-req">Request Withdraw</a></button>
@@ -34,12 +41,12 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Current Cash</td>
-                    <td>600000</td>
+                    <td>Current Balance</td>
+                    <td>{{ .CurBalance }}</td>
                 </tr>
                 <tr>
                     <td>Current Debt</td>
-                    <td>300000</td>
+                    <td>{{ .CurDebt }}</td>
                 </tr>
             </tbody>
         </table>
@@ -49,32 +56,18 @@
             <thead>
                 <th>ID</th>
                 <th>Date</th>
-                <th>Account</th>
+                <th>Name</th>
                 <th>Amount (Rp)</th>
-                <th>Info</th>
             </thead>
             <tbody>
+                {{ range $index,$elem := .RecentTransaction }}
                 <tr>
-                    <td>1</td>
-                    <td>20 Jan 21</td>
-                    <td>Cash -</td>
-                    <td>100000</td>
-                    <td>Withdraw</td>
+                    <td> {{ $elem.ID }} </td>
+                    <td> {{ $elem.Date }} </td>
+                    <td> {{ $elem.Name }} </td>
+                    <td> {{ $elem.Amount }} </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>18 Jan 21</td>
-                    <td>Cash +</td>
-                    <td>150000</td>
-                    <td>Deposit</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>17 Jan 21</td>
-                    <td>Debt -</td>
-                    <td>250000</td>
-                    <td>Bayar hutang</td>
-                </tr>
+                {{ end }}
             </tbody>
         </table>
         <hr>
@@ -85,18 +78,20 @@
                 <th>Date</th>
                 <th>Due Date</th>
                 <th>Amount (Rp)</th>
-                <th>Remain (Rp)</th>
+                <th>Remaining (Rp)</th>
                 <th>Info</th>
             </thead>
             <tbody>
+                {{range $index,$elem := .DebtDetail}}
                 <tr>
-                    <td>156</td>
-                    <td>1 Dec 20</td>
-                    <td>1 Jan 21</td>
-                    <td>2500000</td>
-                    <td>300000</td>
-                    <td>Membeli Handphone Samsung A30</td>
+                    <td>{{$elem.ID}}</td>
+                    <td>{{$elem.Date}}</td>
+                    <td>{{$elem.DueDate}}</td>
+                    <td>{{$elem.Amount}}</td>
+                    <td>{{$elem.Remaining}}</td>
+                    <td>{{$elem.Info}}</td>
                 </tr>
+                {{end}}
             </tbody>
         </table>
     </article>

@@ -4,32 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member Request</title>
+    <title>Find User</title>
     <link rel="stylesheet" href="public/style/pico.min.css">
 </head>
 <body>
     <article>
-        <header><h1>Member Request</h1></header>
+        <header><h1>Find User</h1></header>
         <table>
             <thead>
                 <th>ID</th>
-                <th>Date</th>
+                <th>Username</th>
                 <th>FullName</th>
-                <th>Type</th>
-                <th>Amount (Rp)</th>
-                <th>Document</th>
-                <th>Command</th>
+                <th>Role</th>
             </thead>
             <tbody>
                 {{ range $index, $elem := . }}
                 <tr>
                     <td>{{ $elem.ID }}</td>
-                    <td>{{ $elem.Date }}</td>
+                    <td>{{ $elem.Username }}</td>
                     <td>{{ $elem.FullName }}</td>
-                    <td>{{ $elem.Type }}</td>
-                    <td>{{ $elem.Amount }}</td>
-                    <td><a href="{{$elem.Document}}">view</a></td>
-                    <td><button>Accept</button><button>Decline</button></td>
+                    <td>{{ $elem.Role }}</td>
                 </tr>
                 {{ end }}
             </tbody>

@@ -13,17 +13,21 @@
         <table>
             <thead>
                 <th>ID</th>
+                <th>Code</th>
                 <th>Name</th>
                 <th>Info</th>
                 <th>Command</th>
             </thead>
             <tbody>
+                {{range $index, $elem := .}}
                 <tr>
-                    <td>1</td>
-                    <td>Cash</td>
-                    <td>Uang kas, bertambah debit berkurang kredit.Uang kas, bertambah debit berkurang kredit.</td>
+                    <td>{{$elem.ID}}</td>
+                    <td>{{$elem.Code}}</td>
+                    <td>{{$elem.Name}}</td>
+                    <td>{{$elem.Info}}</td>
                     <td><button>Edit</button><button>Remove</button></td>
                 </tr>
+                {{end}}
             </tbody>
         </table>
     </article>

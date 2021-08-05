@@ -11,11 +11,12 @@
     <article>
         <header><h1>New Transaction</h1></header>
         <form action="/new-transaction" method="POST">
-            <select name="Name" id="Name">
+            <label for="Name">Name</label>
+            <select name="Name" id="Name" required>
                 <option value="1">Cash</option>
             </select>
-            <input type="text" placeholder="Debit">
-            <input type="text" placeholder="Credit">
+            <input type="text" placeholder="Debit" required>
+            <input type="text" placeholder="Credit" required>
             <textarea name="Info" cols="23" rows="4" placeholder="Info"></textarea>
             <button type="submit">Submit</button>
         </form>

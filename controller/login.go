@@ -16,8 +16,8 @@ func Login(c *gin.Context) {
 
 		//Get username and pass from form
 
-		username := c.PostForm("Username")
-		pass := c.PostForm("Pass")
+		username := c.PostForm(konstanta.QueryUsername)
+		pass := c.PostForm(konstanta.QueryPass)
 
 		//TOBE
 		//compare pass from form and db
