@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"manajemen-keuangan-koperasi/driver"
 	"manajemen-keuangan-koperasi/konstanta"
 	"net/http"
 
@@ -10,6 +11,8 @@ import (
 var HTMLFILENAME = konstanta.GetHTMLFileName()
 var route = konstanta.GetRoute()
 
-func Home(c *gin.Context) {
-	c.Redirect(http.StatusTemporaryRedirect, route.Login())
+func Home(DB *driver.DBDriver) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		c.Redirect(http.StatusTemporaryRedirect, route.Login())
+	}
 }
