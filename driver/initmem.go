@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"manajemen-keuangan-koperasi/konstanta"
+	"os"
 )
 
 func initMember(DB *sql.DB) {
@@ -40,10 +41,11 @@ func initMember(DB *sql.DB) {
 	if err != nil {
 		panic(err)
 	}
-	// err = insertSuperAdmin(tx)
-	// if err != nil {
-	// 	panic(err)
-	// }
+	err = insertSuperAdmin(tx)
+	if err != nil {
+		//member_id is unique, if already exist will return error
+		fmt.Println(err)
+	}
 }
 
 func createTableUser(tx *sql.Tx) error {
@@ -54,7 +56,6 @@ func createTableUser(tx *sql.Tx) error {
 		fmt.Println(err)
 		return err
 	}
-	fmt.Println("no err")
 	return nil
 }
 
@@ -109,8 +110,8 @@ func createTableMemBalanceHistory(tx *sql.Tx) error {
 }
 
 func insertSuperAdmin(tx *sql.Tx) error {
-	statement := fmt.Sprintf("CREATE DATABASE %s", konstanta.TABLEMEMBALANCEHISTORY)
-	_, err := tx.Exec(statement)
+	statement := fmt.Sprintf("INSERT INTO %s (member_id,username,passwd,role) VALUES (?,?,?,?)", konstanta.TABLEALLUSER)
+	_, err := tx.Exec(statement, "A0", os.Getenv("SUPERADMIN"), os.Getenv("SUPERPASS"), "Admin-Super")
 	if err != nil {
 		tx.Rollback()
 		return err
