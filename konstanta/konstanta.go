@@ -67,6 +67,9 @@ var QueryRole = "Role"
 var QueryMemID = "MemID"
 var QueryFilter = "Filter"
 var QueryKey = "Key"
+var QueryType = "Type"
+var QueryAmount = "Amount"
+var QueryInfo = "Info"
 
 var DB = "DB" //key name to get from gin.Context
 

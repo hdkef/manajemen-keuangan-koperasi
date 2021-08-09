@@ -92,7 +92,7 @@ func createTableMemBalance(tx *sql.Tx) error {
 }
 
 func createTableMemReq(tx *sql.Tx) error {
-	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s(id int AUTO_INCREMENT, mem_id int NOT NULL, type ENUM('IP','IW','SS+','SS-','D+','D-') NOT NULL, amount FLOAT(14,2) UNSIGNED NOT NULL, document VARCHAR(50), due_date DATE, info VARCHAR(250), PRIMARY KEY (id), FOREIGN KEY (mem_id) REFERENCES %s (id))", konstanta.TABLEMEMREQ, konstanta.TABLEALLUSER)
+	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s(id int AUTO_INCREMENT, mem_id int NOT NULL, date DATE DEFAULT (CURRENT_DATE) NOT NULL, type ENUM('IP','IW','SS+','SS-','D+','D-') NOT NULL, amount FLOAT(14,2) UNSIGNED NOT NULL, document VARCHAR(50), due_date DATE DEFAULT NULL, info VARCHAR(250), PRIMARY KEY (id), FOREIGN KEY (mem_id) REFERENCES %s (id))", konstanta.TABLEMEMREQ, konstanta.TABLEALLUSER)
 	_, err := tx.Exec(statement)
 	if err != nil {
 		tx.Rollback()

@@ -12,11 +12,12 @@
         <header><h1>Deposit Request</h1></header>
         <form action="/deposit-req" method="POST">
             <input type="text" name="Amount" placeholder="Amount (Rp)" required>
-            <select name="Type">
-                <option value="SS">Sumbangan Sukarela</option>
+            <select name="Type" required>
+                <option value="SS+">Simpanan Sukarela</option>
                 <option value="IW">Iuran Wajib</option>
-                <option value="SS">Pokok</option>
+                <option value="IP">Simpanan Pokok</option>
             </select>
+            <textarea name="Info" placeholder="Info"></textarea>
             <button type="submit">Submit</button>
         </form>
     </article>
