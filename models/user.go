@@ -1,8 +1,10 @@
 package models
 
 type User struct {
-	ID       string
+	ID       interface{}
+	MemID    string
 	Username string
+	Pass     string
 	FullName string
 	Role     string
 	Tel      string

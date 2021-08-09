@@ -1,15 +1,14 @@
 package controller
 
 import (
-	"errors"
 	"manajemen-keuangan-koperasi/driver"
 	"manajemen-keuangan-koperasi/konstanta"
-	"manajemen-keuangan-koperasi/models"
 	"manajemen-keuangan-koperasi/services"
 	"manajemen-keuangan-koperasi/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Login(DB *driver.DBDriver) func(c *gin.Context) {
@@ -21,22 +20,24 @@ func Login(DB *driver.DBDriver) func(c *gin.Context) {
 			username := c.PostForm(konstanta.QueryUsername)
 			pass := c.PostForm(konstanta.QueryPass)
 
-			//TOBE
-			//compare pass from form and db
+			//Get user info from db
 
-			if pass != "tes" {
-				RenderError(c, errors.New("login failed"))
+			user, err := DB.FindOneUser("Username", username)
+			if err != nil {
+				RenderError(c, err)
 				return
 			}
 
-			usr := models.User{
-				ID:       "1",
-				Username: username,
-				Role:     konstanta.RoleADMINSuper,
+			//compare pass from form and db
+
+			err = bcrypt.CompareHashAndPassword([]byte(user.Pass), []byte(pass))
+			if err != nil {
+				RenderError(c, err)
+				return
 			}
 
 			//create token and save
-			tokenString, err := services.GenerateTokenStringFromUserStruct(&usr)
+			tokenString, err := services.GenerateTokenStringFromUserStruct(&user)
 			if err != nil {
 				utils.ResErr(c, http.StatusInternalServerError, &err)
 				return
