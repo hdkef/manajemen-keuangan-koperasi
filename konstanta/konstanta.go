@@ -64,6 +64,8 @@ var QueryPass = "Pass"
 var QueryFilter = "Filter"
 var QueryKey = "Key"
 
+var DB = "DB"
+
 type htmlFileName struct {
 }
 

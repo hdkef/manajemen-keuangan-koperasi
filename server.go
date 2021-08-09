@@ -2,6 +2,7 @@ package main
 
 import (
 	"manajemen-keuangan-koperasi/controller"
+	"manajemen-keuangan-koperasi/driver"
 	"manajemen-keuangan-koperasi/konstanta"
 	"manajemen-keuangan-koperasi/middleware"
 
@@ -15,6 +16,9 @@ func init() {
 
 func main() {
 
+	db := driver.DBConn()
+	defer db.DB.Close()
+
 	route := konstanta.GetRoute()
 
 	r := gin.Default()
@@ -22,6 +26,7 @@ func main() {
 	r.Static("/public", "./public")
 
 	r.Use(middleware.Auth)
+	r.Use(middleware.DB(db))
 
 	r.GET(route.Home(), controller.Home)
 	r.GET(route.EditCOA(), controller.EditCOA)
