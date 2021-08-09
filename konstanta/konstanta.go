@@ -64,7 +64,14 @@ var QueryPass = "Pass"
 var QueryFilter = "Filter"
 var QueryKey = "Key"
 
-var DB = "DB"
+var DB = "DB" //key name to get from gin.Context
+
+var TABLEALLUSER = "alluser"
+var TABLEMEMJOURNAL = "member_journal"
+var TABLEMEMDEBT = "member_debt"
+var TABLEMEMBALANCE = "member_balance"
+var TABLEMEMREQ = "member_req"
+var TABLEMEMBALANCEHISTORY = "member_balance_history"
 
 type htmlFileName struct {
 }
