@@ -8,6 +8,19 @@
     <link rel="stylesheet" href="public/style/pico.min.css">
 </head>
 <body>
-    
+    <article>
+        <header><h1>Register</h1></header>
+        <form action="/register" method="POST">
+            <input type="text" name="MemID" placeholder="Member ID" required>
+            <input type="text" name="Username" placeholder="Username" required>
+            <input type="password" name="Pass" placeholder="Pass" required>
+            <select name="Role" required>
+                <option value="member">Member</option>
+                <option value="Admin-Input">Admin Input</option>
+                <option value="Admin-Super">Admin-Super</option>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+    </article>
 </body>
 </html>

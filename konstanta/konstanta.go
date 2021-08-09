@@ -25,6 +25,7 @@ var finduser = "find-user"
 var meminspectres = "mem-inspect-res"
 var register = "register"
 var usersetting = "user-setting"
+var payloan = "pay-loan"
 
 func createRoute(route string) string {
 	return fmt.Sprintf("/%s", route)
@@ -50,6 +51,7 @@ var withdrawreqroute = createRoute(withdrawreq)
 var finduserroute = createRoute(finduser)
 var registerroute = createRoute(register)
 var usersettingroute = createRoute(usersetting)
+var payloanroute = createRoute(payloan)
 
 var CookiesBearer = "bearer"
 
@@ -61,6 +63,8 @@ var RoleMEMBER = "member"
 var QueryID = "ID"
 var QueryUsername = "Username"
 var QueryPass = "Pass"
+var QueryRole = "Role"
+var QueryMemID = "MemID"
 var QueryFilter = "Filter"
 var QueryKey = "Key"
 
@@ -161,6 +165,10 @@ func (r *htmlFileName) UserSetting() string {
 	return createHTMLFilename(usersetting)
 }
 
+func (r *htmlFileName) PayLoan() string {
+	return createHTMLFilename(payloan)
+}
+
 type route struct {
 }
 
@@ -236,4 +244,8 @@ func (r *route) Register() string {
 
 func (r *route) UserSetting() string {
 	return usersettingroute
+}
+
+func (r *route) PayLoan() string {
+	return payloanroute
 }

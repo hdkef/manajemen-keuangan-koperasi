@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"manajemen-keuangan-koperasi/konstanta"
 	"os"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func initMember(DB *sql.DB) {
@@ -110,8 +112,14 @@ func createTableMemBalanceHistory(tx *sql.Tx) error {
 }
 
 func insertSuperAdmin(tx *sql.Tx) error {
+	pass := os.Getenv("SUPERPASS")
+	//hashing pass before insert into db
+	hashedPassbyte, err := bcrypt.GenerateFromPassword([]byte(pass), 5)
+	if err != nil {
+		return err
+	}
 	statement := fmt.Sprintf("INSERT INTO %s (member_id,username,passwd,role) VALUES (?,?,?,?)", konstanta.TABLEALLUSER)
-	_, err := tx.Exec(statement, "A0", os.Getenv("SUPERADMIN"), os.Getenv("SUPERPASS"), "Admin-Super")
+	_, err = tx.Exec(statement, "A0", os.Getenv("SUPERADMIN"), string(hashedPassbyte), "Admin-Super")
 	if err != nil {
 		tx.Rollback()
 		return err
