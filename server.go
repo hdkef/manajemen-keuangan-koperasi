@@ -33,7 +33,6 @@ func main() {
 	r.GET(route.FullReport(), controller.FullReport)
 	r.GET(route.Admin(), controller.Admin)
 	r.GET(route.Login(), controller.Login)
-	r.POST(route.Login(), controller.Login)
 	r.GET(route.Member(), controller.Member)
 	r.GET(route.MemRequest(), controller.MemRequest)
 	r.GET(route.LoanReq(), controller.LoanReq)
@@ -41,6 +40,10 @@ func main() {
 	r.GET(route.DepositReq(), controller.DepositReq)
 	r.GET(route.WithdrawReq(), controller.WithdrawReq)
 	r.GET(route.FindUser(), controller.FindUser)
+	r.GET(route.UserSetting(), controller.UserSetting)
+	r.GET(route.Register(), controller.Register)
+
+	r.POST(route.Login(), controller.Login)
 
 	r.Run()
 

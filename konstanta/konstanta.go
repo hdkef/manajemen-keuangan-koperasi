@@ -23,6 +23,8 @@ var depositreq = "deposit-req"
 var withdrawreq = "withdraw-req"
 var finduser = "find-user"
 var meminspectres = "mem-inspect-res"
+var register = "register"
+var usersetting = "user-setting"
 
 func createRoute(route string) string {
 	return fmt.Sprintf("/%s", route)
@@ -46,6 +48,8 @@ var meminspectroute = createRoute(meminspect)
 var depositreqroute = createRoute(depositreq)
 var withdrawreqroute = createRoute(withdrawreq)
 var finduserroute = createRoute(finduser)
+var registerroute = createRoute(register)
+var usersettingroute = createRoute(usersetting)
 
 var CookiesBearer = "bearer"
 
@@ -140,6 +144,14 @@ func (r *htmlFileName) MemInspectRes() string {
 	return createHTMLFilename(meminspectres)
 }
 
+func (r *htmlFileName) Register() string {
+	return createHTMLFilename(register)
+}
+
+func (r *htmlFileName) UserSetting() string {
+	return createHTMLFilename(usersetting)
+}
+
 type route struct {
 }
 
@@ -207,4 +219,12 @@ func (r *route) WithdrawReq() string {
 
 func (r *route) FindUser() string {
 	return finduserroute
+}
+
+func (r *route) Register() string {
+	return registerroute
+}
+
+func (r *route) UserSetting() string {
+	return usersettingroute
 }
