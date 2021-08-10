@@ -1,10 +1,12 @@
 package models
 
 type MemReq struct {
-	ID       string
-	Date     string
-	FullName string
-	Type     string
-	Amount   string
-	Document string
+	ID      interface{}
+	User    User
+	Date    string
+	Type    string
+	Amount  float64
+	Doc     string
+	DueDate string
+	Info    string
 }

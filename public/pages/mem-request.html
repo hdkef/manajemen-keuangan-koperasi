@@ -14,10 +14,12 @@
             <thead>
                 <th>ID</th>
                 <th>Date</th>
-                <th>FullName</th>
+                <th>UserID</th>
+                <th>Username</th>
                 <th>Type</th>
                 <th>Amount (Rp)</th>
                 <th>Document</th>
+                <th>Info</th>
                 <th>Command</th>
             </thead>
             <tbody>
@@ -25,10 +27,12 @@
                 <tr>
                     <td>{{ $elem.ID }}</td>
                     <td>{{ $elem.Date }}</td>
-                    <td>{{ $elem.FullName }}</td>
+                    <td>{{ $elem.User.MemID }}</td>
+                    <td>{{ $elem.User.Username }}</td>
                     <td>{{ $elem.Type }}</td>
                     <td>{{ $elem.Amount }}</td>
-                    <td><a href="{{$elem.Document}}">view</a></td>
+                    <td><a href="{{$elem.Doc}}">view</a></td>
+                    <td>{{ $elem.Info }}</td>
                     <td><button>Accept</button><button>Decline</button></td>
                 </tr>
                 {{ end }}
