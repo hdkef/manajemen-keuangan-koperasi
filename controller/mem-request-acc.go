@@ -25,6 +25,11 @@ func MemRequestAcc(DB *driver.DBDriver) func(c *gin.Context) {
 		}
 		info := c.PostForm(konstanta.QueryInfo)
 		claims, _ := c.Get(konstanta.Claims)
+		id, err := strconv.ParseFloat(c.PostForm(konstanta.QueryID), 64)
+		if err != nil {
+			RenderError(c, err)
+			return
+		}
 
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
@@ -46,6 +51,14 @@ func MemRequestAcc(DB *driver.DBDriver) func(c *gin.Context) {
 
 		//then modify member balance with switch case
 		_, err = DB.ModifyMemBalanceTx(tx, type_, amount, uid)
+		if err != nil {
+			tx.Rollback()
+			RenderError(c, err)
+			return
+		}
+
+		//then delete corresponding mem req
+		_, err = DB.DeleteMemReqTx(tx, id)
 		if err != nil {
 			tx.Rollback()
 			RenderError(c, err)

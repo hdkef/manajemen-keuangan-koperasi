@@ -99,3 +99,19 @@ func (DB *DBDriver) FindMemReq() ([]models.MemReq, error) {
 	}
 	return memreq, nil
 }
+
+var statementDeleteMemReq string = fmt.Sprintf("DELETE FROM %s WHERE id = ?", konstanta.TABLEMEMREQ)
+
+func (DB *DBDriver) DeleteMemReq(id float64) (sql.Result, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	return DB.DB.ExecContext(ctx, statementDeleteMemReq, id)
+}
+
+func (DB *DBDriver) DeleteMemReqTx(tx *sql.Tx, id float64) (sql.Result, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	return tx.ExecContext(ctx, statementDeleteMemReq, id)
+}
