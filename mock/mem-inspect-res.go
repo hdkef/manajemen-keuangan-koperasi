@@ -8,7 +8,7 @@ import (
 func MemInspectRes() models.MemInspect {
 	return models.MemInspect{
 		User: models.User{
-			ID:       "1",
+			ID:       1,
 			Username: "hdk34",
 			FullName: "Hadekha Erfadila Fitra",
 			DOB:      "20 Jan 1987",

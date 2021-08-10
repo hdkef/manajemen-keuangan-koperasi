@@ -10,7 +10,7 @@ import (
 
 var statementInsertUser string = fmt.Sprintf("INSERT INTO %s (member_id, username, passwd, role) VALUES (?,?,?,?)", konstanta.TABLEALLUSER)
 
-func (DB *DBDriver) InsertUser(MemID string, Username string, Passwd string, Role string) (sql.Result, error) {
+func (DB *DBDriver) InsertUserTx(tx *sql.Tx, MemID string, Username string, Passwd string, Role string) (sql.Result, error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -35,4 +35,10 @@ func (DB *DBDriver) FindOneUser(bywhat string, value string) (models.User, error
 	}
 
 	return tmpUsr, nil
+}
+
+var statementCreateZeroBalance string = fmt.Sprintf("INSERT INTO %s (uid,IP,IW,SS,SHU,Bonus) VALUES (?,?,?,?,?,?)", konstanta.TABLEMEMBALANCE)
+
+func (DB *DBDriver) CreateZeroBalance(tx *sql.Tx, uid float64) (sql.Result, error) {
+	return tx.Exec(statementCreateZeroBalance, uid, 0, 0, 0, 0, 0)
 }

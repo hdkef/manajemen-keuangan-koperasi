@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Member Request</title>
     <link rel="stylesheet" href="public/style/pico.min.css">
+    <script src="public/javascript/mem-req.js" defer></script>
 </head>
 <body>
     <article>
@@ -14,7 +15,7 @@
             <thead>
                 <th>ID</th>
                 <th>Date</th>
-                <th>UserID</th>
+                <th>Member ID</th>
                 <th>Username</th>
                 <th>Type</th>
                 <th>Amount (Rp)</th>
@@ -27,13 +28,26 @@
                 <tr>
                     <td>{{ $elem.ID }}</td>
                     <td>{{ $elem.Date }}</td>
-                    <td>{{ $elem.User.MemID }}</td>
+                    <td>{{ $elem.User.ID }}</td>
                     <td>{{ $elem.User.Username }}</td>
                     <td>{{ $elem.Type }}</td>
                     <td>{{ $elem.Amount }}</td>
                     <td><a href="{{$elem.Doc}}">view</a></td>
                     <td>{{ $elem.Info }}</td>
-                    <td><button>Accept</button><button>Decline</button></td>
+                    <td>
+                        <form action="/mem-request-acc" method="POST">
+                            <input type="hidden" value="{{$elem.User.ID}}" name="UID">
+                            <input type="hidden" value="{{$elem.Date}}" name="Date">
+                            <input type="hidden" value="{{$elem.Type}}" name="Type">
+                            <input type="hidden" value="{{$elem.Amount}}" name="Amount">
+                            <input type="hidden" value="{{$elem.Doc}}" name="Doc">
+                            <input type="hidden" value="{{$elem.Info}}" name="Info">
+                            <button type="submit">accept</button>
+                        </form>
+                        <form action="/mem-request-dec" method="POST">
+                            <button type="submit">decline</button>
+                        </form>
+                    </td>
                 </tr>
                 {{ end }}
             </tbody>

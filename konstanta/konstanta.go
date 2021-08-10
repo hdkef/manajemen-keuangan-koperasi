@@ -52,6 +52,8 @@ var finduserroute = createRoute(finduser)
 var registerroute = createRoute(register)
 var usersettingroute = createRoute(usersetting)
 var payloanroute = createRoute(payloan)
+var memrequestacc = createRoute("mem-request-acc")
+var memrequestdec = createRoute("mem-request-dec")
 
 var CookiesBearer = "bearer"
 
@@ -70,8 +72,13 @@ var QueryKey = "Key"
 var QueryType = "Type"
 var QueryAmount = "Amount"
 var QueryInfo = "Info"
+var QueryDate = "Date"
+var QueryDoc = "Doc"
+var QueryUID = "UID"
 
-var DB = "DB" //key name to get from gin.Context
+var TypeIP = "SS+"
+var TypeIW = "IW"
+var TypeSSPos = "SS+"
 
 var TABLEALLUSER = "alluser"
 var TABLEMEMJOURNAL = "member_journal"
@@ -251,4 +258,12 @@ func (r *route) UserSetting() string {
 
 func (r *route) PayLoan() string {
 	return payloanroute
+}
+
+func (r *route) MemRequestAcc() string {
+	return memrequestacc
+}
+
+func (r *route) MemRequestDec() string {
+	return memrequestdec
 }

@@ -51,6 +51,8 @@ func main() {
 	r.POST(route.Login(), controller.Login(db))
 	r.POST(route.Register(), controller.Register(db))
 	r.POST(route.DepositReq(), controller.DepositReq(db))
+	r.POST(route.MemRequestAcc(), controller.MemRequestAcc(db))
+	r.POST(route.MemRequestDec(), controller.MemRequestDec(db))
 
 	r.Run()
 

@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"context"
 	"manajemen-keuangan-koperasi/driver"
 	"manajemen-keuangan-koperasi/konstanta"
 	"manajemen-keuangan-koperasi/services"
@@ -34,11 +35,48 @@ func Register(DB *driver.DBDriver) func(c *gin.Context) {
 				return
 			}
 
-			_, err = DB.InsertUser(memid, username, string(hashedPassbyte), role)
+			ctx, cancel := context.WithCancel(context.Background())
+			defer cancel()
+
+			//start transaction
+			tx, err := DB.DB.BeginTx(ctx, nil)
 			if err != nil {
+				tx.Rollback()
 				RenderError(c, err)
 				return
 			}
+
+			//insert user to alluser
+			res, err := DB.InsertUserTx(tx, memid, username, string(hashedPassbyte), role)
+			if err != nil {
+				tx.Rollback()
+				RenderError(c, err)
+				return
+			}
+
+			id, err := res.LastInsertId()
+			if err != nil {
+				tx.Rollback()
+				RenderError(c, err)
+				return
+			}
+
+			//create zero balance account
+			_, err = DB.CreateZeroBalance(tx, float64(id))
+			if err != nil {
+				tx.Rollback()
+				RenderError(c, err)
+				return
+			}
+
+			//commit transaction
+			err = tx.Commit()
+			if err != nil {
+				tx.Rollback()
+				RenderError(c, err)
+				return
+			}
+
 			RenderSuccess(c, "user registered")
 			return
 		}
