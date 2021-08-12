@@ -35,7 +35,7 @@ func (DB *DBDriver) InsertMemReqTx(tx *sql.Tx, uid float64, type_ string, amount
 	date := time.Now()
 
 	defer cancel()
-	return DB.DB.ExecContext(ctx, statementInsertMemReq, uid, date, type_, amount, option.Doc, option.DueDate, option.Info)
+	return tx.ExecContext(ctx, statementInsertMemReq, uid, date, type_, amount, option.Doc, option.DueDate, option.Info)
 }
 
 var statementInsertMemDebtTx string = fmt.Sprintf("INSERT INTO %s (uid,date,initial,paid,document,due_date,info,approvedby) VALUES (?,?,?,?,?,?,?,?)", konstanta.TABLEMEMDEBT)
@@ -67,6 +67,8 @@ var statementSSPos string = fmt.Sprintf("UPDATE %s SET %s = %s + ? WHERE uid = ?
 var statementSSNeg string = fmt.Sprintf("UPDATE %s SET %s = %s - ? WHERE uid = ?", konstanta.TABLEMEMBALANCE, "SS", "SS")
 var statementIP string = fmt.Sprintf("UPDATE %s SET %s = %s + ? WHERE uid = ?", konstanta.TABLEMEMBALANCE, "IP", "IP")
 var statementIW string = fmt.Sprintf("UPDATE %s SET %s = %s + ? WHERE uid = ?", konstanta.TABLEMEMBALANCE, "IW", "IW")
+var statementSHU string = fmt.Sprintf("UPDATE %s SET %s = %s + ? WHERE uid = ?", konstanta.TABLEMEMBALANCE, "SHU", "SHU")
+var statementBonus string = fmt.Sprintf("UPDATE %s SET %s = %s + ? WHERE uid = ?", konstanta.TABLEMEMBALANCE, "Bonus", "Bonus")
 
 func (DB *DBDriver) ModifyMemBalanceTx(tx *sql.Tx, type_ string, amount float64, uid float64) (sql.Result, error) {
 
@@ -82,6 +84,10 @@ func (DB *DBDriver) ModifyMemBalanceTx(tx *sql.Tx, type_ string, amount float64,
 		return tx.ExecContext(ctx, statementSSPos, amount, uid)
 	case konstanta.TypeSSNeg:
 		return tx.ExecContext(ctx, statementSSNeg, amount, uid)
+	case konstanta.TypeSHU:
+		return tx.ExecContext(ctx, statementSHU, amount, uid)
+	case konstanta.TypeBonus:
+		return tx.ExecContext(ctx, statementBonus, amount, uid)
 	default:
 		return nil, errors.New("ERROR")
 	}

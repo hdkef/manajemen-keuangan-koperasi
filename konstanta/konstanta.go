@@ -26,6 +26,7 @@ var meminspectres = "mem-inspect-res"
 var register = "register"
 var usersetting = "user-setting"
 var payloan = "pay-loan"
+var adminput = "adm-input"
 
 func createRoute(route string) string {
 	return fmt.Sprintf("/%s", route)
@@ -52,8 +53,9 @@ var finduserroute = createRoute(finduser)
 var registerroute = createRoute(register)
 var usersettingroute = createRoute(usersetting)
 var payloanroute = createRoute(payloan)
-var memrequestacc = createRoute("mem-request-acc")
-var memrequestdec = createRoute("mem-request-dec")
+var memrequestaccroute = createRoute("mem-request-acc")
+var memrequestdecroute = createRoute("mem-request-dec")
+var adminputroute = createRoute(adminput)
 
 var CookiesBearer = "bearer"
 
@@ -80,6 +82,8 @@ var TypeIP = "IP"
 var TypeIW = "IW"
 var TypeSSPos = "SS+"
 var TypeSSNeg = "SS-"
+var TypeSHU = "SHU"
+var TypeBonus = "Bonus"
 
 var TABLEALLUSER = "alluser"
 var TABLEMEMJOURNAL = "member_journal"
@@ -180,6 +184,10 @@ func (r *htmlFileName) PayLoan() string {
 	return createHTMLFilename(payloan)
 }
 
+func (r *htmlFileName) AdmInput() string {
+	return createHTMLFilename(adminput)
+}
+
 type route struct {
 }
 
@@ -262,9 +270,13 @@ func (r *route) PayLoan() string {
 }
 
 func (r *route) MemRequestAcc() string {
-	return memrequestacc
+	return memrequestaccroute
 }
 
 func (r *route) MemRequestDec() string {
-	return memrequestdec
+	return memrequestdecroute
+}
+
+func (r *route) AdmInput() string {
+	return adminputroute
 }
