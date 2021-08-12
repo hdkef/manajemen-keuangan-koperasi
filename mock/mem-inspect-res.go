@@ -23,27 +23,19 @@ func MemInspectRes() models.MemInspect {
 		TransactionThisMonth: "2",
 		Transaction: []models.MemTransaction{
 			{
-				ID:     "1",
 				Date:   "4 Aug 21",
-				Name:   "Debt Minus",
 				Amount: "500000",
 			},
 			{
-				ID:     "2",
 				Date:   "4 Aug 21",
-				Name:   "Deposit",
 				Amount: "500000",
 			},
 			{
-				ID:     "3",
 				Date:   "4 Aug 21",
-				Name:   "Withdraw",
 				Amount: "200000",
 			},
 			{
-				ID:     "4",
 				Date:   "1 Jan 21",
-				Name:   "Debt Plus",
 				Amount: "1000000",
 			},
 		},

@@ -45,7 +45,6 @@ func main() {
 	r.GET(route.FindUser(), controller.FindUser(db))
 	r.GET(route.UserSetting(), controller.UserSetting(db))
 	r.GET(route.Register(), controller.Register(db))
-	r.GET(route.PayLoan(), controller.PayLoan(db))
 	r.GET(route.AdmInput(), controller.AdmInput(db))
 
 	r.POST(route.Login(), controller.Login(db))

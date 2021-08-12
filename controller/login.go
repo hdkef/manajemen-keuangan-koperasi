@@ -22,7 +22,7 @@ func Login(DB *driver.DBDriver) func(c *gin.Context) {
 
 			//Get user info from db
 
-			user, err := DB.FindOneUser("Username", username)
+			user, err := DB.FindOneUserByUsername(username)
 			if err != nil {
 				RenderError(c, err)
 				return

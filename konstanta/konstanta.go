@@ -24,7 +24,6 @@ var finduser = "find-user"
 var meminspectres = "mem-inspect-res"
 var register = "register"
 var usersetting = "user-setting"
-var payloan = "pay-loan"
 var adminput = "adm-input"
 
 func createRoute(route string) string {
@@ -50,7 +49,6 @@ var withdrawreqroute = createRoute(withdrawreq)
 var finduserroute = createRoute(finduser)
 var registerroute = createRoute(register)
 var usersettingroute = createRoute(usersetting)
-var payloanroute = createRoute(payloan)
 var memrequestaccroute = createRoute("mem-request-acc")
 var memrequestdecroute = createRoute("mem-request-dec")
 var adminputroute = createRoute(adminput)
@@ -73,7 +71,6 @@ var QueryType = "Type"
 var QueryAmount = "Amount"
 var QueryInfo = "Info"
 var QueryDate = "Date"
-var QueryDoc = "Doc"
 var QueryUID = "UID"
 
 var TypeIP = "IP"
@@ -174,10 +171,6 @@ func (r *htmlFileName) UserSetting() string {
 	return createHTMLFilename(usersetting)
 }
 
-func (r *htmlFileName) PayLoan() string {
-	return createHTMLFilename(payloan)
-}
-
 func (r *htmlFileName) AdmInput() string {
 	return createHTMLFilename(adminput)
 }
@@ -253,10 +246,6 @@ func (r *route) Register() string {
 
 func (r *route) UserSetting() string {
 	return usersettingroute
-}
-
-func (r *route) PayLoan() string {
-	return payloanroute
 }
 
 func (r *route) MemRequestAcc() string {

@@ -63,6 +63,32 @@ func (DB *DBDriver) InsertMemJournalTx(tx *sql.Tx, uid float64, type_ string, am
 
 }
 
+var statementFindLimitedMemJournalTx string = fmt.Sprintf("SELECT id,date,type,amount,info,approvedby FROM %s WHERE uid=? LIMIT ?", konstanta.TABLEMEMJOURNAL)
+
+func (DB *DBDriver) FindLimitedMemJournalByUIDTx(tx *sql.Tx, uid float64, limit int) ([]models.MemTransaction, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+
+	defer cancel()
+
+	row, err := tx.QueryContext(ctx, statementFindLimitedMemJournalTx, uid, limit)
+	if err != nil {
+		return nil, err
+	}
+
+	var journals []models.MemTransaction
+
+	for row.Next() {
+		var tmp models.MemTransaction
+		err = row.Scan(&tmp.ID, &tmp.Date, &tmp.Type, &tmp.Amount, &tmp.Info, &tmp.ApprovedBy)
+		if err != nil {
+			return nil, err
+		}
+		journals = append(journals, tmp)
+	}
+
+	return journals, nil
+}
+
 var statementSSPos string = fmt.Sprintf("UPDATE %s SET %s = %s + ? WHERE uid = ?", konstanta.TABLEMEMBALANCE, "SS", "SS")
 var statementSSNeg string = fmt.Sprintf("UPDATE %s SET %s = %s - ? WHERE uid = ?", konstanta.TABLEMEMBALANCE, "SS", "SS")
 var statementIP string = fmt.Sprintf("UPDATE %s SET %s = %s + ? WHERE uid = ?", konstanta.TABLEMEMBALANCE, "IP", "IP")
@@ -93,6 +119,21 @@ func (DB *DBDriver) ModifyMemBalanceTx(tx *sql.Tx, type_ string, amount float64,
 	}
 }
 
+var statementFindMemBalanceByUID string = fmt.Sprintf("SELECT IP,IW,SS,SHU,Bonus FROM %s WHERE uid=?", konstanta.TABLEMEMBALANCE)
+
+func (DB *DBDriver) FindMemBalanceByUIDTx(tx *sql.Tx, uid float64) (models.MemBalance, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	var tmp models.MemBalance
+
+	err := tx.QueryRowContext(ctx, statementFindMemBalanceByUID, uid).Scan(&tmp.IP, &tmp.IW, &tmp.SS, &tmp.Bonus, &tmp.Bonus)
+	if err != nil {
+		return models.MemBalance{}, err
+	}
+	return tmp, nil
+}
+
 var statementFindMemSSBalance = fmt.Sprintf("SELECT SS from %s WHERE uid = ?", konstanta.TABLEMEMBALANCE)
 
 func (DB *DBDriver) FindMemSSBalanceTx(tx *sql.Tx, uid float64) (float64, error) {
@@ -108,7 +149,7 @@ func (DB *DBDriver) FindMemSSBalanceTx(tx *sql.Tx, uid float64) (float64, error)
 	return amt, nil
 }
 
-var statementFindMemReqTx string = "SELECT alluser.id, alluser.member_id, alluser.username, member_req.id, member_req.date, member_req.type, member_req.amount, member_req.document, member_req.due_date, member_req.info from member_req JOIN alluser ON member_req.uid = alluser.id"
+var statementFindMemReqTx string = "SELECT alluser.id, alluser.member_id, alluser.username, member_req.id, member_req.date, member_req.type, member_req.amount, member_req.info from member_req JOIN alluser ON member_req.uid = alluser.id"
 
 func (DB *DBDriver) FindMemReq() ([]models.MemReq, error) {
 
@@ -125,7 +166,7 @@ func (DB *DBDriver) FindMemReq() ([]models.MemReq, error) {
 
 	for row.Next() {
 		var tmpmemreq models.MemReq
-		err = row.Scan(&tmpmemreq.User.ID, &tmpmemreq.User.MemID, &tmpmemreq.User.Username, &tmpmemreq.ID, &tmpmemreq.Date, &tmpmemreq.Type, &tmpmemreq.Amount, &tmpmemreq.Doc, &tmpmemreq.DueDate, &tmpmemreq.Info)
+		err = row.Scan(&tmpmemreq.User.ID, &tmpmemreq.User.MemID, &tmpmemreq.User.Username, &tmpmemreq.ID, &tmpmemreq.Date, &tmpmemreq.Type, &tmpmemreq.Amount, &tmpmemreq.Info)
 		if err != nil {
 			return memreq, err
 		}

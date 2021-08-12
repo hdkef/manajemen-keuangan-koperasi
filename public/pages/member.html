@@ -20,19 +20,17 @@
 </head>
 <body>
     <article>
-        <head><h1> {{ .User.FullName }}</h1></head>
+        <head><h1> {{ .User.Username }}</h1></head> <!--Be Replaced with .FullName-->
         <details>
             <summary>Details</summary>
+            <p>UID : {{ .User.ID }}</p>
+            <p>Member ID : {{ .User.MemID }}</p>
             <p>Username : {{ .User.Username }}</p>
-            <p>Tel : {{ .User.Tel }}</p>
-            <p>DoB : {{ .User.DOB }}</p>
-            <p>Address : {{ .User.Address }}</p>
+            <p>Role : {{ .User.Role }}</p>
           </details>
         <p>Menu</p>
         <button><a href="/deposit-req">Request Deposit</a></button>
         <button><a href="/withdraw-req">Request Withdraw</a></button>
-        <button><a href="/loan-req">Create Loan Request</a></button>
-        <button><a href="/pay-loan">Pay Loan</a></button>
         <button><a href="/user-setting">Setting</a></button>
         <hr>
         <p>Summary</p>
@@ -43,12 +41,24 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Current Balance</td>
-                    <td>{{ .CurBalance }}</td>
+                    <td>Pokok</td>
+                    <td>{{ .Balance.IP }}</td>
                 </tr>
                 <tr>
-                    <td>Current Debt</td>
-                    <td>{{ .CurDebt }}</td>
+                    <td>Wajib</td>
+                    <td>{{ .Balance.IW }}</td>
+                </tr>
+                <tr>
+                    <td>Sukarela</td>
+                    <td>{{ .Balance.SS }}</td>
+                </tr>
+                <tr>
+                    <td>SHU</td>
+                    <td>{{ .Balance.SHU }}</td>
+                </tr>
+                <tr>
+                    <td>Bonus</td>
+                    <td>{{ .Balance.Bonus }}</td>
                 </tr>
             </tbody>
         </table>
@@ -58,22 +68,26 @@
             <thead>
                 <th>ID</th>
                 <th>Date</th>
-                <th>Name</th>
+                <th>Type</th>
                 <th>Amount (Rp)</th>
+                <th>Info</th>
+                <th>ApprovedBy</th>
             </thead>
             <tbody>
                 {{ range $index,$elem := .RecentTransaction }}
                 <tr>
                     <td> {{ $elem.ID }} </td>
                     <td> {{ $elem.Date }} </td>
-                    <td> {{ $elem.Name }} </td>
+                    <td> {{ $elem.Type }} </td>
                     <td> {{ $elem.Amount }} </td>
+                    <td> {{ $elem.Info }} </td>
+                    <td> {{ $elem.ApprovedBy }} </td>
                 </tr>
                 {{ end }}
             </tbody>
         </table>
         <hr>
-        <p>Debt Details</p>
+        <!-- <p>Debt Details</p>
         <table>
             <thead>
                 <th>ID</th>
@@ -95,7 +109,7 @@
                 </tr>
                 {{end}}
             </tbody>
-        </table>
+        </table> -->
     </article>
 </body>
 </html>

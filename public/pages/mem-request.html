@@ -19,7 +19,6 @@
                 <th>Username</th>
                 <th>Type</th>
                 <th>Amount (Rp)</th>
-                <th>Document</th>
                 <th>Info</th>
                 <th>Command</th>
             </thead>
@@ -32,7 +31,6 @@
                     <td>{{ $elem.User.Username }}</td>
                     <td>{{ $elem.Type }}</td>
                     <td>{{ $elem.Amount }}</td>
-                    <td><a href="{{$elem.Doc}}">view</a></td>
                     <td>{{ $elem.Info }}</td>
                     <td>
                         <form action="/mem-request-acc" method="POST">
@@ -41,7 +39,6 @@
                             <input type="hidden" value="{{$elem.Date}}" name="Date">
                             <input type="hidden" value="{{$elem.Type}}" name="Type">
                             <input type="hidden" value="{{$elem.Amount}}" name="Amount">
-                            <input type="hidden" value="{{$elem.Doc}}" name="Doc">
                             <input type="hidden" value="{{$elem.Info}}" name="Info">
                             <button type="submit">accept</button>
                         </form>

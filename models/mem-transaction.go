@@ -1,8 +1,10 @@
 package models
 
 type MemTransaction struct {
-	ID     string
-	Date   string
-	Name   string
-	Amount string
+	ID         float64
+	Date       string
+	Type       string
+	Amount     string
+	Info       string
+	ApprovedBy float64
 }
