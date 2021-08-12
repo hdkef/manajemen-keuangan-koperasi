@@ -37,6 +37,7 @@ func MemRequestAcc(DB *driver.DBDriver) func(c *gin.Context) {
 		//start transaction
 		tx, err := DB.DB.BeginTx(ctx, nil)
 		if err != nil {
+			tx.Rollback()
 			RenderError(c, err)
 			return
 		}

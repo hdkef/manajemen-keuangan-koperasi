@@ -76,9 +76,10 @@ var QueryDate = "Date"
 var QueryDoc = "Doc"
 var QueryUID = "UID"
 
-var TypeIP = "SS+"
+var TypeIP = "IP"
 var TypeIW = "IW"
 var TypeSSPos = "SS+"
+var TypeSSNeg = "SS-"
 
 var TABLEALLUSER = "alluser"
 var TABLEMEMJOURNAL = "member_journal"

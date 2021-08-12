@@ -28,6 +28,16 @@ func (DB *DBDriver) InsertMemReq(uid float64, type_ string, amount float64, opti
 	return DB.DB.ExecContext(ctx, statementInsertMemReq, uid, date, type_, amount, option.Doc, option.DueDate, option.Info)
 }
 
+func (DB *DBDriver) InsertMemReqTx(tx *sql.Tx, uid float64, type_ string, amount float64, option MemReqOption) (sql.Result, error) {
+
+	ctx, cancel := context.WithCancel(context.Background())
+
+	date := time.Now()
+
+	defer cancel()
+	return DB.DB.ExecContext(ctx, statementInsertMemReq, uid, date, type_, amount, option.Doc, option.DueDate, option.Info)
+}
+
 var statementInsertMemDebtTx string = fmt.Sprintf("INSERT INTO %s (uid,date,initial,paid,document,due_date,info,approvedby) VALUES (?,?,?,?,?,?,?,?)", konstanta.TABLEMEMDEBT)
 
 func (DB *DBDriver) InsertMemDebtTx(tx *sql.Tx, uid float64, amount float64, option MemReqOption, approvedby float64) (sql.Result, error) {
@@ -53,7 +63,8 @@ func (DB *DBDriver) InsertMemJournalTx(tx *sql.Tx, uid float64, type_ string, am
 
 }
 
-var statementSS string = fmt.Sprintf("UPDATE %s SET %s = %s + ? WHERE uid = ?", konstanta.TABLEMEMBALANCE, "SS", "SS")
+var statementSSPos string = fmt.Sprintf("UPDATE %s SET %s = %s + ? WHERE uid = ?", konstanta.TABLEMEMBALANCE, "SS", "SS")
+var statementSSNeg string = fmt.Sprintf("UPDATE %s SET %s = %s - ? WHERE uid = ?", konstanta.TABLEMEMBALANCE, "SS", "SS")
 var statementIP string = fmt.Sprintf("UPDATE %s SET %s = %s + ? WHERE uid = ?", konstanta.TABLEMEMBALANCE, "IP", "IP")
 var statementIW string = fmt.Sprintf("UPDATE %s SET %s = %s + ? WHERE uid = ?", konstanta.TABLEMEMBALANCE, "IW", "IW")
 
@@ -68,10 +79,27 @@ func (DB *DBDriver) ModifyMemBalanceTx(tx *sql.Tx, type_ string, amount float64,
 	case konstanta.TypeIW:
 		return tx.ExecContext(ctx, statementIW, amount, uid)
 	case konstanta.TypeSSPos:
-		return tx.ExecContext(ctx, statementSS, amount, uid)
+		return tx.ExecContext(ctx, statementSSPos, amount, uid)
+	case konstanta.TypeSSNeg:
+		return tx.ExecContext(ctx, statementSSNeg, amount, uid)
 	default:
 		return nil, errors.New("ERROR")
 	}
+}
+
+var statementFindMemSSBalance = fmt.Sprintf("SELECT SS from %s WHERE uid = ?", konstanta.TABLEMEMBALANCE)
+
+func (DB *DBDriver) FindMemSSBalanceTx(tx *sql.Tx, uid float64) (float64, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	var amt float64
+
+	err := tx.QueryRowContext(ctx, statementFindMemSSBalance, uid).Scan(&amt)
+	if err != nil {
+		return 0, err
+	}
+	return amt, nil
 }
 
 var statementFindMemReqTx string = "SELECT alluser.id, alluser.member_id, alluser.username, member_req.id, member_req.date, member_req.type, member_req.amount, member_req.document, member_req.due_date, member_req.info from member_req JOIN alluser ON member_req.uid = alluser.id"
