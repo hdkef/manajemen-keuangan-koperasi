@@ -137,8 +137,8 @@ func insertSuperAdmin(tx *sql.Tx) error {
 
 		return err
 	}
-	statement2 := fmt.Sprintf("INSERT INTO %s (uid,IS,IP,role) VALUES (?,?,?,?)", konstanta.TABLEMEMBALANCE)
-	_, err = tx.Exec(statement2, id, 0, 0, 0)
+	statement2 := fmt.Sprintf("INSERT INTO %s (uid,IP,IW,SS,SHU,Bonus) VALUES (?,?,?,?,?,?)", konstanta.TABLEMEMBALANCE)
+	_, err = tx.Exec(statement2, id, 0, 0, 0, 0, 0)
 	if err != nil {
 
 		return err
