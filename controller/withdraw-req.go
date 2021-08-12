@@ -9,7 +9,6 @@ import (
 	"manajemen-keuangan-koperasi/services"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -59,10 +58,7 @@ func WithdrawReq(DB *driver.DBDriver) func(c *gin.Context) {
 
 			//send request
 
-			_, err = DB.InsertMemReqTx(tx, uid, konstanta.TypeSSNeg, amount, driver.MemReqOption{
-				DueDate: time.Now(),
-				Info:    info,
-			})
+			_, err = DB.InsertMemReqTx(tx, uid, konstanta.TypeSSNeg, amount, info)
 			if err != nil {
 				tx.Rollback()
 				RenderError(c, err)

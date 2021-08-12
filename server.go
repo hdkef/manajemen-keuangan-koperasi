@@ -39,7 +39,6 @@ func main() {
 	r.GET(route.Login(), controller.Login(db))
 	r.GET(route.Member(), controller.Member(db))
 	r.GET(route.MemRequest(), controller.MemRequest(db))
-	r.GET(route.LoanReq(), controller.LoanReq(db))
 	r.GET(route.MemInspect(), controller.MemInspect(db))
 	r.GET(route.DepositReq(), controller.DepositReq(db))
 	r.GET(route.WithdrawReq(), controller.WithdrawReq(db))

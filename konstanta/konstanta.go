@@ -17,7 +17,6 @@ var success = "success"
 var login = "login"
 var member = "member"
 var memrequest = "mem-request"
-var loanreq = "loan-req"
 var meminspect = "mem-inspect"
 var depositreq = "deposit-req"
 var withdrawreq = "withdraw-req"
@@ -45,7 +44,6 @@ var adminroute = createRoute(admin)
 var loginroute = createRoute(login)
 var memberroute = createRoute(member)
 var memrequestroute = createRoute(memrequest)
-var loanreqroute = createRoute(loanreq)
 var meminspectroute = createRoute(meminspect)
 var depositreqroute = createRoute(depositreq)
 var withdrawreqroute = createRoute(withdrawreq)
@@ -148,10 +146,6 @@ func (r *htmlFileName) MemRequest() string {
 	return createHTMLFilename(memrequest)
 }
 
-func (r *htmlFileName) LoanReq() string {
-	return createHTMLFilename(loanreq)
-}
-
 func (r *htmlFileName) MemInspect() string {
 	return createHTMLFilename(meminspect)
 }
@@ -235,10 +229,6 @@ func (r *route) Member() string {
 
 func (r *route) MemRequest() string {
 	return memrequestroute
-}
-
-func (r *route) LoanReq() string {
-	return loanreqroute
 }
 
 func (r *route) MemInspect() string {

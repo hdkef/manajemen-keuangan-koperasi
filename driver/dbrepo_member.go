@@ -16,26 +16,26 @@ type MemReqOption struct {
 	Info    string
 }
 
-var statementInsertMemReq string = fmt.Sprintf("INSERT INTO %s (uid,date,type,amount,document,due_date,info) VALUES (?,?,?,?,?,?,?)", konstanta.TABLEMEMREQ)
+var statementInsertMemReq string = fmt.Sprintf("INSERT INTO %s (uid,date,type,amount,info) VALUES (?,?,?,?,?)", konstanta.TABLEMEMREQ)
 
-func (DB *DBDriver) InsertMemReq(uid float64, type_ string, amount float64, option MemReqOption) (sql.Result, error) {
+func (DB *DBDriver) InsertMemReq(uid float64, type_ string, amount float64, info string) (sql.Result, error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
 	date := time.Now()
 
 	defer cancel()
-	return DB.DB.ExecContext(ctx, statementInsertMemReq, uid, date, type_, amount, option.Doc, option.DueDate, option.Info)
+	return DB.DB.ExecContext(ctx, statementInsertMemReq, uid, date, type_, amount, info)
 }
 
-func (DB *DBDriver) InsertMemReqTx(tx *sql.Tx, uid float64, type_ string, amount float64, option MemReqOption) (sql.Result, error) {
+func (DB *DBDriver) InsertMemReqTx(tx *sql.Tx, uid float64, type_ string, amount float64, info string) (sql.Result, error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
 	date := time.Now()
 
 	defer cancel()
-	return tx.ExecContext(ctx, statementInsertMemReq, uid, date, type_, amount, option.Doc, option.DueDate, option.Info)
+	return tx.ExecContext(ctx, statementInsertMemReq, uid, date, type_, amount, info)
 }
 
 var statementInsertMemDebtTx string = fmt.Sprintf("INSERT INTO %s (uid,date,initial,paid,document,due_date,info,approvedby) VALUES (?,?,?,?,?,?,?,?)", konstanta.TABLEMEMDEBT)

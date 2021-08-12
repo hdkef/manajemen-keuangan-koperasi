@@ -8,7 +8,6 @@ import (
 	"manajemen-keuangan-koperasi/services"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -30,10 +29,7 @@ func DepositReq(DB *driver.DBDriver) func(c *gin.Context) {
 			}
 			info := c.PostForm(konstanta.QueryInfo)
 
-			_, err = DB.InsertMemReq(user.(models.User).ID, type_, amount, driver.MemReqOption{
-				DueDate: time.Now(),
-				Info:    info,
-			})
+			_, err = DB.InsertMemReq(user.(models.User).ID, type_, amount, info)
 			if err != nil {
 				RenderError(c, err)
 				return
