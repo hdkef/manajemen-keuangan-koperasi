@@ -44,6 +44,7 @@ func ValidateTokenFromCookies(c *gin.Context) (models.User, error) {
 			SaveTokenCookie(c, &tokenString)
 			return models.User{
 				ID:       (*mapclaims)["ID"].(float64),
+				MemID:    (*mapclaims)["MemID"].(string),
 				Username: (*mapclaims)["Username"].(string),
 				Role:     (*mapclaims)["Role"].(string),
 				IsAgent:  (*mapclaims)["IsAgent"].(string),
@@ -54,6 +55,7 @@ func ValidateTokenFromCookies(c *gin.Context) (models.User, error) {
 	}
 	return models.User{
 		ID:       (*mapclaims)["ID"].(float64),
+		MemID:    (*mapclaims)["MemID"].(string),
 		Username: (*mapclaims)["Username"].(string),
 		Role:     (*mapclaims)["Role"].(string),
 		IsAgent:  (*mapclaims)["IsAgent"].(string),

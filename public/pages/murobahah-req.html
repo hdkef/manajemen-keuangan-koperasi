@@ -10,14 +10,14 @@
 <body>
     <article>
         <header><h1>Murobahah Request</h1></header>
-        <form action="/murobahah-req" method="POST">
-            <input type="text" name="UIDbuyer" placeholder="UID Pihak Pertama" required>
+        <form action="/murobahah-req" method="POST" enctype="multipart/form-data">
+            <input type="text" name="UIDBuyer" placeholder="UID Pihak Pertama" required>
             <label for="Doc">Dokumen Akad Murobahah</label>
             <input type="file" id="" name="Doc" id="Doc" required>
-            <div style="display: flex;justify-content: left;margin-bottom: 25px;">
-                <input type="checkbox" id="Agreement" required>
-                <label for="Agreement">Saya memahami syarat dan ketentuan</label>
-            </div>
+            <label for="DueDate">Jatuh Tempo</label>
+            <input type="date" name="DueDate" id="DueDate" required>
+            <input type="text" name="Amount" placeholder="Jumlah (Rp)" required>
+            <textarea name="Info" placeholder="Info"></textarea>
             <details>
                 <summary>Syarat dan Ketentuan</summary>
                 <ul>
@@ -29,6 +29,10 @@
                     <li>Barang tidak boleh dipindahtangankan oleh pembeli sebelum cicilan selesai atau hutangnya sudah dilunasi.</li>
                 </ul>
             </details>
+            <div style="display: flex;justify-content: left;margin-bottom: 25px;">
+                <input type="checkbox" id="Agreement" required>
+                <label for="Agreement">Saya memahami syarat dan ketentuan</label>
+            </div>
             <button type="submit">Submit</button>
         </form>
     </article>

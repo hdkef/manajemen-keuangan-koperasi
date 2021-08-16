@@ -38,16 +38,28 @@ func (DB *DBDriver) InsertMemReqTx(tx *sql.Tx, uid float64, type_ string, amount
 	return tx.ExecContext(ctx, statementInsertMemReq, uid, date, type_, amount, info)
 }
 
-var statementInsertMemMudorobahTx string = fmt.Sprintf("INSERT INTO %s (uid,date,initial,paid,document,due_date,info,approvedby) VALUES (?,?,?,?,?,?,?,?)", konstanta.TABLEMEMMUDOROBAH)
+var statementInsertMemMurobahahTx string = fmt.Sprintf("INSERT INTO %s (uid,date,initial,paid,document,due_date,info,approvedby) VALUES (?,?,?,?,?,?,?,?)", konstanta.TABLEMEMMUROBAHAH)
 
-func (DB *DBDriver) InsertMemMudorobahTx(tx *sql.Tx, uid float64, amount float64, option MemReqOption, approvedby float64) (sql.Result, error) {
+func (DB *DBDriver) InsertMemMurobahahTx(tx *sql.Tx, uid float64, amount float64, option MemReqOption, approvedby float64) (sql.Result, error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
 	date := time.Now()
 
 	defer cancel()
-	return tx.ExecContext(ctx, statementInsertMemMudorobahTx, uid, date, amount, 0, option.Doc, option.DueDate, option.Info, approvedby)
+	return tx.ExecContext(ctx, statementInsertMemMurobahahTx, uid, date, amount, 0, option.Doc, option.DueDate, option.Info, approvedby)
+}
+
+var statementInsertMemReqMurobahah = fmt.Sprintf("INSERT INTO %s (agent_id,buyer_id,date,amount,due_date,document,info) VALUES (?,?,?,?,?,?,?)", konstanta.TABLEMEMREQMUROBAHAH)
+
+func (DB *DBDriver) InsertMemReqMurobahah(agentid float64, buyerid float64, duedate string, amount float64, doc string, info string) (sql.Result, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+
+	date := time.Now()
+
+	defer cancel()
+
+	return DB.DB.ExecContext(ctx, statementInsertMemReqMurobahah, agentid, buyerid, date, amount, duedate, doc, info)
 }
 
 var statementInsertMemJournalTx string = fmt.Sprintf("INSERT INTO %s (uid,date,type,amount,info,approvedby) VALUES (?,?,?,?,?,?)", konstanta.TABLEMEMJOURNAL)

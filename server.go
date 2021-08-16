@@ -25,6 +25,7 @@ func main() {
 	r.LoadHTMLGlob("public/pages/*")
 	r.Static("/public", "./public")
 
+	//use middleware Auth
 	r.Use(middleware.Auth)
 
 	r.GET(route.Home(), controller.Home(db))

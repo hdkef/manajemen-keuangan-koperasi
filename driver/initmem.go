@@ -35,7 +35,12 @@ func initMember(DB *sql.DB) {
 		tx.Rollback()
 		panic(err)
 	}
-	err = createTableMemMudorobah(tx)
+	err = createTableMemReqMurobahah(tx)
+	if err != nil {
+		tx.Rollback()
+		panic(err)
+	}
+	err = createTableMemMurobahah(tx)
 	if err != nil {
 		tx.Rollback()
 		panic(err)
@@ -79,8 +84,18 @@ func createTableMemJournal(tx *sql.Tx) error {
 	return nil
 }
 
-func createTableMemMudorobah(tx *sql.Tx) error {
-	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s(id int AUTO_INCREMENT, uid int NOT NULL ,date DATE DEFAULT (CURRENT_DATE) NOT NULL, due_date DATE NOT NULL, initial FLOAT(14,2) UNSIGNED NOT NULL, paid FLOAT(14,2) UNSIGNED NOT NULL, document VARCHAR(50) NOT NULL, info VARCHAR(250), approvedby int NOT NULL, PRIMARY KEY (id), FOREIGN KEY (uid) REFERENCES %s (id) , FOREIGN KEY (approvedby) REFERENCES %s (id) )", konstanta.TABLEMEMMUDOROBAH, konstanta.TABLEALLUSER, konstanta.TABLEALLUSER)
+func createTableMemMurobahah(tx *sql.Tx) error {
+	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s(id int AUTO_INCREMENT, uid int NOT NULL ,date DATE DEFAULT (CURRENT_DATE) NOT NULL, due_date DATE NOT NULL, initial FLOAT(14,2) UNSIGNED NOT NULL, paid FLOAT(14,2) UNSIGNED NOT NULL, document VARCHAR(150) NOT NULL, info VARCHAR(250), approvedby int NOT NULL, PRIMARY KEY (id), FOREIGN KEY (uid) REFERENCES %s (id) , FOREIGN KEY (approvedby) REFERENCES %s (id) )", konstanta.TABLEMEMMUROBAHAH, konstanta.TABLEALLUSER, konstanta.TABLEALLUSER)
+	_, err := tx.Exec(statement)
+	if err != nil {
+
+		return err
+	}
+	return nil
+}
+
+func createTableMemReqMurobahah(tx *sql.Tx) error {
+	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s(id int AUTO_INCREMENT, agent_id int NOT NULL, buyer_id int NOT NULL ,date DATE DEFAULT (CURRENT_DATE) NOT NULL, due_date DATE NOT NULL, amount FLOAT(14,2) UNSIGNED NOT NULL, document VARCHAR(150) NOT NULL, info VARCHAR(250), PRIMARY KEY (id), FOREIGN KEY (agent_id) REFERENCES %s (id), FOREIGN KEY (buyer_id) REFERENCES %s (id) )", konstanta.TABLEMEMREQMUROBAHAH, konstanta.TABLEALLUSER, konstanta.TABLEALLUSER)
 	_, err := tx.Exec(statement)
 	if err != nil {
 
