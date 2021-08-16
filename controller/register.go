@@ -27,6 +27,7 @@ func Register(DB *driver.DBDriver) func(c *gin.Context) {
 			username := c.PostForm(konstanta.QueryUsername)
 			pass := c.PostForm(konstanta.QueryPass)
 			role := c.PostForm(konstanta.QueryRole)
+			isagent := c.PostForm(konstanta.QueryIsAgent)
 
 			//hashing pass before insert into db
 			hashedPassbyte, err := bcrypt.GenerateFromPassword([]byte(pass), 5)
@@ -47,7 +48,7 @@ func Register(DB *driver.DBDriver) func(c *gin.Context) {
 			}
 
 			//insert user to alluser
-			res, err := DB.InsertUserTx(tx, memid, username, string(hashedPassbyte), role)
+			res, err := DB.InsertUserTx(tx, memid, username, string(hashedPassbyte), role, isagent)
 			if err != nil {
 				tx.Rollback()
 				RenderError(c, err)

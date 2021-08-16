@@ -26,6 +26,12 @@ func Auth(c *gin.Context) {
 			mustAdmin(c, &claims)
 			return
 		}
+		//only agent can access this route
+		if path == route.MurobahahReq() {
+			isAgent(c, &claims)
+			return
+		}
+		//only superadmin can access this route
 		if path == route.ManageUser() {
 			mustAdminSuper(c, &claims)
 			return
@@ -46,6 +52,15 @@ func Auth(c *gin.Context) {
 	}
 	//if no valid token and URL is /login next
 	c.Next()
+}
+
+func isAgent(c *gin.Context, claims *models.User) {
+	if claims.IsAgent == "Y" {
+		c.Next()
+		return
+	}
+	c.Abort()
+	controller.RenderError(c, errors.New("USER IS NOT AGENT"))
 }
 
 func mustAdmin(c *gin.Context, claims *models.User) {

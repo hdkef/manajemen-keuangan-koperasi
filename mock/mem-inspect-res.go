@@ -10,10 +10,6 @@ func MemInspectRes() models.MemInspect {
 		User: models.User{
 			ID:       1,
 			Username: "hdk34",
-			FullName: "Hadekha Erfadila Fitra",
-			DOB:      "20 Jan 1987",
-			Tel:      "0812131415116",
-			Address:  "Jl. Cikudapateuh",
 			Role:     konstanta.RoleADMINInput,
 		},
 		Balance:              "2500000",

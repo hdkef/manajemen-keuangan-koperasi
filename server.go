@@ -46,6 +46,7 @@ func main() {
 	r.GET(route.UserSetting(), controller.UserSetting(db))
 	r.GET(route.Register(), controller.Register(db))
 	r.GET(route.AdmInput(), controller.AdmInput(db))
+	r.GET(route.MurobahahReq(), controller.MurobahahReq(db))
 
 	r.POST(route.Login(), controller.Login(db))
 	r.POST(route.Register(), controller.Register(db))
@@ -54,6 +55,7 @@ func main() {
 	r.POST(route.MemRequestAcc(), controller.MemRequestAcc(db))
 	r.POST(route.MemRequestDec(), controller.MemRequestDec(db))
 	r.POST(route.AdmInput(), controller.AdmInput(db))
+	r.POST(route.MurobahahReq(), controller.MurobahahReq(db))
 
 	r.Run()
 

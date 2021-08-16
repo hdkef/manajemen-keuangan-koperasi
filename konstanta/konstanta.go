@@ -25,6 +25,7 @@ var meminspectres = "mem-inspect-res"
 var register = "register"
 var usersetting = "user-setting"
 var adminput = "adm-input"
+var murobahahreq = "murobahah-req"
 
 func createRoute(route string) string {
 	return fmt.Sprintf("/%s", route)
@@ -52,6 +53,7 @@ var usersettingroute = createRoute(usersetting)
 var memrequestaccroute = createRoute("mem-request-acc")
 var memrequestdecroute = createRoute("mem-request-dec")
 var adminputroute = createRoute(adminput)
+var murobahahreqroute = createRoute(murobahahreq)
 
 var CookiesBearer = "bearer"
 
@@ -72,6 +74,7 @@ var QueryAmount = "Amount"
 var QueryInfo = "Info"
 var QueryDate = "Date"
 var QueryUID = "UID"
+var QueryIsAgent = "IsAgent"
 
 var TypeIP = "IP"
 var TypeIW = "IW"
@@ -82,7 +85,7 @@ var TypeBonus = "Bonus"
 
 var TABLEALLUSER = "alluser"
 var TABLEMEMJOURNAL = "member_journal"
-var TABLEMEMDEBT = "member_debt"
+var TABLEMEMMUDOROBAH = "member_mudorobah"
 var TABLEMEMBALANCE = "member_balance"
 var TABLEMEMREQ = "member_req"
 var TABLEMEMBALANCEHISTORY = "member_balance_history"
@@ -175,6 +178,10 @@ func (r *htmlFileName) AdmInput() string {
 	return createHTMLFilename(adminput)
 }
 
+func (r *htmlFileName) MurobahahReq() string {
+	return createHTMLFilename(murobahahreq)
+}
+
 type route struct {
 }
 
@@ -258,4 +265,8 @@ func (r *route) MemRequestDec() string {
 
 func (r *route) AdmInput() string {
 	return adminputroute
+}
+
+func (r *route) MurobahahReq() string {
+	return murobahahreqroute
 }

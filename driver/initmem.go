@@ -35,7 +35,7 @@ func initMember(DB *sql.DB) {
 		tx.Rollback()
 		panic(err)
 	}
-	err = createTableMemDebt(tx)
+	err = createTableMemMudorobah(tx)
 	if err != nil {
 		tx.Rollback()
 		panic(err)
@@ -59,7 +59,7 @@ func initMember(DB *sql.DB) {
 }
 
 func createTableUser(tx *sql.Tx) error {
-	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (id int AUTO_INCREMENT, member_id VARCHAR(20) UNIQUE NOT NULL, username VARCHAR(25) UNIQUE NOT NULL, passwd VARCHAR(250) NOT NULL, role ENUM('Admin-Input','Admin-Super','member') DEFAULT 'member' NOT NULL, PRIMARY KEY (id))", konstanta.TABLEALLUSER)
+	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (id int AUTO_INCREMENT, member_id VARCHAR(20) UNIQUE NOT NULL, username VARCHAR(25) UNIQUE NOT NULL, passwd VARCHAR(250) NOT NULL, role ENUM('Admin-Input','Admin-Super','member') DEFAULT 'member' NOT NULL, isagent ENUM('Y','N') DEFAULT 'N' NOT NULL ,PRIMARY KEY (id))", konstanta.TABLEALLUSER)
 	_, err := tx.Exec(statement)
 	if err != nil {
 
@@ -79,8 +79,8 @@ func createTableMemJournal(tx *sql.Tx) error {
 	return nil
 }
 
-func createTableMemDebt(tx *sql.Tx) error {
-	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s(id int AUTO_INCREMENT, uid int NOT NULL ,date DATE DEFAULT (CURRENT_DATE) NOT NULL, due_date DATE NOT NULL, initial FLOAT(14,2) UNSIGNED NOT NULL, paid FLOAT(14,2) UNSIGNED NOT NULL, document VARCHAR(50) NOT NULL, info VARCHAR(250), approvedby int NOT NULL, PRIMARY KEY (id), FOREIGN KEY (uid) REFERENCES %s (id) , FOREIGN KEY (approvedby) REFERENCES %s (id) )", konstanta.TABLEMEMDEBT, konstanta.TABLEALLUSER, konstanta.TABLEALLUSER)
+func createTableMemMudorobah(tx *sql.Tx) error {
+	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s(id int AUTO_INCREMENT, uid int NOT NULL ,date DATE DEFAULT (CURRENT_DATE) NOT NULL, due_date DATE NOT NULL, initial FLOAT(14,2) UNSIGNED NOT NULL, paid FLOAT(14,2) UNSIGNED NOT NULL, document VARCHAR(50) NOT NULL, info VARCHAR(250), approvedby int NOT NULL, PRIMARY KEY (id), FOREIGN KEY (uid) REFERENCES %s (id) , FOREIGN KEY (approvedby) REFERENCES %s (id) )", konstanta.TABLEMEMMUDOROBAH, konstanta.TABLEALLUSER, konstanta.TABLEALLUSER)
 	_, err := tx.Exec(statement)
 	if err != nil {
 
@@ -126,8 +126,8 @@ func insertSuperAdmin(tx *sql.Tx) error {
 	if err != nil {
 		return err
 	}
-	statement1 := fmt.Sprintf("INSERT INTO %s (member_id,username,passwd,role) VALUES (?,?,?,?)", konstanta.TABLEALLUSER)
-	res, err := tx.Exec(statement1, "A0", os.Getenv("SUPERADMIN"), string(hashedPassbyte), "Admin-Super")
+	statement1 := fmt.Sprintf("INSERT INTO %s (member_id,username,passwd,role,isagent) VALUES (?,?,?,?,?)", konstanta.TABLEALLUSER)
+	res, err := tx.Exec(statement1, "A0", os.Getenv("SUPERADMIN"), string(hashedPassbyte), "Admin-Super", "Y")
 	if err != nil {
 
 		return err

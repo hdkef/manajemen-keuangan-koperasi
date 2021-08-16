@@ -26,18 +26,19 @@
             <p>UID : {{ .User.ID }}</p>
             <p>Member ID : {{ .User.MemID }}</p>
             <p>Username : {{ .User.Username }}</p>
-            <p>Role : {{ .User.Role }}</p>
-          </details>
+            <p>Peran : {{ .User.Role }}</p>
+        </details>
         <p>Menu</p>
-        <button><a href="/deposit-req">Request Deposit</a></button>
-        <button><a href="/withdraw-req">Request Withdraw</a></button>
-        <button><a href="/user-setting">Setting</a></button>
+        <button><a href="/deposit-req">Permintaan Deposit</a></button>
+        <button><a href="/withdraw-req">Permintaan Withdraw</a></button>
+        <button><a href="/murobahah-req">Murobahah</a></button>
+        <button><a href="/user-setting">Pengaturan</a></button>
         <hr>
         <p>Summary</p>
         <table>
             <thead>
-                <th>Account</th>
-                <th>Amount (Rp)</th>
+                <th>Akun</th>
+                <th>Jumlah (Rp)</th>
             </thead>
             <tbody>
                 <tr>
@@ -63,7 +64,7 @@
             </tbody>
         </table>
         <hr>
-        <p>Recent Transaction</p>
+        <p>Transaksi Terakhir</p>
         <table>
             <thead>
                 <th>ID</th>

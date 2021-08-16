@@ -10,13 +10,11 @@ func FindUser() []models.User {
 		{
 			ID:       1,
 			Username: "hdkef",
-			FullName: "Hadekha Erfadila Fitra",
 			Role:     konstanta.RoleADMINInput,
 		},
 		{
 			ID:       1,
 			Username: "dsz",
-			FullName: "Diaz Zulfikar",
 			Role:     konstanta.RoleMEMBER,
 		},
 	}

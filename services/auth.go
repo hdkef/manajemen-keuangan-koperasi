@@ -8,7 +8,6 @@ import (
 	"manajemen-keuangan-koperasi/utils"
 	"net/http"
 	"os"
-	"reflect"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -26,6 +25,7 @@ func init() {
 	SECRET = os.Getenv("SECRET")
 }
 
+//MUST BE MODIFIED EVERY CHANGES ON models.User
 func ValidateTokenFromCookies(c *gin.Context) (models.User, error) {
 	//get token string from cookies
 	tokenString, err := c.Cookie(konstanta.CookiesBearer)
@@ -46,6 +46,7 @@ func ValidateTokenFromCookies(c *gin.Context) (models.User, error) {
 				ID:       (*mapclaims)["ID"].(float64),
 				Username: (*mapclaims)["Username"].(string),
 				Role:     (*mapclaims)["Role"].(string),
+				IsAgent:  (*mapclaims)["IsAgent"].(string),
 			}, nil
 		}
 		removeTokenCookie(c)
@@ -55,6 +56,7 @@ func ValidateTokenFromCookies(c *gin.Context) (models.User, error) {
 		ID:       (*mapclaims)["ID"].(float64),
 		Username: (*mapclaims)["Username"].(string),
 		Role:     (*mapclaims)["Role"].(string),
+		IsAgent:  (*mapclaims)["IsAgent"].(string),
 	}, nil
 }
 
@@ -114,22 +116,16 @@ func checkTokenRenew(token *jwt.Token) bool {
 	return timeSubNow <= float64(refreshtokendif)
 }
 
+//MUST BE MODIFIED EVERY CHANGES ON models.User
 //newClaimsMap create new jwt mapclaims from user struct and return it
 func newClaimsMap(user *models.User) jwt.MapClaims {
 	var claims jwt.MapClaims = make(jwt.MapClaims)
 
-	var userval = reflect.ValueOf(*user)
-	var usertype = reflect.TypeOf(*user)
-
-	for i := 0; i < userval.NumField(); i++ {
-		fieldName := usertype.Field(i).Name
-		fieldValue := userval.Field(i).Interface()
-		if userval.Field(i).Kind() == reflect.Int64 {
-			claims[fieldName] = fieldValue.(int64)
-		} else {
-			claims[fieldName] = fieldValue
-		}
-	}
+	claims["Username"] = user.Username
+	claims["MemID"] = user.MemID
+	claims["Role"] = user.Role
+	claims["IsAgent"] = user.IsAgent
+	claims["ID"] = user.ID
 
 	claims["exp"] = time.Now().Unix() + int64(tokenexpiresdur)
 	//this code is intended to be place after for loop so that new exp override old exp for refresh token

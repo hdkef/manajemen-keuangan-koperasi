@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Murobahah Request</title>
+    <link rel="stylesheet" href="public/style/pico.min.css">
+</head>
+<body>
+    <article>
+        <header><h1>Murobahah Request</h1></header>
+        <form action="/murobahah-req" method="POST">
+            <input type="text" name="UIDbuyer" placeholder="UID Pihak Pertama" required>
+            <label for="Doc">Dokumen Akad Murobahah</label>
+            <input type="file" id="" name="Doc" id="Doc" required>
+            <div style="display: flex;justify-content: left;margin-bottom: 25px;">
+                <input type="checkbox" id="Agreement" required>
+                <label for="Agreement">Saya memahami syarat dan ketentuan</label>
+            </div>
+            <details>
+                <summary>Syarat dan Ketentuan</summary>
+                <ul>
+                    <li>Pihak pertama merupakan pihak pembeli</li>
+                    <li>Form ini diisi oleh pihak kedua, yaitu pihak penjual</li>
+                    <li>Pembeli akan amanah menunaikan janjinya sesuai dengan  ijab Kabul</li>
+                    <li>Bila karena hal tertentu, pembeli tidak bisa menunaikan janjinya pembeli harus menyampaikan alasan dan  penjual  berhak menegur dan menyampaikan peringatan serta melakukan verifikasi alasannya.</li>
+                    <li>Bila karena suatu hal, pembeli sudah dilakukan peringatan dan tidak bisa melunasi, maka penjual berhak untuk mengambil dan menjual kembali barang yang bersangkutan, dan mengembalikan uang cicilan kepada pembeli. Dengan catatan harga jual barang saat diambil masih lebih besar daripada besarnya cicilan yang telah disetor. </li>
+                    <li>Barang tidak boleh dipindahtangankan oleh pembeli sebelum cicilan selesai atau hutangnya sudah dilunasi.</li>
+                </ul>
+            </details>
+            <button type="submit">Submit</button>
+        </form>
+    </article>
+</body>
+</html>
