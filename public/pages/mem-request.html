@@ -11,6 +11,7 @@
 <body>
     <article>
         <header><h1>Member Request</h1></header>
+        <p>Permintaan Anggota</p>
         <table>
             <thead>
                 <th>ID</th>
@@ -23,7 +24,7 @@
                 <th>Command</th>
             </thead>
             <tbody>
-                {{ range $index, $elem := . }}
+                {{ range $index, $elem := .MemReq }}
                 <tr>
                     <td>{{ $elem.ID }}</td>
                     <td>{{ $elem.Date }}</td>
@@ -47,6 +48,36 @@
                             <button type="submit">decline</button>
                         </form>
                     </td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+        <hr>
+        <p>Permintaan Murobahah</p>
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Username Agen</th>
+                <th>Username Pembeli</th>
+                <th>Tanggal</th>
+                <th>Jatuh Tempo</th>
+                <th>Jumlah</th>
+                <th>Info</th>
+                <th>Dokumen</th>
+                <th>Command</th>
+            </thead>
+            <tbody>
+                {{ range $index, $elem := .MemReqMurobahah }}
+                <tr>
+                    <td>{{ $elem.ID }}</td>
+                    <td>{{ $elem.Agent.Username }}</td>
+                    <td>{{ $elem.Buyer.Username }}</td>
+                    <td>{{ $elem.Date }}</td>
+                    <td>{{ $elem.DueDate }}</td>
+                    <td>{{ $elem.Amount }}</td>
+                    <td>{{ $elem.Info }}</td>
+                    <td><a href="/{{ $elem.Doc }}">lihat</a></td>
+                    <td>coming soon</td>
                 </tr>
                 {{ end }}
             </tbody>

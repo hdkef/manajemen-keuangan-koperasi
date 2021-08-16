@@ -163,7 +163,7 @@ func (DB *DBDriver) FindMemSSBalanceTx(tx *sql.Tx, uid float64) (float64, error)
 
 var statementFindMemReqTx string = "SELECT alluser.id, alluser.member_id, alluser.username, member_req.id, member_req.date, member_req.type, member_req.amount, member_req.info from member_req JOIN alluser ON member_req.uid = alluser.id"
 
-func (DB *DBDriver) FindMemReq() ([]models.MemReq, error) {
+func (DB *DBDriver) FindMemReqTx(tx *sql.Tx) ([]models.MemReq, error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
@@ -171,7 +171,7 @@ func (DB *DBDriver) FindMemReq() ([]models.MemReq, error) {
 
 	var memreq []models.MemReq
 
-	row, err := DB.DB.QueryContext(ctx, statementFindMemReqTx)
+	row, err := tx.QueryContext(ctx, statementFindMemReqTx)
 	if err != nil {
 		return memreq, err
 	}
@@ -201,4 +201,28 @@ func (DB *DBDriver) DeleteMemReqTx(tx *sql.Tx, id float64) (sql.Result, error) {
 	defer cancel()
 
 	return tx.ExecContext(ctx, statementDeleteMemReq, id)
+}
+
+var statementFindMemReqMurobahah string = fmt.Sprintf("SELECT member_req_murobahah.id, agent.Username, buyer.Username, member_req_murobahah.date, member_req_murobahah.due_date, member_req_murobahah.amount, member_req_murobahah.info, member_req_murobahah.document FROM %s JOIN %s AS agent ON agent_id = agent.id JOIN %s AS buyer ON buyer_id = buyer.id", konstanta.TABLEMEMREQMUROBAHAH, konstanta.TABLEALLUSER, konstanta.TABLEALLUSER)
+
+func (DB *DBDriver) FindMemReqMurobahahTx(tx *sql.Tx) ([]models.Murobahah, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	row, err := tx.QueryContext(ctx, statementFindMemReqMurobahah)
+	if err != nil {
+		return nil, err
+	}
+
+	var murobahahs []models.Murobahah
+
+	for row.Next() {
+		var tmp models.Murobahah
+		err = row.Scan(&tmp.ID, &tmp.Agent.Username, &tmp.Buyer.Username, &tmp.Date, &tmp.DueDate, &tmp.Amount, &tmp.Info, &tmp.Doc)
+		if err != nil {
+			return nil, err
+		}
+		murobahahs = append(murobahahs, tmp)
+	}
+	return murobahahs, nil
 }
