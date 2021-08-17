@@ -15,11 +15,11 @@
         <table>
             <thead>
                 <th>ID</th>
-                <th>Date</th>
-                <th>Member ID</th>
+                <th>Tanggal</th>
+                <th>ID Anggota</th>
                 <th>Username</th>
-                <th>Type</th>
-                <th>Amount (Rp)</th>
+                <th>Jenis</th>
+                <th>Jumlah (Rp)</th>
                 <th>Info</th>
                 <th>Command</th>
             </thead>
@@ -56,23 +56,28 @@
         <p>Permintaan Murobahah</p>
         <table>
             <thead>
-                <th>ID</th>
-                <th>Username Agen</th>
-                <th>Username Pembeli</th>
-                <th>Tanggal</th>
-                <th>Jatuh Tempo</th>
-                <th>Jumlah</th>
-                <th>Info</th>
-                <th>Dokumen</th>
-                <th>Command</th>
+                <tr>
+                    <th rowspan="2">ID</th>
+                    <th rowspan="2">Tanggal</th>
+                    <th colspan="2">Username</th>
+                    <th rowspan="2">Jatuh Tempo</th>
+                    <th rowspan="2">Jumlah (Rp)</th>
+                    <th rowspan="2">Info</th>
+                    <th rowspan="2">Dokumen</th>
+                    <th rowspan="2">Command</th>
+                </tr>
+                <tr>
+                    <th>Agen</th>
+                    <th>Pembeli</th>
+                </tr>
             </thead>
             <tbody>
                 {{ range $index, $elem := .MemReqMurobahah }}
                 <tr>
                     <td>{{ $elem.ID }}</td>
+                    <td>{{ $elem.Date }}</td>
                     <td>{{ $elem.Agent.Username }}</td>
                     <td>{{ $elem.Buyer.Username }}</td>
-                    <td>{{ $elem.Date }}</td>
                     <td>{{ $elem.DueDate }}</td>
                     <td>{{ $elem.Amount }}</td>
                     <td>{{ $elem.Info }}</td>

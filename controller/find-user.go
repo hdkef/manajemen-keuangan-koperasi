@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"manajemen-keuangan-koperasi/driver"
 	"manajemen-keuangan-koperasi/konstanta"
-	"manajemen-keuangan-koperasi/mock"
+	"manajemen-keuangan-koperasi/models"
 	"manajemen-keuangan-koperasi/services"
 
 	"github.com/gin-gonic/gin"
@@ -12,10 +12,21 @@ import (
 
 func FindUser(DB *driver.DBDriver) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		filter, _ := c.GetQuery(konstanta.QueryFilter)
-		key, _ := c.GetQuery(konstanta.QueryKey)
+		filter, filterExist := c.GetQuery(konstanta.QueryFilter)
+		key, keyExist := c.GetQuery(konstanta.QueryKey)
 		fmt.Println(filter, key)
-		usr := mock.FindUser()
-		services.RenderPages(c, HTMLFILENAME.FindUser(), usr)
+		if keyExist || filterExist {
+			//find user
+			users, err := DB.FindAllUserByFilter(filter, key)
+			if err != nil {
+				//if error show nothing
+				services.RenderPages(c, HTMLFILENAME.FindUser(), []models.User{})
+				return
+			}
+
+			services.RenderPages(c, HTMLFILENAME.FindUser(), users)
+			return
+		}
+		services.RenderPages(c, HTMLFILENAME.FindUser(), []models.User{})
 	}
 }

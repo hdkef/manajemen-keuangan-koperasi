@@ -10,15 +10,6 @@
 <body>
     <article>
         <header><h1>Manage User</h1></header>
-        <p>Find User</p>
-        <form action="/find-user" method="GET" name="findForm">
-            <select name="Filter" required>
-                <option value="Username">Username</option>
-                <option value="FullName">FullName</option>
-            </select>
-            <input type="text" name="Key" placeholder="search key" required>
-            <button type="submit">Search</button>
-        </form>
         <hr>
         <p>Edit User Role</p>
         <form action="/manage-user" method="POST" name="editRoleForm">

@@ -3,6 +3,7 @@ package driver
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 	"manajemen-keuangan-koperasi/konstanta"
 	"manajemen-keuangan-koperasi/models"
@@ -59,4 +60,44 @@ func (DB *DBDriver) FindOneUserByUIDTx(tx *sql.Tx, value float64) (models.User, 
 	}
 
 	return tmpUsr, nil
+}
+
+var statementFindAllUserByUsername = fmt.Sprintf("SELECT id, member_id, username, role, isagent FROM %s WHERE username=?", konstanta.TABLEALLUSER)
+var statementFindAllUserByRole = fmt.Sprintf("SELECT id, member_id, username, role, isagent FROM %s WHERE role=?", konstanta.TABLEALLUSER)
+var statementFindAllUserByMemID = fmt.Sprintf("SELECT id, member_id, username, role, isagent FROM %s WHERE member_id=?", konstanta.TABLEALLUSER)
+
+func (DB *DBDriver) FindAllUserByFilter(filter string, key string) ([]models.User, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	var row *sql.Rows
+	var err error
+
+	switch filter {
+	case konstanta.QueryUsername:
+		row, err = DB.DB.QueryContext(ctx, statementFindAllUserByUsername, key)
+	case konstanta.QueryMemID:
+		row, err = DB.DB.QueryContext(ctx, statementFindAllUserByMemID, key)
+	case konstanta.QueryRole:
+		row, err = DB.DB.QueryContext(ctx, statementFindAllUserByRole, key)
+	default:
+		return nil, errors.New("no filter match")
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	var users []models.User
+
+	for row.Next() {
+		var tmpUsr models.User
+		err = row.Scan(&tmpUsr.ID, &tmpUsr.MemID, &tmpUsr.Username, &tmpUsr.Role, &tmpUsr.IsAgent)
+		if err != nil {
+			return nil, err
+		}
+		users = append(users, tmpUsr)
+	}
+
+	return users, nil
 }
