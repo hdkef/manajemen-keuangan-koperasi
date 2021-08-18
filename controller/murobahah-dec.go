@@ -44,24 +44,14 @@ func MurobahahDec(DB *driver.DBDriver) func(c *gin.Context) {
 		}
 
 		//send info to agent & buyer (bulk insert) that request been declined
-		//untuk sementara bulk insert codenya seperti ini
 		info := fmt.Sprintf("murobahah request with id of %v been declined", id)
 
-		_, err = DB.InsertAllInfoTx(tx, agentid, info)
+		_, err = DB.InsertBatchAllInfoTx(tx, []float64{agentid, buyerid}, info)
 		if err != nil {
 			tx.Rollback()
 			RenderError(c, err)
 			return
 		}
-
-		_, err = DB.InsertAllInfoTx(tx, buyerid, info)
-		if err != nil {
-			tx.Rollback()
-			RenderError(c, err)
-			return
-		}
-
-		/////////////////////////////////////////////////
 
 		//delete req from murobahah req
 		_, err = DB.DeleteMemReqMurobahahTx(tx, id)

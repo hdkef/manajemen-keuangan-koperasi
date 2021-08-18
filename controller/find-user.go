@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"manajemen-keuangan-koperasi/driver"
 	"manajemen-keuangan-koperasi/konstanta"
 	"manajemen-keuangan-koperasi/models"
@@ -14,7 +13,6 @@ func FindUser(DB *driver.DBDriver) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		filter, filterExist := c.GetQuery(konstanta.QueryFilter)
 		key, keyExist := c.GetQuery(konstanta.QueryKey)
-		fmt.Println(filter, key)
 		if keyExist || filterExist {
 			//find user
 			users, err := DB.FindAllUserByFilter(filter, key)

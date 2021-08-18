@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"manajemen-keuangan-koperasi/konstanta"
+	"strings"
 	"time"
 )
 
@@ -82,15 +83,27 @@ func (DB *DBDriver) InsertMemJournalTx(tx *sql.Tx, uid float64, type_ string, am
 
 }
 
-var statementInsertAllInfoTx string = fmt.Sprintf("INSERT INTO %s (uid,date,info) VALUES (?,?,?)", konstanta.TABLEALLINFO)
+var statementRawInsertBatchAllInfo string = fmt.Sprintf("INSERT INTO %s (uid,date,info)", konstanta.TABLEALLINFO)
 
-func (DB *DBDriver) InsertAllInfoTx(tx *sql.Tx, uid float64, info string) (sql.Result, error) {
+func (DB *DBDriver) InsertBatchAllInfoTx(tx *sql.Tx, uid []float64, info string) (sql.Result, error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	date := time.Now()
 
-	return tx.ExecContext(ctx, statementInsertAllInfoTx, uid, date, info)
+	valueStrings := make([]string, 0, len(uid))
+	valueArgs := make([]interface{}, 0, len(uid)*3)
+
+	for _, v := range uid {
+		valueStrings = append(valueStrings, "(?,?,?)")
+		valueArgs = append(valueArgs, v)
+		valueArgs = append(valueArgs, date)
+		valueArgs = append(valueArgs, info)
+	}
+
+	var statementReadyInsertBatchAllInfo string = fmt.Sprintf("%s VALUES %s", statementRawInsertBatchAllInfo, strings.Join(valueStrings, ","))
+
+	return tx.ExecContext(ctx, statementReadyInsertBatchAllInfo, valueArgs...)
 }
 
 var statementInsertAgentHistory string = fmt.Sprintf("INSERT INTO %s (uid,murobahah_id) VALUES (?,?)", konstanta.TABLEAGENTHISTORY)
