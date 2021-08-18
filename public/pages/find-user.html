@@ -10,19 +10,20 @@
 <body>
     <article>
         <header><h1>Find User</h1></header>
-        <p>Find User</p>
         <form action="/find-user" method="GET" name="findForm">
-            <select name="Filter" required>
+            <label for="Filter">Filter pencarian</label>
+            <select name="Filter" id="Filter" required>
                 <option value="Username">Username</option>
-                <option value="MemID">MemID</option>
-                <option value="Role">Role</option>
+                <option value="MemID">ID Anggota</option>
+                <option value="Role">Peran</option>
+                <option value="IsAgent">Adalah Agen (Y/N)</option>
             </select>
-            <input type="text" name="Key" placeholder="search key" required>
+            <input type="text" name="Key" placeholder="Kata kunci.." required>
             <button type="submit">Search</button>
         </form>
         <table>
             <thead>
-                <th>ID</th>
+                <th>UID</th>
                 <th>ID Anggota</th>
                 <th>Username</th>
                 <th>Role</th>

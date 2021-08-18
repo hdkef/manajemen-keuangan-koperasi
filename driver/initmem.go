@@ -55,6 +55,11 @@ func initMember(DB *sql.DB) {
 		tx.Rollback()
 		panic(err)
 	}
+	err = createTableAllInfo(tx)
+	if err != nil {
+		tx.Rollback()
+		panic(err)
+	}
 	err = insertSuperAdmin(tx)
 	if err != nil {
 		tx.Rollback()
@@ -126,6 +131,16 @@ func createTableMemReq(tx *sql.Tx) error {
 
 func createTableMemBalanceHistory(tx *sql.Tx) error {
 	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s(id int AUTO_INCREMENT, uid int NOT NULL, date DATE DEFAULT(CURRENT_DATE) NOT NULL, IP FLOAT(14,2) UNSIGNED NOT NULL, IW FLOAT(14,2) UNSIGNED NOT NULL, SS FLOAT(14,2) UNSIGNED NOT NULL, SHU FLOAT(14,2) UNSIGNED NOT NULL, Bonus FLOAT(14,2) UNSIGNED NOT NULL, PRIMARY KEY (id), FOREIGN KEY (uid) REFERENCES %s (id))", konstanta.TABLEMEMBALANCEHISTORY, konstanta.TABLEALLUSER)
+	_, err := tx.Exec(statement)
+	if err != nil {
+
+		return err
+	}
+	return nil
+}
+
+func createTableAllInfo(tx *sql.Tx) error {
+	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (id int AUTO_INCREMENT, uid int NOT NULL, date DATE DEFAULT(CURRENT_DATE) NOT NULL, Info VARCHAR(100) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (uid) REFERENCES %s(id))", konstanta.TABLEALLINFO, konstanta.TABLEALLUSER)
 	_, err := tx.Exec(statement)
 	if err != nil {
 

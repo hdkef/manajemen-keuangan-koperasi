@@ -203,7 +203,7 @@ func (DB *DBDriver) DeleteMemReqTx(tx *sql.Tx, id float64) (sql.Result, error) {
 	return tx.ExecContext(ctx, statementDeleteMemReq, id)
 }
 
-var statementFindMemReqMurobahah string = fmt.Sprintf("SELECT member_req_murobahah.id, agent.Username, buyer.Username, member_req_murobahah.date, member_req_murobahah.due_date, member_req_murobahah.amount, member_req_murobahah.info, member_req_murobahah.document FROM %s JOIN %s AS agent ON agent_id = agent.id JOIN %s AS buyer ON buyer_id = buyer.id", konstanta.TABLEMEMREQMUROBAHAH, konstanta.TABLEALLUSER, konstanta.TABLEALLUSER)
+var statementFindMemReqMurobahah string = fmt.Sprintf("SELECT member_req_murobahah.id,  agent.ID, agent.Username, buyer.ID,buyer.Username, member_req_murobahah.date, member_req_murobahah.due_date, member_req_murobahah.amount, member_req_murobahah.info, member_req_murobahah.document FROM %s JOIN %s AS agent ON agent_id = agent.id JOIN %s AS buyer ON buyer_id = buyer.id", konstanta.TABLEMEMREQMUROBAHAH, konstanta.TABLEALLUSER, konstanta.TABLEALLUSER)
 
 func (DB *DBDriver) FindMemReqMurobahahTx(tx *sql.Tx) ([]models.Murobahah, error) {
 	ctx, cancel := context.WithCancel(context.Background())
@@ -218,11 +218,64 @@ func (DB *DBDriver) FindMemReqMurobahahTx(tx *sql.Tx) ([]models.Murobahah, error
 
 	for row.Next() {
 		var tmp models.Murobahah
-		err = row.Scan(&tmp.ID, &tmp.Agent.Username, &tmp.Buyer.Username, &tmp.Date, &tmp.DueDate, &tmp.Amount, &tmp.Info, &tmp.Doc)
+		err = row.Scan(&tmp.ID, &tmp.Agent.ID, &tmp.Agent.Username, &tmp.Buyer.ID, &tmp.Buyer.Username, &tmp.Date, &tmp.DueDate, &tmp.Amount, &tmp.Info, &tmp.Doc)
 		if err != nil {
 			return nil, err
 		}
 		murobahahs = append(murobahahs, tmp)
 	}
 	return murobahahs, nil
+}
+
+var statementDeleteMemReqMurobahah string = fmt.Sprintf("DELETE FROM %s WHERE id=?", konstanta.TABLEMEMREQMUROBAHAH)
+
+func (DB *DBDriver) DeleteMemReqMurobahahTx(tx *sql.Tx, id float64) (sql.Result, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	return tx.ExecContext(ctx, statementDeleteMemReqMurobahah, id)
+}
+
+var statementInsertAllInfoTx string = fmt.Sprintf("INSERT INTO %s (uid,date,info) VALUES (?,?,?)", konstanta.TABLEALLINFO)
+
+func (DB *DBDriver) InsertAllInfoTx(tx *sql.Tx, uid float64, info string) (sql.Result, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	date := time.Now()
+
+	return tx.ExecContext(ctx, statementInsertAllInfoTx, uid, date, info)
+}
+
+var statementFindAllInfo string = fmt.Sprintf("SELECT id,date,info FROM %s WHERE uid=?", konstanta.TABLEALLINFO)
+
+func (DB *DBDriver) FindAllInfoTx(tx *sql.Tx, uid float64) ([]models.AllInfo, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	row, err := tx.QueryContext(ctx, statementFindAllInfo, uid)
+	if err != nil {
+		return nil, err
+	}
+
+	var infos []models.AllInfo
+
+	for row.Next() {
+		var tmp models.AllInfo
+		err = row.Scan(&tmp.ID, &tmp.Date, &tmp.Info)
+		if err != nil {
+			return nil, err
+		}
+		infos = append(infos, tmp)
+	}
+	return infos, nil
+}
+
+var statementDeleteAllInfo string = fmt.Sprintf("DELETE FROM %s WHERE id=?", konstanta.TABLEALLINFO)
+
+func (DB *DBDriver) DeleteAllInfoTx(tx *sql.Tx, id float64) (sql.Result, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	return tx.ExecContext(ctx, statementDeleteAllInfo, id)
 }

@@ -6,4 +6,5 @@ type Member struct {
 	CurDebt           string
 	RecentTransaction []MemTransaction
 	DebtDetail        []DebtDetail
+	AllInfo           []AllInfo
 }

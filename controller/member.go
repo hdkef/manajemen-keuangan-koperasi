@@ -59,7 +59,16 @@ func Member(DB *driver.DBDriver) func(c *gin.Context) {
 			return
 		}
 
-		//font forget to commit
+		//get all info
+
+		allinfo, err := DB.FindAllInfoTx(tx, uid)
+		if err != nil {
+			tx.Rollback()
+			RenderError(c, err)
+			return
+		}
+
+		//dont forget to commit
 		err = tx.Commit()
 		if err != nil {
 			tx.Rollback()
@@ -71,6 +80,7 @@ func Member(DB *driver.DBDriver) func(c *gin.Context) {
 			User:              user,
 			Balance:           balance,
 			RecentTransaction: journal,
+			AllInfo:           allinfo,
 		})
 	}
 }

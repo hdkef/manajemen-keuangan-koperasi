@@ -34,6 +34,24 @@
         <button><a href="/murobahah-req">Murobahah</a></button>
         <button><a href="/user-setting">Pengaturan</a></button>
         <hr>
+        <p>Info Terbaru</p>
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Tanggal</th>
+                <th>Keterangan</th>
+            </thead>
+            <tbody>
+                {{ range $index,$elem := .AllInfo }}
+                <tr>
+                    <td> {{ $elem.ID }} </td>
+                    <td> {{ $elem.Date }} </td>
+                    <td> {{ $elem.Info }} </td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+        <hr>
         <p>Summary</p>
         <table>
             <thead>

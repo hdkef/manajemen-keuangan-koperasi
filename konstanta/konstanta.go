@@ -54,6 +54,8 @@ var memrequestaccroute = createRoute("mem-request-acc")
 var memrequestdecroute = createRoute("mem-request-dec")
 var adminputroute = createRoute(adminput)
 var murobahahreqroute = createRoute(murobahahreq)
+var murobahahaccroute = createRoute("murobahah-acc")
+var murobahahdecroute = createRoute("murobahah-dec")
 
 var CookiesBearer = "bearer"
 
@@ -77,6 +79,7 @@ var QueryUID = "UID"
 var QueryIsAgent = "IsAgent"
 var QueryDoc = "Doc"
 var QueryUIDBuyer = "UIDBuyer"
+var QueryUIDAgent = "UIDAgent"
 var QueryDueDate = "DueDate"
 
 var TypeIP = "IP"
@@ -93,6 +96,7 @@ var TABLEMEMREQMUROBAHAH = "member_req_murobahah"
 var TABLEMEMBALANCE = "member_balance"
 var TABLEMEMREQ = "member_req"
 var TABLEMEMBALANCEHISTORY = "member_balance_history"
+var TABLEALLINFO = "allinfo"
 
 type htmlFileName struct {
 }
@@ -273,4 +277,12 @@ func (r *route) AdmInput() string {
 
 func (r *route) MurobahahReq() string {
 	return murobahahreqroute
+}
+
+func (r *route) MurobahahAcc() string {
+	return murobahahaccroute
+}
+
+func (r *route) MurobahahDec() string {
+	return murobahahdecroute
 }

@@ -81,8 +81,27 @@
                     <td>{{ $elem.DueDate }}</td>
                     <td>{{ $elem.Amount }}</td>
                     <td>{{ $elem.Info }}</td>
-                    <td><a href="/{{ $elem.Doc }}">lihat</a></td>
-                    <td>coming soon</td>
+                    <td><a href="/{{ $elem.Doc }}" target="_blank">lihat</a></td>
+                    <td>
+                        <form action="/murobahah-acc" method="POST">
+                            <input type="hidden" value="{{$elem.ID}}" name="ID">
+                            <input type="hidden" value="{{$elem.Date}}" name="Date">
+                            <input type="hidden" value="{{$elem.Agent.ID}}" name="UIDAgent">
+                            <input type="hidden" value="{{$elem.Buyer.ID}}" name="UIDBuyer">
+                            <input type="hidden" value="{{$elem.DueDate}}" name="DueDate">
+                            <input type="hidden" value="{{$elem.Amount}}" name="Amount">
+                            <input type="hidden" value="{{$elem.Doc}}" name="Doc">
+                            <input type="hidden" value="{{$elem.Info}}" name="Info">
+                            <button type="submit">accept</button>
+                        </form>
+                        <form action="/murobahah-dec" method="POST">
+                            <input type="hidden" value="{{$elem.ID}}" name="ID">
+                            <input type="hidden" value="{{$elem.Agent.ID}}" name="UIDAgent">
+                            <input type="hidden" value="{{$elem.Buyer.ID}}" name="UIDBuyer">
+                            <input type="hidden" value="{{$elem.Doc}}" name="Doc">
+                            <button type="submit">decline</button>
+                        </form>
+                    </td>
                 </tr>
                 {{ end }}
             </tbody>

@@ -57,6 +57,8 @@ func main() {
 	r.POST(route.MemRequestDec(), controller.MemRequestDec(db))
 	r.POST(route.AdmInput(), controller.AdmInput(db))
 	r.POST(route.MurobahahReq(), controller.MurobahahReq(db))
+	r.POST(route.MurobahahAcc(), controller.MurobahahAcc(db))
+	r.POST(route.MurobahahDec(), controller.MurobahahDec(db))
 
 	r.Run()
 

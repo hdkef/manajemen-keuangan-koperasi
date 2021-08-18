@@ -65,6 +65,7 @@ func (DB *DBDriver) FindOneUserByUIDTx(tx *sql.Tx, value float64) (models.User, 
 var statementFindAllUserByUsername = fmt.Sprintf("SELECT id, member_id, username, role, isagent FROM %s WHERE username=?", konstanta.TABLEALLUSER)
 var statementFindAllUserByRole = fmt.Sprintf("SELECT id, member_id, username, role, isagent FROM %s WHERE role=?", konstanta.TABLEALLUSER)
 var statementFindAllUserByMemID = fmt.Sprintf("SELECT id, member_id, username, role, isagent FROM %s WHERE member_id=?", konstanta.TABLEALLUSER)
+var statementFindAllUserByIsAgent = fmt.Sprintf("SELECT id, member_id, username, role, isagent FROM %s WHERE isagent=?", konstanta.TABLEALLUSER)
 
 func (DB *DBDriver) FindAllUserByFilter(filter string, key string) ([]models.User, error) {
 	ctx, cancel := context.WithCancel(context.Background())
@@ -80,6 +81,8 @@ func (DB *DBDriver) FindAllUserByFilter(filter string, key string) ([]models.Use
 		row, err = DB.DB.QueryContext(ctx, statementFindAllUserByMemID, key)
 	case konstanta.QueryRole:
 		row, err = DB.DB.QueryContext(ctx, statementFindAllUserByRole, key)
+	case konstanta.QueryIsAgent:
+		row, err = DB.DB.QueryContext(ctx, statementFindAllUserByIsAgent, key)
 	default:
 		return nil, errors.New("no filter match")
 	}
