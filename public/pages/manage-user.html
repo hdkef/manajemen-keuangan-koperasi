@@ -6,25 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage User</title>
     <link rel="stylesheet" href="public/style/pico.min.css">
+    <script src="public/javascript/nav.js" defer></script>
 </head>
 <body>
+    <div id="mynav">
+    </div>
     <article>
         <header><h1>Manage User</h1></header>
-        <hr>
-        <p>Edit User Role</p>
-        <form action="/manage-user" method="POST" name="editRoleForm">
-            <input type="text" name="ID" placeholder="ID" required>
-            <select name="Role" required>
-                <option value="Admin-Input">Admin-Input</option>
-                <option value="Member">Member</option>
+        <form action="manage-user" method="POST">
+            
+            <input type="text" name="UID" placeholder="UID dari user yang akan diubah">
+            
+            <label for="IsAgent">Status agen</label>
+            <select name="IsAgent" id="IsAgent">
+                <option value="Default">tidak diubah</option>
+                <option value="Y">iya</option>
+                <option value="N">tidak</option>
             </select>
-            <button type="submit">Submit</button>
-        </form>
-        <hr>
-        <p>Delete User</p>
-        <form action="/manage-user" method="POST" name="editRoleForm">
-            <input type="text" name="ID" placeholder="ID" required>
-            <button type="submit">Submit</button>
+
+            <label for="Role">Peran</label>
+            <select name="Role" id="Role">
+                <option value="Default">tidak diubah</option>
+                <option value="Admin-Super">Admin-Super</option>
+                <option value="Admin-Input">Admin-Input</option>
+                <option value="member">Member</option>
+            </select>
+            <button type="submit">Simpan perubahan</button>
         </form>
     </article>
 </body>
