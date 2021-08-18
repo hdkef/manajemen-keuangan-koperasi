@@ -106,29 +106,31 @@
             </tbody>
         </table>
         <hr>
-        <!-- <p>Debt Details</p>
+        <p>Murobahah Terakhir</p>
         <table>
             <thead>
                 <th>ID</th>
-                <th>Date</th>
-                <th>Due Date</th>
-                <th>Amount (Rp)</th>
-                <th>Remaining (Rp)</th>
+                <th>Tanggal</th>
+                <th>Jatuh Tempo</th>
+                <th>Jumlah Awal</th>
+                <th>Terbayar</th>
                 <th>Info</th>
+                <th>Dokumen</th>
             </thead>
             <tbody>
-                {{range $index,$elem := .DebtDetail}}
+                {{ range $index,$elem := .Murobahah }}
                 <tr>
-                    <td>{{$elem.ID}}</td>
-                    <td>{{$elem.Date}}</td>
-                    <td>{{$elem.DueDate}}</td>
-                    <td>{{$elem.Amount}}</td>
-                    <td>{{$elem.Remaining}}</td>
-                    <td>{{$elem.Info}}</td>
+                    <td> {{ $elem.ID }} </td>
+                    <td> {{ $elem.Date }} </td>
+                    <td> {{ $elem.DueDate }} </td>
+                    <td> {{ $elem.Initial }} </td>
+                    <td> {{ $elem.Paid }} </td>
+                    <td> {{ $elem.Info }} </td>
+                    <td><a href="/{{ $elem.Doc }}" target="_blank">lihat</a></td>
                 </tr>
-                {{end}}
+                {{ end }}
             </tbody>
-        </table> -->
+        </table>
     </article>
 </body>
 </html>

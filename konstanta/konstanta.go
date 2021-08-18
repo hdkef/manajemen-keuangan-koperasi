@@ -88,6 +88,8 @@ var TypeSSPos = "SS+"
 var TypeSSNeg = "SS-"
 var TypeSHU = "SHU"
 var TypeBonus = "Bonus"
+var TYPEMurobahahPos = "MRBH+"
+var TYPEMurobahahNeg = "MRBH-"
 
 var TABLEALLUSER = "alluser"
 var TABLEMEMJOURNAL = "member_journal"
@@ -97,6 +99,7 @@ var TABLEMEMBALANCE = "member_balance"
 var TABLEMEMREQ = "member_req"
 var TABLEMEMBALANCEHISTORY = "member_balance_history"
 var TABLEALLINFO = "allinfo"
+var TABLEAGENTHISTORY = "agent_history"
 
 type htmlFileName struct {
 }

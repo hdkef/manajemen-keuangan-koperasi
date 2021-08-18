@@ -59,6 +59,14 @@ func Member(DB *driver.DBDriver) func(c *gin.Context) {
 			return
 		}
 
+		//get murobahahs
+		murobahahs, err := DB.FindMemMurobahahTx(tx, uid)
+		if err != nil {
+			tx.Rollback()
+			RenderError(c, err)
+			return
+		}
+
 		//get all info
 
 		allinfo, err := DB.FindAllInfoTx(tx, uid)
@@ -81,6 +89,7 @@ func Member(DB *driver.DBDriver) func(c *gin.Context) {
 			Balance:           balance,
 			RecentTransaction: journal,
 			AllInfo:           allinfo,
+			Murobahah:         murobahahs,
 		})
 	}
 }

@@ -60,6 +60,11 @@ func initMember(DB *sql.DB) {
 		tx.Rollback()
 		panic(err)
 	}
+	err = createTableAgentHistory(tx)
+	if err != nil {
+		tx.Rollback()
+		panic(err)
+	}
 	err = insertSuperAdmin(tx)
 	if err != nil {
 		tx.Rollback()
@@ -80,7 +85,7 @@ func createTableUser(tx *sql.Tx) error {
 }
 
 func createTableMemJournal(tx *sql.Tx) error {
-	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s(id int AUTO_INCREMENT, uid int NOT NULL, date DATE DEFAULT (CURRENT_DATE) NOT NULL, type ENUM('IP','IW','SS+','SS-','SHU','Bonus','D+','D-') NOT NULL, amount FLOAT(14,2) UNSIGNED NOT NULL, info VARCHAR(250), approvedby int NOT NULL, PRIMARY KEY (id), FOREIGN KEY (uid) REFERENCES %s (id), FOREIGN KEY (approvedby) REFERENCES %s (id))", konstanta.TABLEMEMJOURNAL, konstanta.TABLEALLUSER, konstanta.TABLEALLUSER)
+	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s(id int AUTO_INCREMENT, uid int NOT NULL, date DATE DEFAULT (CURRENT_DATE) NOT NULL, type ENUM('IP','IW','SS+','SS-','SHU','Bonus','MRBH+','MRBH-') NOT NULL, amount FLOAT(14,2) UNSIGNED NOT NULL, info VARCHAR(250), approvedby int NOT NULL, PRIMARY KEY (id), FOREIGN KEY (uid) REFERENCES %s (id), FOREIGN KEY (approvedby) REFERENCES %s (id))", konstanta.TABLEMEMJOURNAL, konstanta.TABLEALLUSER, konstanta.TABLEALLUSER)
 	_, err := tx.Exec(statement)
 	if err != nil {
 
@@ -141,6 +146,16 @@ func createTableMemBalanceHistory(tx *sql.Tx) error {
 
 func createTableAllInfo(tx *sql.Tx) error {
 	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (id int AUTO_INCREMENT, uid int NOT NULL, date DATE DEFAULT(CURRENT_DATE) NOT NULL, Info VARCHAR(100) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (uid) REFERENCES %s(id))", konstanta.TABLEALLINFO, konstanta.TABLEALLUSER)
+	_, err := tx.Exec(statement)
+	if err != nil {
+
+		return err
+	}
+	return nil
+}
+
+func createTableAgentHistory(tx *sql.Tx) error {
+	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (id int AUTO_INCREMENT, uid int NOT NULL, murobahah_id int NOT NULL, PRIMARY KEY (id), FOREIGN KEY (uid) REFERENCES %s(id), FOREIGN KEY (murobahah_id) REFERENCES %s(id))", konstanta.TABLEAGENTHISTORY, konstanta.TABLEALLUSER, konstanta.TABLEMEMMUROBAHAH)
 	_, err := tx.Exec(statement)
 	if err != nil {
 

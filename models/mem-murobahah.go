@@ -1,10 +1,9 @@
 package models
 
-type Murobahah struct {
+type MemMurobahah struct {
 	ID      float64
-	Agent   User
-	Buyer   User
-	Amount  float64
+	Initial float64
+	Paid    float64
 	Date    string
 	DueDate string
 	Doc     string
