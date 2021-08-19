@@ -37,3 +37,20 @@ func (DB *DBDriver) ModifyMemBalanceTx(tx *sql.Tx, type_ string, amount float64,
 		return nil, errors.New("ERROR")
 	}
 }
+
+var ModifyMemberRoleByUID string = fmt.Sprintf("UPDATE %s SET role=? WHERE id=?", konstanta.TABLEALLUSER)
+var ModifyMemberIsAgentByUID string = fmt.Sprintf("UPDATE %s SET isagent=? WHERE id=?", konstanta.TABLEALLUSER)
+
+func (DB *DBDriver) ModifyMemberFieldByUIDTx(tx *sql.Tx, uid float64, type_ string, value string) (sql.Result, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	switch type_ {
+	case konstanta.TYPEIsAgent:
+		return tx.ExecContext(ctx, ModifyMemberIsAgentByUID, value, uid)
+	case konstanta.TYPERole:
+		return tx.ExecContext(ctx, ModifyMemberRoleByUID, value, uid)
+	default:
+		return nil, errors.New("ERROR")
+	}
+}

@@ -25,7 +25,7 @@ func UploadFile(c *gin.Context, formname string, uniquevalue string, type_ strin
 		return "", err
 	}
 
-	//filename is Time.Now() with uniquevalue
+	//filename is Time.Now() with uniquevalue and type_
 
 	fname := type_ + uniquevalue + time.Now().String()
 

@@ -62,6 +62,7 @@ func main() {
 	r.POST(route.MurobahahReq(), controller.MurobahahReq(db))
 	r.POST(route.MurobahahAcc(), controller.MurobahahAcc(db))
 	r.POST(route.MurobahahDec(), controller.MurobahahDec(db))
+	r.POST(route.ManageUser(), controller.ManageUser(db))
 
 	r.Any(route.DelCacheMember(), controller.DelCacheMember(redis))
 

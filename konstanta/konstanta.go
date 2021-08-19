@@ -90,6 +90,8 @@ var TypeSHU = "SHU"
 var TypeBonus = "Bonus"
 var TYPEMurobahahPos = "MRBH+"
 var TYPEMurobahahNeg = "MRBH-"
+var TYPERole = "Role"
+var TYPEIsAgent = "IsAgent"
 
 var TABLEALLUSER = "alluser"
 var TABLEMEMJOURNAL = "member_journal"
