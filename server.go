@@ -19,6 +19,9 @@ func main() {
 	db := driver.DBConn()
 	defer db.DB.Close()
 
+	redis := driver.RedisConn()
+	defer redis.C.Close()
+
 	route := konstanta.GetRoute()
 
 	r := gin.Default()
@@ -38,7 +41,7 @@ func main() {
 	r.GET(route.FullReport(), controller.FullReport(db))
 	r.GET(route.Admin(), controller.Admin(db))
 	r.GET(route.Login(), controller.Login(db))
-	r.GET(route.Member(), controller.Member(db))
+	r.GET(route.Member(), controller.Member(db, redis))
 	r.GET(route.MemRequest(), controller.MemRequest(db))
 	r.GET(route.MemInspect(), controller.MemInspect(db))
 	r.GET(route.DepositReq(), controller.DepositReq(db))
@@ -59,6 +62,8 @@ func main() {
 	r.POST(route.MurobahahReq(), controller.MurobahahReq(db))
 	r.POST(route.MurobahahAcc(), controller.MurobahahAcc(db))
 	r.POST(route.MurobahahDec(), controller.MurobahahDec(db))
+
+	r.Any(route.DelCacheMember(), controller.DelCacheMember(redis))
 
 	r.Run()
 

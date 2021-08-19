@@ -7,6 +7,7 @@
     <title>Home</title>
     <link rel="stylesheet" href="public/style/pico.min.css">
     <script src="public/javascript/nav.js" defer></script>
+    <script src="public/javascript/del-cache-member.js" defer></script>
     <style>
         a{
             display: block;
@@ -133,6 +134,7 @@
                 {{ end }}
             </tbody>
         </table>
+        <button onclick="DelCacheMember('{{ .User.ID }}')">Refresh All</button>
     </article>
 </body>
 </html>

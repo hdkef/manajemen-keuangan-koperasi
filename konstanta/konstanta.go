@@ -56,6 +56,7 @@ var adminputroute = createRoute(adminput)
 var murobahahreqroute = createRoute(murobahahreq)
 var murobahahaccroute = createRoute("murobahah-acc")
 var murobahahdecroute = createRoute("murobahah-dec")
+var delcachememberroute = createRoute("del-cache-member/:UID")
 
 var CookiesBearer = "bearer"
 
@@ -288,4 +289,8 @@ func (r *route) MurobahahAcc() string {
 
 func (r *route) MurobahahDec() string {
 	return murobahahdecroute
+}
+
+func (r *route) DelCacheMember() string {
+	return delcachememberroute
 }

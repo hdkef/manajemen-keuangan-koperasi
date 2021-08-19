@@ -3,6 +3,8 @@ package controller
 import (
 	"context"
 	"errors"
+	"fmt"
+	"log"
 	"manajemen-keuangan-koperasi/driver"
 	"manajemen-keuangan-koperasi/konstanta"
 	"manajemen-keuangan-koperasi/models"
@@ -11,7 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Member(DB *driver.DBDriver) func(c *gin.Context) {
+func Member(DB *driver.DBDriver, C *driver.RedisDriver) func(c *gin.Context) {
 	return func(c *gin.Context) {
 
 		claims, exist := c.Get(konstanta.Claims)
@@ -20,6 +22,12 @@ func Member(DB *driver.DBDriver) func(c *gin.Context) {
 			return
 		}
 		uid := claims.(models.User).ID
+
+		//try get member from redis and render it
+		err := tryRenderWithRedis(c, C, uid)
+		if err == nil {
+			return
+		}
 
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
@@ -84,12 +92,38 @@ func Member(DB *driver.DBDriver) func(c *gin.Context) {
 			return
 		}
 
-		services.RenderPages(c, HTMLFILENAME.Member(), models.Member{
+		member := models.Member{
 			User:              user,
 			Balance:           balance,
 			RecentTransaction: journal,
 			AllInfo:           allinfo,
 			Murobahah:         murobahahs,
-		})
+		}
+
+		services.RenderPages(c, HTMLFILENAME.Member(), member)
+
+		//after get from database success, store it to redis
+		err = storeToRedis(c, C, uid, member)
+		if err != nil {
+			log.Println(err)
+		}
 	}
+}
+
+func tryRenderWithRedis(c *gin.Context, C *driver.RedisDriver, uid float64) error {
+	uidInString := fmt.Sprint(uid)
+
+	member, err := C.GetCacheMember(uidInString)
+	if err != nil {
+		return err
+	}
+
+	services.RenderPages(c, HTMLFILENAME.Member(), member)
+	return nil
+}
+
+func storeToRedis(c *gin.Context, C *driver.RedisDriver, uid float64, member models.Member) error {
+	uidInString := fmt.Sprint(uid)
+
+	return C.SetCacheMember(uidInString, member)
 }
