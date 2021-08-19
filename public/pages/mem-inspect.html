@@ -13,9 +13,115 @@
     <article>
         <header><h1>Member Inspect</h1></header>
         <form action="/mem-inspect" method="GET">
-            <input type="text" name="ID" placeholder="ID" required>
+            <input type="text" name="UID" placeholder="UID" required>
             <button type="submit">Submit</button>
         </form>
+    </article>
+    <article>
+        <head><h1>Result</h1></head>
+        <p>UID : {{ .User.ID }}</p>
+        <p>ID Anggota : {{ .User.MemID }}</p>
+        <p>Username : {{ .User.Username }}</p>
+        <p>Peran : {{ .User.Role }}</p>
+        <p>Agent : {{ .User.IsAgent }}</p>
+        <hr>
+        <p>Info Terbaru</p>
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Tanggal</th>
+                <th>Keterangan</th>
+            </thead>
+            <tbody>
+                {{ range $index,$elem := .AllInfo }}
+                <tr>
+                    <td> {{ $elem.ID }} </td>
+                    <td> {{ $elem.Date }} </td>
+                    <td> {{ $elem.Info }} </td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+        <hr>
+        <p>Rangkuman Saldo</p>
+        <table>
+            <thead>
+                <th>Akun</th>
+                <th>Jumlah (Rp)</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Pokok</td>
+                    <td>{{ .Balance.IP }}</td>
+                </tr>
+                <tr>
+                    <td>Wajib</td>
+                    <td>{{ .Balance.IW }}</td>
+                </tr>
+                <tr>
+                    <td>Sukarela</td>
+                    <td>{{ .Balance.SS }}</td>
+                </tr>
+                <tr>
+                    <td>SHU</td>
+                    <td>{{ .Balance.SHU }}</td>
+                </tr>
+                <tr>
+                    <td>Bonus</td>
+                    <td>{{ .Balance.Bonus }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <p>Transaksi Terakhir</p>
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Tanggal</th>
+                <th>Jenis</th>
+                <th>Jumlah (Rp)</th>
+                <th>Info</th>
+                <th>ApprovedBy</th>
+            </thead>
+            <tbody>
+                {{ range $index,$elem := .RecentTransaction }}
+                <tr>
+                    <td> {{ $elem.ID }} </td>
+                    <td> {{ $elem.Date }} </td>
+                    <td> {{ $elem.Type }} </td>
+                    <td> {{ $elem.Amount }} </td>
+                    <td> {{ $elem.Info }} </td>
+                    <td> {{ $elem.ApprovedBy }} </td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+        <hr>
+        <p>Murobahah Terakhir</p>
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Tanggal</th>
+                <th>Jatuh Tempo</th>
+                <th>Jumlah Awal</th>
+                <th>Terbayar</th>
+                <th>Info</th>
+                <th>Dokumen</th>
+            </thead>
+            <tbody>
+                {{ range $index,$elem := .Murobahah }}
+                <tr>
+                    <td> {{ $elem.ID }} </td>
+                    <td> {{ $elem.Date }} </td>
+                    <td> {{ $elem.DueDate }} </td>
+                    <td> {{ $elem.Initial }} </td>
+                    <td> {{ $elem.Paid }} </td>
+                    <td> {{ $elem.Info }} </td>
+                    <td><a href="/{{ $elem.Doc }}" target="_blank">lihat</a></td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
     </article>
 </body>
 </html>

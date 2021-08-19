@@ -30,11 +30,12 @@
             <p>ID Anggota : {{ .User.MemID }}</p>
             <p>Username : {{ .User.Username }}</p>
             <p>Peran : {{ .User.Role }}</p>
+            <p>Agent : {{ .User.IsAgent }}</p>
         </details>
         <p>Menu</p>
-        <button><a href="/deposit-req">Permintaan Deposit</a></button>
-        <button><a href="/withdraw-req">Permintaan Withdraw</a></button>
-        <button><a href="/murobahah-req">Murobahah</a></button>
+        <button><a href="/deposit-req">Deposit</a></button>
+        <button><a href="/withdraw-req">Withdraw</a></button>
+        <button><a href="/">Cicil Murobahah</a></button>
         <button><a href="/user-setting">Pengaturan</a></button>
         <hr>
         <p>Info Terbaru</p>
@@ -55,7 +56,7 @@
             </tbody>
         </table>
         <hr>
-        <p>Summary</p>
+        <p>Rangkuman Saldo</p>
         <table>
             <thead>
                 <th>Akun</th>
@@ -134,7 +135,7 @@
                 {{ end }}
             </tbody>
         </table>
-        <button onclick="DelCacheMember('{{ .User.ID }}')">Refresh All</button>
+        <button onclick="DelCacheMember('{{ .User.ID }}')">Refresh Data</button>
     </article>
 </body>
 </html>

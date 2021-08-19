@@ -21,7 +21,6 @@ var meminspect = "mem-inspect"
 var depositreq = "deposit-req"
 var withdrawreq = "withdraw-req"
 var finduser = "find-user"
-var meminspectres = "mem-inspect-res"
 var register = "register"
 var usersetting = "user-setting"
 var adminput = "adm-input"
@@ -172,10 +171,6 @@ func (r *htmlFileName) WithdrawReq() string {
 
 func (r *htmlFileName) FindUser() string {
 	return createHTMLFilename(finduser)
-}
-
-func (r *htmlFileName) MemInspectRes() string {
-	return createHTMLFilename(meminspectres)
 }
 
 func (r *htmlFileName) Register() string {
