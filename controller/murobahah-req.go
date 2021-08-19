@@ -44,7 +44,7 @@ func MurobahahReq(DB *driver.DBDriver) func(c *gin.Context) {
 			agentid := user.ID
 
 			//first upload document
-			fpath, err := services.UploadFile(c, konstanta.QueryDoc, memid)
+			fpath, err := services.UploadFile(c, konstanta.QueryDoc, memid, "MRBH")
 			if err != nil {
 				RenderError(c, err)
 				return

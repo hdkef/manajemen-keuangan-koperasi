@@ -19,7 +19,7 @@ func init() {
 }
 
 //upload file and return filepath relative
-func UploadFile(c *gin.Context, formname string, uniquevalue string) (string, error) {
+func UploadFile(c *gin.Context, formname string, uniquevalue string, type_ string) (string, error) {
 	file, err := c.FormFile(formname)
 	if err != nil {
 		return "", err
@@ -27,7 +27,7 @@ func UploadFile(c *gin.Context, formname string, uniquevalue string) (string, er
 
 	//filename is Time.Now() with uniquevalue
 
-	fname := time.Now().String() + uniquevalue
+	fname := type_ + uniquevalue + time.Now().String()
 
 	fpath := filepath.Join(ABS_DST, fname)
 
