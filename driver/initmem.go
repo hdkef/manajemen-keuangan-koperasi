@@ -74,7 +74,7 @@ func initMember(DB *sql.DB) {
 }
 
 func createTableUser(tx *sql.Tx) error {
-	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (id int AUTO_INCREMENT, member_id VARCHAR(20) UNIQUE NOT NULL, username VARCHAR(25) UNIQUE NOT NULL, passwd VARCHAR(250) NOT NULL, role ENUM('Admin-Input','Admin-Super','member') DEFAULT 'member' NOT NULL, isagent ENUM('Y','N') DEFAULT 'N' NOT NULL ,PRIMARY KEY (id))", konstanta.TABLEALLUSER)
+	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (id int AUTO_INCREMENT, member_id VARCHAR(20) UNIQUE NOT NULL, username VARCHAR(25) UNIQUE NOT NULL, passwd VARCHAR(250) NOT NULL, role ENUM('Admin-Input','Admin-Super','member') DEFAULT 'member' NOT NULL, isagent ENUM('Y','N') DEFAULT 'N' NOT NULL, TEL VARCHAR(16),PRIMARY KEY (id))", konstanta.TABLEALLUSER)
 	_, err := tx.Exec(statement)
 	if err != nil {
 
@@ -171,8 +171,8 @@ func insertSuperAdmin(tx *sql.Tx) error {
 	if err != nil {
 		return err
 	}
-	statement1 := fmt.Sprintf("INSERT INTO %s (member_id,username,passwd,role,isagent) VALUES (?,?,?,?,?)", konstanta.TABLEALLUSER)
-	res, err := tx.Exec(statement1, "A0", os.Getenv("SUPERADMIN"), string(hashedPassbyte), "Admin-Super", "Y")
+	statement1 := fmt.Sprintf("INSERT INTO %s (member_id,username,passwd,role,isagent,tel) VALUES (?,?,?,?,?,?)", konstanta.TABLEALLUSER)
+	res, err := tx.Exec(statement1, "A0", os.Getenv("SUPERADMIN"), string(hashedPassbyte), "Admin-Super", "Y", "000000000000")
 	if err != nil {
 
 		return err

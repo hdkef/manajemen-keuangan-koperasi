@@ -1,5 +1,7 @@
 package models
 
+import "database/sql"
+
 type MemMurobahah struct {
 	ID      float64
 	Initial float64
@@ -7,5 +9,5 @@ type MemMurobahah struct {
 	Date    string
 	DueDate string
 	Doc     string
-	Info    string
+	Info    sql.NullString
 }

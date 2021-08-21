@@ -10,7 +10,6 @@ func EditTransaction() []models.Transaction {
 			Name:   "Cash",
 			Debit:  "2500000",
 			Credit: "",
-			Info:   "Beli a",
 		},
 		{
 			ID:     "2",
@@ -18,7 +17,6 @@ func EditTransaction() []models.Transaction {
 			Name:   "Cash",
 			Debit:  "2500000",
 			Credit: "",
-			Info:   "Beli a",
 		},
 	}
 }

@@ -81,6 +81,7 @@ var QueryDoc = "Doc"
 var QueryUIDBuyer = "UIDBuyer"
 var QueryUIDAgent = "UIDAgent"
 var QueryDueDate = "DueDate"
+var QueryTel = "Tel"
 
 var TypeIP = "IP"
 var TypeIW = "IW"

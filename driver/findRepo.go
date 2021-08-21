@@ -9,7 +9,7 @@ import (
 	"manajemen-keuangan-koperasi/models"
 )
 
-var statementFindOneUserByUsername string = fmt.Sprintf("SELECT id, member_id, username, passwd, role, isagent FROM %s WHERE Username=?", konstanta.TABLEALLUSER)
+var statementFindOneUserByUsername string = fmt.Sprintf("SELECT id, member_id, username, passwd, role, isagent, tel FROM %s WHERE Username=?", konstanta.TABLEALLUSER)
 
 func (DB *DBDriver) FindOneUserByUsername(value string) (models.User, error) {
 
@@ -20,7 +20,7 @@ func (DB *DBDriver) FindOneUserByUsername(value string) (models.User, error) {
 
 	tmpUsr := models.User{}
 
-	err := row.Scan(&tmpUsr.ID, &tmpUsr.MemID, &tmpUsr.Username, &tmpUsr.Pass, &tmpUsr.Role, &tmpUsr.IsAgent)
+	err := row.Scan(&tmpUsr.ID, &tmpUsr.MemID, &tmpUsr.Username, &tmpUsr.Pass, &tmpUsr.Role, &tmpUsr.IsAgent, &tmpUsr.Tel)
 	if err != nil {
 		return models.User{}, err
 	}
@@ -28,7 +28,7 @@ func (DB *DBDriver) FindOneUserByUsername(value string) (models.User, error) {
 	return tmpUsr, nil
 }
 
-var statementFindOneUserByUID string = fmt.Sprintf("SELECT id, member_id, username, passwd, role, isagent FROM %s WHERE id=?", konstanta.TABLEALLUSER)
+var statementFindOneUserByUID string = fmt.Sprintf("SELECT id, member_id, username, passwd, role, isagent, tel FROM %s WHERE id=?", konstanta.TABLEALLUSER)
 
 func (DB *DBDriver) FindOneUserByUIDTx(tx *sql.Tx, value float64) (models.User, error) {
 
@@ -39,7 +39,7 @@ func (DB *DBDriver) FindOneUserByUIDTx(tx *sql.Tx, value float64) (models.User, 
 
 	tmpUsr := models.User{}
 
-	err := row.Scan(&tmpUsr.ID, &tmpUsr.MemID, &tmpUsr.Username, &tmpUsr.Pass, &tmpUsr.Role, &tmpUsr.IsAgent)
+	err := row.Scan(&tmpUsr.ID, &tmpUsr.MemID, &tmpUsr.Username, &tmpUsr.Pass, &tmpUsr.Role, &tmpUsr.IsAgent, &tmpUsr.Tel)
 	if err != nil {
 		return models.User{}, err
 	}
@@ -47,10 +47,10 @@ func (DB *DBDriver) FindOneUserByUIDTx(tx *sql.Tx, value float64) (models.User, 
 	return tmpUsr, nil
 }
 
-var statementFindAllUserByUsername = fmt.Sprintf("SELECT id, member_id, username, role, isagent FROM %s WHERE username=?", konstanta.TABLEALLUSER)
-var statementFindAllUserByRole = fmt.Sprintf("SELECT id, member_id, username, role, isagent FROM %s WHERE role=?", konstanta.TABLEALLUSER)
-var statementFindAllUserByMemID = fmt.Sprintf("SELECT id, member_id, username, role, isagent FROM %s WHERE member_id=?", konstanta.TABLEALLUSER)
-var statementFindAllUserByIsAgent = fmt.Sprintf("SELECT id, member_id, username, role, isagent FROM %s WHERE isagent=?", konstanta.TABLEALLUSER)
+var statementFindAllUserByUsername = fmt.Sprintf("SELECT id, member_id, username, role, isagent, tel FROM %s WHERE username LIKE ?", konstanta.TABLEALLUSER)
+var statementFindAllUserByRole = fmt.Sprintf("SELECT id, member_id, username, role, isagent, tel FROM %s WHERE role LIKE ?", konstanta.TABLEALLUSER)
+var statementFindAllUserByMemID = fmt.Sprintf("SELECT id, member_id, username, role, isagent, tel FROM %s WHERE member_id LIKE ?", konstanta.TABLEALLUSER)
+var statementFindAllUserByIsAgent = fmt.Sprintf("SELECT id, member_id, username, role, isagent, tel FROM %s WHERE isagent LIKE ?", konstanta.TABLEALLUSER)
 
 func (DB *DBDriver) FindAllUserByFilter(filter string, key string) ([]models.User, error) {
 	ctx, cancel := context.WithCancel(context.Background())
@@ -80,7 +80,7 @@ func (DB *DBDriver) FindAllUserByFilter(filter string, key string) ([]models.Use
 
 	for row.Next() {
 		var tmpUsr models.User
-		err = row.Scan(&tmpUsr.ID, &tmpUsr.MemID, &tmpUsr.Username, &tmpUsr.Role, &tmpUsr.IsAgent)
+		err = row.Scan(&tmpUsr.ID, &tmpUsr.MemID, &tmpUsr.Username, &tmpUsr.Role, &tmpUsr.IsAgent, &tmpUsr.Tel)
 		if err != nil {
 			return nil, err
 		}

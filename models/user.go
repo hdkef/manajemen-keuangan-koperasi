@@ -1,5 +1,7 @@
 package models
 
+import "database/sql"
+
 type User struct {
 	ID       float64
 	MemID    string
@@ -7,4 +9,5 @@ type User struct {
 	Role     string
 	Pass     string
 	IsAgent  string
+	Tel      sql.NullString
 }

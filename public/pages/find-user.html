@@ -32,6 +32,8 @@
                 <th>ID Anggota</th>
                 <th>Username</th>
                 <th>Role</th>
+                <th>Adalah Agen</th>
+                <th>Tel</th>
             </thead>
             <tbody>
                 {{ range $index, $elem := . }}
@@ -40,6 +42,8 @@
                     <td>{{ $elem.MemID }}</td>
                     <td>{{ $elem.Username }}</td>
                     <td>{{ $elem.Role }}</td>
+                    <td>{{ $elem.IsAgent     }}</td>
+                    <td>{{ $elem.Tel }}</td>
                 </tr>
                 {{ end }}
             </tbody>
