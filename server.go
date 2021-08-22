@@ -36,7 +36,7 @@ func main() {
 	r.GET(route.EditTransaction(), controller.EditTransaction(db))
 	r.GET(route.NewCOA(), controller.NewCOA(db))
 	r.GET(route.NewTransaction(), controller.NewTransaction(db))
-	r.GET(route.ManageUser(), controller.ManageUser(db))
+	r.GET(route.ManageUser(), controller.ManageUser(db, redis))
 	r.GET(route.Summary(), controller.Summary(db))
 	r.GET(route.FullReport(), controller.FullReport(db))
 	r.GET(route.Admin(), controller.Admin(db))
@@ -51,6 +51,7 @@ func main() {
 	r.GET(route.Register(), controller.Register(db))
 	r.GET(route.AdmInput(), controller.AdmInput(db))
 	r.GET(route.MurobahahReq(), controller.MurobahahReq(db))
+	r.GET(route.PayMurobahah(), controller.PayMurobahah(db))
 
 	r.POST(route.Login(), controller.Login(db))
 	r.POST(route.Register(), controller.Register(db))
@@ -62,9 +63,10 @@ func main() {
 	r.POST(route.MurobahahReq(), controller.MurobahahReq(db))
 	r.POST(route.MurobahahAcc(), controller.MurobahahAcc(db))
 	r.POST(route.MurobahahDec(), controller.MurobahahDec(db))
-	r.POST(route.ManageUser(), controller.ManageUser(db))
+	r.POST(route.ManageUser(), controller.ManageUser(db, redis))
 
 	r.Any(route.DelCacheMember(), controller.DelCacheMember(redis))
+	r.Any(route.Logout(), controller.Logout(redis))
 
 	r.Run()
 

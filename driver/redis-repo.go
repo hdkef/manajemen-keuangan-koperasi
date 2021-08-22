@@ -21,6 +21,14 @@ func (C *RedisDriver) SetCacheMember(keyname string, member models.Member) error
 	return nil
 }
 
+func (C *RedisDriver) SetString(keyname string, data string) error {
+	_, err := C.C.Do("SET", keyname, data)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (C *RedisDriver) GetCacheMember(keyname string) (models.Member, error) {
 	//get slice of byte of json
 	data, err := redis.Bytes(C.C.Do("GET", keyname))
@@ -36,7 +44,15 @@ func (C *RedisDriver) GetCacheMember(keyname string) (models.Member, error) {
 	return member, nil
 }
 
-func (C *RedisDriver) DelCacheMember(keyname string) error {
+func (C *RedisDriver) GetString(keyname string) (string, error) {
+	data, err := redis.String(C.C.Do("GET", keyname))
+	if err != nil {
+		return "", err
+	}
+	return data, nil
+}
+
+func (C *RedisDriver) Del(keyname string) error {
 	_, err := C.C.Do("Del", keyname)
 	return err
 }

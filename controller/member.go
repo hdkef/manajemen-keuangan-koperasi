@@ -9,6 +9,7 @@ import (
 	"manajemen-keuangan-koperasi/konstanta"
 	"manajemen-keuangan-koperasi/models"
 	"manajemen-keuangan-koperasi/services"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -23,8 +24,21 @@ func Member(DB *driver.DBDriver, C *driver.RedisDriver) func(c *gin.Context) {
 		}
 		uid := claims.(models.User).ID
 
+		//get redis for force logout
+		forcelogoutkey := konstanta.ForceLogoutKey(uid)
+		res, err := C.GetString(forcelogoutkey)
+		if err == nil {
+			//if exist forcelogout in redis, dologout and clear redis
+			if res == "Y" {
+				doLogout(fmt.Sprint(uid), C, c)
+				C.Del(forcelogoutkey)
+				c.Redirect(http.StatusTemporaryRedirect, "/login")
+				return
+			}
+		}
+
 		//try get member from redis and render it
-		err := tryRenderWithRedis(c, C, uid)
+		err = tryRenderWithRedis(c, C, uid)
 		if err == nil {
 			return
 		}

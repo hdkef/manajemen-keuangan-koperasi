@@ -25,9 +25,14 @@ var register = "register"
 var usersetting = "user-setting"
 var adminput = "adm-input"
 var murobahahreq = "murobahah-req"
+var paymurobahah = "pay-murobahah"
 
 func createRoute(route string) string {
 	return fmt.Sprintf("/%s", route)
+}
+
+func ForceLogoutKey(uid float64) string {
+	return fmt.Sprintf("forcelogout-%v", uid)
 }
 
 //route path
@@ -56,6 +61,8 @@ var murobahahreqroute = createRoute(murobahahreq)
 var murobahahaccroute = createRoute("murobahah-acc")
 var murobahahdecroute = createRoute("murobahah-dec")
 var delcachememberroute = createRoute("del-cache-member/:UID")
+var logoutroute = createRoute("logout/:UID")
+var paymurobahahroute = createRoute(paymurobahah)
 
 var CookiesBearer = "bearer"
 
@@ -192,6 +199,10 @@ func (r *htmlFileName) MurobahahReq() string {
 	return createHTMLFilename(murobahahreq)
 }
 
+func (r *htmlFileName) PayMurobahah() string {
+	return createHTMLFilename(paymurobahah)
+}
+
 type route struct {
 }
 
@@ -291,4 +302,12 @@ func (r *route) MurobahahDec() string {
 
 func (r *route) DelCacheMember() string {
 	return delcachememberroute
+}
+
+func (r *route) PayMurobahah() string {
+	return paymurobahahroute
+}
+
+func (r *route) Logout() string {
+	return logoutroute
 }

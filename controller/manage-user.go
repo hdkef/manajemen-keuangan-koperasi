@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 	"fmt"
+	"log"
 	"manajemen-keuangan-koperasi/driver"
 	"manajemen-keuangan-koperasi/konstanta"
 	"manajemen-keuangan-koperasi/services"
@@ -12,7 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ManageUser(DB *driver.DBDriver) func(c *gin.Context) {
+func ManageUser(DB *driver.DBDriver, C *driver.RedisDriver) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		if c.Request.Method == http.MethodPost {
 			uid, err := strconv.ParseFloat(c.PostForm(konstanta.QueryUID), 64)
@@ -61,6 +62,12 @@ func ManageUser(DB *driver.DBDriver) func(c *gin.Context) {
 				tx.Rollback()
 				RenderError(c, err)
 				return
+			}
+
+			//set redis cache for force logout
+			err = C.SetString(konstanta.ForceLogoutKey(uid), "Y")
+			if err != nil {
+				log.Println(err)
 			}
 
 			//Render Sucess

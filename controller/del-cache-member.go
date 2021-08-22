@@ -12,7 +12,7 @@ import (
 func DelCacheMember(C *driver.RedisDriver) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		uid, _ := c.Params.Get(konstanta.QueryUID)
-		err := C.DelCacheMember(uid)
+		err := C.Del(uid)
 		if err != nil {
 			utils.ResErr(c, http.StatusInternalServerError, &err)
 			return

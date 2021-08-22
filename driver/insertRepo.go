@@ -15,13 +15,13 @@ func (DB *DBDriver) CreateZeroBalance(tx *sql.Tx, uid float64) (sql.Result, erro
 	return tx.Exec(statementCreateZeroBalance, uid, 0, 0, 0, 0, 0)
 }
 
-var statementInsertUser string = fmt.Sprintf("INSERT INTO %s (member_id, username, passwd, role, isagent) VALUES (?,?,?,?,?)", konstanta.TABLEALLUSER)
+var statementInsertUser string = fmt.Sprintf("INSERT INTO %s (member_id, username, passwd, role, isagent, tel) VALUES (?,?,?,?,?,?)", konstanta.TABLEALLUSER)
 
-func (DB *DBDriver) InsertUserTx(tx *sql.Tx, MemID string, Username string, Passwd string, Role string, IsAgent string) (sql.Result, error) {
+func (DB *DBDriver) InsertUserTx(tx *sql.Tx, MemID string, Username string, Passwd string, Role string, IsAgent string, tel string) (sql.Result, error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	return DB.DB.ExecContext(ctx, statementInsertUser, MemID, Username, Passwd, Role, IsAgent)
+	return DB.DB.ExecContext(ctx, statementInsertUser, MemID, Username, Passwd, Role, IsAgent, tel)
 }
 
 var statementInsertMemReq string = fmt.Sprintf("INSERT INTO %s (uid,date,type,amount,info) VALUES (?,?,?,?,?)", konstanta.TABLEMEMREQ)
