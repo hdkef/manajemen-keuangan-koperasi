@@ -90,7 +90,7 @@ func (DB *DBDriver) FindAllUserByFilter(filter string, key string) ([]models.Use
 	return users, nil
 }
 
-var statementFindLimitedMemJournalTx string = fmt.Sprintf("SELECT id,date,type,amount,info,approvedby FROM %s WHERE uid=? LIMIT ?", konstanta.TABLEMEMJOURNAL)
+var statementFindLimitedMemJournalTx string = fmt.Sprintf("SELECT id,date,type,amount,info,approvedby FROM %s WHERE uid=? ORDER BY id DESC LIMIT ?", konstanta.TABLEMEMJOURNAL)
 
 func (DB *DBDriver) FindLimitedMemJournalByUIDTx(tx *sql.Tx, uid float64, limit int) ([]models.MemTransaction, error) {
 	ctx, cancel := context.WithCancel(context.Background())
@@ -243,4 +243,52 @@ func (DB *DBDriver) FindMemMurobahahTx(tx *sql.Tx, uid float64) ([]models.MemMur
 	}
 
 	return murobahahs, nil
+}
+
+func (DB *DBDriver) FindMemMurobahah(uid float64) ([]models.MemMurobahah, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	var murobahahs []models.MemMurobahah
+
+	row, err := DB.DB.QueryContext(ctx, statementFindMemMurobahah, uid)
+	if err != nil {
+		return nil, err
+	}
+
+	for row.Next() {
+		var tmp models.MemMurobahah
+		err = row.Scan(&tmp.ID, &tmp.Date, &tmp.DueDate, &tmp.Initial, &tmp.Paid, &tmp.Doc, &tmp.Info)
+		if err != nil {
+			return nil, err
+		}
+		murobahahs = append(murobahahs, tmp)
+	}
+
+	return murobahahs, nil
+}
+
+var statementFindMemMurobahahPayReq string = fmt.Sprintf("SELECT member_murobahah_payreq.id,member_murobahah_payreq.date,member_murobahah_payreq.murobahah_id,member_murobahah_payreq.amount,member_murobahah_payreq.info,murobahah.document FROM %s JOIN %s as murobahah ON murobahah.id = member_murobahah_payreq.murobahah_id", konstanta.TABLEMEMMUROBAHAHPAYREQ, konstanta.TABLEMEMMUROBAHAH)
+
+func (DB *DBDriver) FindMemMurobahahPayReqTx(tx *sql.Tx) ([]models.PayMurobahahReq, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	var reqs []models.PayMurobahahReq
+
+	row, err := DB.DB.QueryContext(ctx, statementFindMemMurobahahPayReq)
+	if err != nil {
+		return nil, err
+	}
+
+	for row.Next() {
+		var tmp models.PayMurobahahReq
+		err = row.Scan(&tmp.ID, &tmp.Date, &tmp.MurobahahID, &tmp.Amount, &tmp.Info, &tmp.Doc)
+		if err != nil {
+			return nil, err
+		}
+		reqs = append(reqs, tmp)
+	}
+
+	return reqs, nil
 }

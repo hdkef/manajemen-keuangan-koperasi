@@ -10,7 +10,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func initMember(DB *sql.DB) {
+func initTable(DB *sql.DB) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
@@ -61,6 +61,11 @@ func initMember(DB *sql.DB) {
 		panic(err)
 	}
 	err = createTableAgentHistory(tx)
+	if err != nil {
+		tx.Rollback()
+		panic(err)
+	}
+	err = createTableMemMurobahahPayReq(tx)
 	if err != nil {
 		tx.Rollback()
 		panic(err)
@@ -156,6 +161,16 @@ func createTableAllInfo(tx *sql.Tx) error {
 
 func createTableAgentHistory(tx *sql.Tx) error {
 	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (id int AUTO_INCREMENT, uid int NOT NULL, murobahah_id int NOT NULL, PRIMARY KEY (id), FOREIGN KEY (uid) REFERENCES %s(id), FOREIGN KEY (murobahah_id) REFERENCES %s(id))", konstanta.TABLEAGENTHISTORY, konstanta.TABLEALLUSER, konstanta.TABLEMEMMUROBAHAH)
+	_, err := tx.Exec(statement)
+	if err != nil {
+
+		return err
+	}
+	return nil
+}
+
+func createTableMemMurobahahPayReq(tx *sql.Tx) error {
+	statement := fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (id int AUTO_INCREMENT, date DATE DEFAULT(CURRENT_DATE) NOT NULL, murobahah_id int NOT NULL, amount FLOAT(14,2) UNSIGNED NOT NULL, info VARCHAR(250) ,PRIMARY KEY (id), FOREIGN KEY (murobahah_id) REFERENCES %s(id))", konstanta.TABLEMEMMUROBAHAHPAYREQ, konstanta.TABLEMEMMUROBAHAH)
 	_, err := tx.Exec(statement)
 	if err != nil {
 

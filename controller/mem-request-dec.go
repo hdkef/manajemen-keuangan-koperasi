@@ -21,6 +21,7 @@ func MemRequestDec(DB *driver.DBDriver) func(c *gin.Context) {
 			RenderError(c, err)
 			return
 		}
+		//TOBE send info "permintaan X tidak diterima"
 		RenderSuccess(c, "transaction declined")
 	}
 }

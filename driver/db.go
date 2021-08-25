@@ -40,7 +40,7 @@ func DBConn() *DBDriver {
 	for {
 		err := db.Ping()
 		if err == nil {
-			initMember(db)
+			initTable(db)
 			return &DBDriver{
 				DB: db,
 			}

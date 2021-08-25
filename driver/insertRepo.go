@@ -114,3 +114,14 @@ func (DB *DBDriver) InsertAgentHistoryTx(tx *sql.Tx, agentid float64, murobahahi
 
 	return tx.ExecContext(ctx, statementInsertAgentHistory, agentid, murobahahid)
 }
+
+var statementInsertMemMurobahahPayReq string = fmt.Sprintf("INSERT INTO %s (date,murobahah_id, amount, info) VALUES (?,?,?,?)", konstanta.TABLEMEMMUROBAHAHPAYREQ)
+
+func (DB *DBDriver) InsertMemMurobahahPayReq(murobahahid float64, amount float64, info string) (sql.Result, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	date := time.Now()
+
+	return DB.DB.ExecContext(ctx, statementInsertMemMurobahahPayReq, date, murobahahid, amount, info)
+}

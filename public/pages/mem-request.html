@@ -108,6 +108,43 @@
                 {{ end }}
             </tbody>
         </table>
+        <hr>
+        <p>Cicil Murobahah</p>
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>MurobahahID</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Doc</th>
+                <th>Info</th>
+                <th>Command</th>
+            </thead>
+            <tbody>
+                {{ range $index, $elem := .MurobahahPayReq }}
+                <tr>
+                    <td>{{ $elem.ID }}</td>
+                    <td>{{ $elem.MurobahahID }}</td>
+                    <td>{{ $elem.Date }}</td>
+                    <td>{{ $elem.Amount }}</td>
+                    <td><a href="/{{ $elem.Doc }}" target="_blank">lihat</a></td>
+                    <td>{{ $elem.Info }}</td>
+                    <td>
+                        <form action="/pay-murobahah-acc" method="POST">
+                            <input type="hidden" value="{{$elem.MurobahahID}}" name="ID">
+                            <input type="hidden" name="Amount" value="{{$elem.Amount}}">
+                            <input type="hidden" name="Info" value="{{$elem.Info}}">
+                            <button type="submit">accept</button>
+                        </form>
+                        <form action="/pay-murobahah-dec" method="POST">
+                            <input type="hidden" value="{{$elem.ID}}" name="ID">
+                            <button type="submit">decline</button>
+                        </form>
+                    </td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
     </article>
 </body>
 </html>

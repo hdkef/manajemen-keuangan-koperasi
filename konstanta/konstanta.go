@@ -110,6 +110,7 @@ var TABLEMEMREQ = "member_req"
 var TABLEMEMBALANCEHISTORY = "member_balance_history"
 var TABLEALLINFO = "allinfo"
 var TABLEAGENTHISTORY = "agent_history"
+var TABLEMEMMUROBAHAHPAYREQ = "member_murobahah_payreq"
 
 type htmlFileName struct {
 }

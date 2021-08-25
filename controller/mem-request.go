@@ -39,6 +39,13 @@ func MemRequest(DB *driver.DBDriver) func(c *gin.Context) {
 			return
 		}
 
+		murobahahpayreq, err := DB.FindMemMurobahahPayReqTx(tx)
+		if err != nil {
+			tx.Rollback()
+			RenderError(c, err)
+			return
+		}
+
 		err = tx.Commit()
 		if err != nil {
 			tx.Rollback()
@@ -49,6 +56,7 @@ func MemRequest(DB *driver.DBDriver) func(c *gin.Context) {
 		var data map[string]interface{} = make(map[string]interface{})
 		data["MemReq"] = memreqs
 		data["MemReqMurobahah"] = murobahahs
+		data["MurobahahPayReq"] = murobahahpayreq
 
 		services.RenderPages(c, HTMLFILENAME.MemRequest(), data)
 	}

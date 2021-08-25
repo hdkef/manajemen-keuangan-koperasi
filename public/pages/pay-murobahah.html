@@ -12,7 +12,37 @@
     <div id="mynav"></div>
     <article>
         <header><h1>Pay Murobahah</h1></header>
-        
+        <form action="/pay-murobahah" method="POST">
+            <input type="text" name="ID" placeholder="ID Murobahah" required>
+            <input type="text" name="Amount" placeholder="Jumlah Pembayaran (Rp)" required>
+            <textarea name="Info" id="" cols="30" rows="5" placeholder="Info"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+        <hr>
+        <p>Murobahah Anda</p>
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Tanggal</th>
+                <th>Jatuh Tempo</th>
+                <th>Jumlah Awal</th>
+                <th>Terbayar</th>
+                <th>Info</th>
+                <th>Dokumen</th>
+            </thead>
+            <tbody>
+                {{ range $index,$elem := . }}
+                <tr>
+                    <td> {{ $elem.ID }} </td>
+                    <td> {{ $elem.Date }} </td>
+                    <td> {{ $elem.DueDate }} </td>
+                    <td> {{ $elem.Initial }} </td>
+                    <td> {{ $elem.Paid }} </td>
+                    <td> {{ $elem.Info }} </td>
+                    <td><a href="/{{ $elem.Doc }}" target="_blank">lihat</a></td>
+                </tr>
+                {{ end }}
+            </tbody>
     </article>
 </body>
 </html>
