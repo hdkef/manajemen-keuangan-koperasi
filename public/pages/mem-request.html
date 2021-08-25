@@ -47,6 +47,10 @@
                         </form>
                         <form action="/mem-request-dec" method="POST">
                             <input type="hidden" value="{{$elem.ID}}" name="ID">
+                            <input type="hidden" value="{{$elem.User.ID}}" name="UID">
+                            <input type="hidden" value="{{$elem.Date}}" name="Date">
+                            <input type="hidden" value="{{$elem.Type}}" name="Type">
+                            <input type="hidden" value="{{$elem.Amount}}" name="Amount">
                             <button type="submit">decline</button>
                         </form>
                     </td>

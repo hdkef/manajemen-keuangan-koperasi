@@ -106,6 +106,17 @@ func (DB *DBDriver) InsertBatchAllInfoTx(tx *sql.Tx, uid []float64, info string)
 	return tx.ExecContext(ctx, statementReadyInsertBatchAllInfo, valueArgs...)
 }
 
+var statementInsertAllInfo string = fmt.Sprintf("INSERT INTO %s (uid,date,info) VALUES (?,?,?)", konstanta.TABLEALLINFO)
+
+func (DB *DBDriver) InsertAllInfo(tx *sql.Tx, uid float64, info string) (sql.Result, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	date := time.Now()
+
+	return tx.ExecContext(ctx, statementInsertAllInfo, uid, date, info)
+}
+
 var statementInsertAgentHistory string = fmt.Sprintf("INSERT INTO %s (uid,murobahah_id) VALUES (?,?)", konstanta.TABLEAGENTHISTORY)
 
 func (DB *DBDriver) InsertAgentHistoryTx(tx *sql.Tx, agentid float64, murobahahid float64) (sql.Result, error) {
