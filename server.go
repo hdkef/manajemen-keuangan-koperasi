@@ -65,6 +65,7 @@ func main() {
 	r.POST(route.MurobahahDec(), controller.MurobahahDec(db))
 	r.POST(route.ManageUser(), controller.ManageUser(db, redis))
 	r.POST(route.PayMurobahah(), controller.PayMurobahah(db))
+	r.POST(route.PayMurobahahAcc(), controller.PayMurobahahAcc(db))
 
 	r.Any(route.DelCacheMember(), controller.DelCacheMember(redis))
 	r.Any(route.Logout(), controller.Logout(redis))

@@ -136,3 +136,24 @@ func (DB *DBDriver) InsertMemMurobahahPayReq(murobahahid float64, amount float64
 
 	return DB.DB.ExecContext(ctx, statementInsertMemMurobahahPayReq, date, murobahahid, amount, info)
 }
+
+var statementIncrementMurobahah string = fmt.Sprintf("UPDATE %s SET paid = paid + ? WHERE id = ?", konstanta.TABLEMEMMUROBAHAH)
+var statementReturnUID string = fmt.Sprintf("SELECT uid from %s WHERE id = ?", konstanta.TABLEMEMMUROBAHAH)
+
+func (DB *DBDriver) IncrementPaidMurobahahReturnUIDTx(tx *sql.Tx, id float64, amount float64) (float64, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	_, err := tx.ExecContext(ctx, statementIncrementMurobahah, amount, id)
+	if err != nil {
+		return 0, err
+	}
+
+	var uid float64
+
+	err = tx.QueryRowContext(ctx, statementReturnUID, id).Scan(&uid)
+	if err != nil {
+		return 0, err
+	}
+	return uid, nil
+}

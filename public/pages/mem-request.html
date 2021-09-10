@@ -135,7 +135,8 @@
                     <td>{{ $elem.Info }}</td>
                     <td>
                         <form action="/pay-murobahah-acc" method="POST">
-                            <input type="hidden" value="{{$elem.MurobahahID}}" name="ID">
+                            <input type="hidden" value="{{$elem.ID}}" name="ID">
+                            <input type="hidden" value="{{$elem.MurobahahID}}" name="MurobahahID">
                             <input type="hidden" name="Amount" value="{{$elem.Amount}}">
                             <input type="hidden" name="Info" value="{{$elem.Info}}">
                             <button type="submit">accept</button>

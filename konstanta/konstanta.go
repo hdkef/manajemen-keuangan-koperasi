@@ -59,6 +59,7 @@ var memrequestdecroute = createRoute("mem-request-dec")
 var adminputroute = createRoute(adminput)
 var murobahahreqroute = createRoute(murobahahreq)
 var murobahahaccroute = createRoute("murobahah-acc")
+var paymurobahahaccroute = createRoute("pay-murobahah-acc")
 var murobahahdecroute = createRoute("murobahah-dec")
 var delcachememberroute = createRoute("del-cache-member/:UID")
 var logoutroute = createRoute("logout/:UID")
@@ -89,6 +90,7 @@ var QueryUIDBuyer = "UIDBuyer"
 var QueryUIDAgent = "UIDAgent"
 var QueryDueDate = "DueDate"
 var QueryTel = "Tel"
+var QueryMurobahahID = "MurobahahID"
 
 var TypeIP = "IP"
 var TypeIW = "IW"
@@ -311,4 +313,8 @@ func (r *route) PayMurobahah() string {
 
 func (r *route) Logout() string {
 	return logoutroute
+}
+
+func (r *route) PayMurobahahAcc() string {
+	return paymurobahahaccroute
 }

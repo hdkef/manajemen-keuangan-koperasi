@@ -7,18 +7,13 @@
     <title>Pay Murobahah</title>
     <link rel="stylesheet" href="public/style/pico.min.css">
     <script src="public/javascript/nav.js" defer></script>
+    <script src="public/javascript/pay-murobahah.js" defer></script>
 </head>
 <body>
     <div id="mynav"></div>
     <article>
-        <header><h1>Pay Murobahah</h1></header>
-        <form action="/pay-murobahah" method="POST">
-            <input type="text" name="ID" placeholder="ID Murobahah" required>
-            <input type="text" name="Amount" placeholder="Jumlah Pembayaran (Rp)" required>
-            <textarea name="Info" id="" cols="30" rows="5" placeholder="Info"></textarea>
-            <button type="submit">Submit</button>
-        </form>
-        <hr>
+        <!--javascript modal-->
+        <div id="frm"></div>
         <p>Murobahah Anda</p>
         <table>
             <thead>
@@ -29,6 +24,7 @@
                 <th>Terbayar</th>
                 <th>Info</th>
                 <th>Dokumen</th>
+                <th>Command</th>
             </thead>
             <tbody>
                 {{ range $index,$elem := . }}
@@ -40,6 +36,9 @@
                     <td> {{ $elem.Paid }} </td>
                     <td> {{ $elem.Info }} </td>
                     <td><a href="/{{ $elem.Doc }}" target="_blank">lihat</a></td>
+                    <td>
+                        <button onclick='createDialog("{{ $elem.ID }}")'>cicil</button>
+                    </td>
                 </tr>
                 {{ end }}
             </tbody>
